@@ -16,11 +16,11 @@ export default function App(props) {
   const [count, setCount] = useState(0);
 
   const increment = () => {
-    setCount(count++);
+    setCount(count + 1);
   }
 
   const decrement = () => {
-    setCount(count--);
+    setCount(count - 1);
   }
 
   return (

@@ -1,16 +1,13 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const webpack = require('webpack');
 
-module.exports = {
+const browserConfig = {
   mode: 'development',
-  entry: { app: './src/index.js' },
+  entry: { app: ['./src/index.js'] },
   output: {
-    /* filename: '[name].bundle.js', // DOM Rendering
-    path: path.resolve(__dirname, 'public'), // DOM Rendering
-    */
-
-    filename: '[name].bundle.js', // Server-side rendering
-    path: path.resolve(__dirname, 'functions/src'),  // Server-side rendering
-
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'public'),
     publicPath: '/',
   },
   module: {
@@ -18,31 +15,25 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['@babel/preset-env', {
-              targets: {
-                ie: '11',
-                edge: '15',
-                safari: '10',
-                firefox: '50',
-                chrome: '49',
-              },
-            }],
-            '@babel/preset-react'
-          ],
-        },
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        loader: 'file-loader',
-        options: {
-          outputPath: '../',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    ie: '11',
+                    edge: '15',
+                    safari: '10',
+                    firefox: '50',
+                    chrome: '49',
+                  },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
         },
       },
     ],
@@ -53,11 +44,51 @@ module.exports = {
       chunks: 'all',
     },
   },
-  devServer: {
-    contentBase: './public', // DOM rendering
-    //contentBase: './functions/src', // Server-side rendering
-    historyApiFallback: true,
-    inline: true,
-  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: 'true',
+    }),
+  ],
   devtool: 'source-map',
 };
+
+const serverConfig = {
+  mode: 'development',
+  entry: { server: ['./functions/src/ssr_server.js'] },
+  target: 'node',
+  externals: [nodeExternals()],
+  output: {
+    filename: 'server.js',
+    path: path.resolve(__dirname, 'functions/dist'),
+    publicPath: '/',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: { node: '10' },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: 'false',
+    }),
+  ],
+  devtool: 'source-map',
+};
+
+module.exports = [browserConfig, serverConfig];

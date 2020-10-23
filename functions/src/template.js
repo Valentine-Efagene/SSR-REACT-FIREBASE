@@ -1,4 +1,4 @@
-export default function template(body) {
+function template(body) {
   return `<!doctype html>
     <head>
       <title>Time</title>
@@ -10,6 +10,8 @@ export default function template(body) {
     </body>
   </html>`;
 }
+
+module.exports = template;
 
 /*
 <script type="text/javascript" src="../../public/app.bundle.js"></script>
