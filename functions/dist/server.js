@@ -1,151 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./functions/node_modules/dotenv/lib/main.js":
-/*!***************************************************!*\
-  !*** ./functions/node_modules/dotenv/lib/main.js ***!
-  \***************************************************/
-/*! default exports */
-/*! export config [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-/* @flow */
-
-/*::
-
-type DotenvParseOptions = {
-  debug?: boolean
-}
-
-// keys and values from src
-type DotenvParseOutput = { [string]: string }
-
-type DotenvConfigOptions = {
-  path?: string, // path to .env file
-  encoding?: string, // encoding of .env file
-  debug?: string // turn on logging for debugging purposes
-}
-
-type DotenvConfigOutput = {
-  parsed?: DotenvParseOutput,
-  error?: Error
-}
-
-*/
-const fs = __webpack_require__(/*! fs */ "fs");
-
-const path = __webpack_require__(/*! path */ "path");
-
-function log(message
-/*: string */
-) {
-  console.log(`[dotenv][DEBUG] ${message}`);
-}
-
-const NEWLINE = '\n';
-const RE_INI_KEY_VAL = /^\s*([\w.-]+)\s*=\s*(.*)?\s*$/;
-const RE_NEWLINES = /\\n/g;
-const NEWLINES_MATCH = /\n|\r|\r\n/; // Parses src into an Object
-
-function parse(src
-/*: string | Buffer */
-, options
-/*: ?DotenvParseOptions */
-)
-/*: DotenvParseOutput */
-{
-  const debug = Boolean(options && options.debug);
-  const obj = {}; // convert Buffers before splitting into lines and processing
-
-  src.toString().split(NEWLINES_MATCH).forEach(function (line, idx) {
-    // matching "KEY' and 'VAL' in 'KEY=VAL'
-    const keyValueArr = line.match(RE_INI_KEY_VAL); // matched?
-
-    if (keyValueArr != null) {
-      const key = keyValueArr[1]; // default undefined or missing values to empty string
-
-      let val = keyValueArr[2] || '';
-      const end = val.length - 1;
-      const isDoubleQuoted = val[0] === '"' && val[end] === '"';
-      const isSingleQuoted = val[0] === "'" && val[end] === "'"; // if single or double quoted, remove quotes
-
-      if (isSingleQuoted || isDoubleQuoted) {
-        val = val.substring(1, end); // if double quoted, expand newlines
-
-        if (isDoubleQuoted) {
-          val = val.replace(RE_NEWLINES, NEWLINE);
-        }
-      } else {
-        // remove surrounding whitespace
-        val = val.trim();
-      }
-
-      obj[key] = val;
-    } else if (debug) {
-      log(`did not match key and value when parsing line ${idx + 1}: ${line}`);
-    }
-  });
-  return obj;
-} // Populates process.env from .env file
-
-
-function config(options
-/*: ?DotenvConfigOptions */
-)
-/*: DotenvConfigOutput */
-{
-  let dotenvPath = path.resolve(process.cwd(), '.env');
-  let encoding
-  /*: string */
-  = 'utf8';
-  let debug = false;
-
-  if (options) {
-    if (options.path != null) {
-      dotenvPath = options.path;
-    }
-
-    if (options.encoding != null) {
-      encoding = options.encoding;
-    }
-
-    if (options.debug != null) {
-      debug = true;
-    }
-  }
-
-  try {
-    // specifying an encoding returns a string instead of a buffer
-    const parsed = parse(fs.readFileSync(dotenvPath, {
-      encoding
-    }), {
-      debug
-    });
-    Object.keys(parsed).forEach(function (key) {
-      if (!Object.prototype.hasOwnProperty.call(process.env, key)) {
-        process.env[key] = parsed[key];
-      } else if (debug) {
-        log(`"${key}" is already defined in \`process.env\` and will not be overwritten`);
-      }
-    });
-    return {
-      parsed
-    };
-  } catch (e) {
-    return {
-      error: e
-    };
-  }
-}
-
-module.exports.config = config;
-module.exports.parse = parse;
-
-/***/ }),
-
 /***/ "./functions/src/render.jsx":
 /*!**********************************!*\
   !*** ./functions/src/render.jsx ***!
@@ -198,7 +53,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dotenv */ "./functions/node_modules/dotenv/lib/main.js");
+/* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dotenv */ "dotenv");
+/* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dotenv__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var source_map_support__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! source-map-support */ "source-map-support");
@@ -210,7 +66,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const app = express__WEBPACK_IMPORTED_MODULE_1___default()();
 source_map_support__WEBPACK_IMPORTED_MODULE_2___default().install();
-dotenv__WEBPACK_IMPORTED_MODULE_0__.config();
+dotenv__WEBPACK_IMPORTED_MODULE_0___default().config();
 const enableHMR = (process.env.ENABLE_HMR || 'true') === 'true';
 
 if (enableHMR && "development" !== 'production') {
@@ -396,6 +252,21 @@ module.exports = [browserConfig, serverConfig];
 
 /***/ }),
 
+/***/ "dotenv":
+/*!*************************!*\
+  !*** external "dotenv" ***!
+  \*************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("dotenv");;
+
+/***/ }),
+
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -408,20 +279,6 @@ module.exports = [browserConfig, serverConfig];
 
 "use strict";
 module.exports = require("express");;
-
-/***/ }),
-
-/***/ "fs":
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs");;
 
 /***/ }),
 

@@ -11,6 +11,7 @@ const About = require('./src/About.js').default;
 const ReactDOMServer = require('react-dom/server');
 const ssrServer = require('./dist/server.js');
 const { app } = require('firebase-admin');
+const fs = require('fs');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -35,7 +36,14 @@ exports.bigben = functions.https.onRequest((req, res) => {
 // http://localhost:5001/fir-ch2-5cbdb/us-central1/ssrTest
 exports.ssrTest = functions.https.onRequest((req, res) => {
   const body = ReactDOMServer.renderToString(React.createElement(About));
-  res.status(200).send(template(body));
+  fs.readFile('../public/index.html', 'utf8', (err, data) => {
+    if (err) {
+      console.log('Error reading index.html');
+    }
+
+    const finalHtml = data.replace('<!-- ::APP:: -->', body);
+    res.status(200).send(finalHtml);
+  });
 });
 
 // http://localhost:5001/fir-ch2-5cbdb/us-central1/ssr
