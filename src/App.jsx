@@ -26,8 +26,8 @@ export default function App(props) {
   return (
     <>
       <p>{count}</p>
-      <Button onClick={increment}>increment</Button>
-      <Button onClick={decrement}>decrement</Button>
+      <Button type="button" onClick={decrement}>decrement</Button>
+      <Button type="button" onClick={increment}>increment</Button>
     </>
   )
 }
