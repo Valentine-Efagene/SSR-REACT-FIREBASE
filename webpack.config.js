@@ -54,12 +54,12 @@ const browserConfig = {
 
 const serverConfig = {
   mode: 'development',
-  entry: { server: ['./functions/src/ssr_server.js'] },
+  entry: { server: ['./server/ssr_server.js'] },
   target: 'node',
   externals: [nodeExternals()],
   output: {
-    filename: 'server.js',
-    path: path.resolve(__dirname, 'functions/dist'),
+    filename: 'ssr_server.js',
+    path: path.resolve(__dirname, 'functions'),
     publicPath: '/',
   },
   module: {
@@ -88,7 +88,44 @@ const serverConfig = {
       __isBrowser__: 'false',
     }),
   ],
-  devtool: 'source-map',
 };
 
-module.exports = [browserConfig, serverConfig];
+const localServer = {
+  mode: 'development',
+  entry: { server: ['./localExpressServer/local_server.js'] },
+  target: 'node',
+  externals: [nodeExternals()],
+  output: {
+    filename: 'local_server.js',
+    path: path.resolve(__dirname, 'functions'),
+    publicPath: '/',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: { node: '10' },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: 'false',
+    }),
+  ],
+};
+
+module.exports = [browserConfig, serverConfig, localServer];

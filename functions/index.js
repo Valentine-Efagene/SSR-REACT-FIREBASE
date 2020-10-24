@@ -8,10 +8,10 @@ const functions = require('firebase-functions');
 //const { app } = require('firebase-admin');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const About = require('./src/About.js').default;
-const App = require('./src/App.js').default;
+//const About = require('./src/About.js').default;
+//const App = require('./src/App.js').default;
 const fs = require('fs');
-const ssrServer = require('./ssr_server.js').default;
+//const ssrServer = require('./ssr_server.js').default;
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -47,10 +47,10 @@ exports.ssrTest = functions.https.onRequest((req, res) => {
 });
 
 // http://localhost:5001/fir-ch2-5cbdb/us-central1/ssrAbout
-exports.ssrTest = functions.https.onRequest((req, res) => {
+/*exports.ssrAbout = functions.https.onRequest((req, res) => {
   const body = ReactDOMServer.renderToString(React.createElement(About));
   res.status(200).send(body);
-});
+});*/
 
 // http://localhost:5001/fir-ch2-5cbdb/us-central1/ssr
-exports.ssr = functions.https.onRequest(ssrServer); // https://firebase.google.com/docs/functions/http-events
+//exports.ssr = functions.https.onRequest(ssrServer); // https://firebase.google.com/docs/functions/http-events

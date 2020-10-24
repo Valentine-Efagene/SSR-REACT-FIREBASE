@@ -1,6 +1,6 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import {Button} from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 
 export default function App(props) {
   /*if (props.facts) {
@@ -17,17 +17,21 @@ export default function App(props) {
 
   const increment = () => {
     setCount(count + 1);
-  }
+  };
 
   const decrement = () => {
     setCount(count - 1);
-  }
+  };
 
   return (
     <>
       <p>{count}</p>
-      <Button type="button" onClick={decrement}>decrement</Button>
-      <Button type="button" onClick={increment}>increment</Button>
+      <Button type="button" onClick={decrement}>
+        decrement
+      </Button>
+      <Button type="button" onClick={increment}>
+        increment
+      </Button>
     </>
-  )
+  );
 }

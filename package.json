@@ -49,6 +49,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
+    "webpack": "webpack",
+    "serve-local": "nodemon functions/local_server.js",
     "emu": "firebase emulators:start",
     "host": "firebase emulators:start --only hosting",
     "babel": "babel src -d functions/src && babel server/ssr_server.js -d functions"
