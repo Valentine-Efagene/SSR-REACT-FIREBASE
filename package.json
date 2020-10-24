@@ -51,7 +51,7 @@
     "watch": "webpack --watch",
     "emu": "firebase emulators:start",
     "host": "firebase emulators:start --only hosting",
-    "babel": "babel src -d functions/src"
+    "babel": "babel src -d functions/src && babel server/ssr_server.js -d functions"
   },
   "repository": {
     "type": "git",
