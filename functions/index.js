@@ -5,11 +5,10 @@ require('@babel/register')({
 });*/
 
 const functions = require('firebase-functions');
-const template = require('./src/template.js');
 const React = require('react');
-const About = require('./src/About.js').default;
+//const About = require('./src/About.js').default;
+const App = require('./src/App.js').default;
 const ReactDOMServer = require('react-dom/server');
-const ssrServer = require('./dist/server.js');
 const { app } = require('firebase-admin');
 const fs = require('fs');
 
@@ -35,7 +34,7 @@ exports.bigben = functions.https.onRequest((req, res) => {
 
 // http://localhost:5001/fir-ch2-5cbdb/us-central1/ssrTest
 exports.ssrTest = functions.https.onRequest((req, res) => {
-  const body = ReactDOMServer.renderToString(React.createElement(About));
+  const body = ReactDOMServer.renderToString(React.createElement(App));
   fs.readFile('../public/index.html', 'utf8', (err, data) => {
     if (err) {
       console.log('Error reading index.html');
@@ -47,4 +46,4 @@ exports.ssrTest = functions.https.onRequest((req, res) => {
 });
 
 // http://localhost:5001/fir-ch2-5cbdb/us-central1/ssr
-exports.ssr = functions.https.onRequest(ssrServer); // https://firebase.google.com/docs/functions/http-events
+//exports.ssr = functions.https.onRequest(ssrServer); // https://firebase.google.com/docs/functions/http-events

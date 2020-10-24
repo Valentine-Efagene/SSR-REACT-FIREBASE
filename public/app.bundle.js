@@ -86,8 +86,9 @@ __webpack_require__.r(__webpack_exports__);
 var list = ['hello', 'world', '!'];
 var element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_App_jsx__WEBPACK_IMPORTED_MODULE_0__.default, {
   facts: list
-});
-react_dom__WEBPACK_IMPORTED_MODULE_2__.render(element, document.getElementById('root')); //ReactDOM.hydrate(element, document.getElementById('root'));
+}); //ReactDOM.render(element, document.getElementById('root'));
+
+react_dom__WEBPACK_IMPORTED_MODULE_2__.hydrate(element, document.getElementById('root'));
 
 /***/ })
 
