@@ -7,7 +7,7 @@ const browserConfig = {
   entry: { app: ['./src/index.js'] },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
   module: {
@@ -52,13 +52,13 @@ const browserConfig = {
   devtool: 'source-map',
 };
 
-const serverConfig = {
+const firebaseSsrServerConfig = {
   mode: 'development',
-  entry: { server: ['./server/ssr_server.js'] },
+  entry: { server: ['./servers/firebase_ssr_server/ssr_server.js'] },
   target: 'node',
   externals: [nodeExternals()],
   output: {
-    filename: 'ssr_server.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'functions'),
     publicPath: '/',
   },
@@ -90,14 +90,14 @@ const serverConfig = {
   ],
 };
 
-const localServer = {
+const localExpressServerConfig = {
   mode: 'development',
-  entry: { server: ['./localExpressServer/local_server.js'] },
+  entry: { server: ['./servers/local_express_server/local_server.js'] },
   target: 'node',
   externals: [nodeExternals()],
   output: {
-    filename: 'local_server.js',
-    path: path.resolve(__dirname, 'functions'),
+    filename: 'local_express_server.js',
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/',
   },
   module: {
@@ -128,4 +128,8 @@ const localServer = {
   ],
 };
 
-module.exports = [browserConfig, serverConfig, localServer];
+module.exports = [
+  browserConfig,
+  firebaseSsrServerConfig,
+  localExpressServerConfig,
+];

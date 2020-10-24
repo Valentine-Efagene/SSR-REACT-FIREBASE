@@ -1,2 +1,0 @@
-1. Compile jsx from cli:
-npx babel --plugins @babel/plugin-transform-react-jsx src/About.jsx --out-dir functions/src

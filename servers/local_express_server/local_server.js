@@ -1,5 +1,5 @@
 import express from 'express';
-import renderer from './renderer.js';
+import renderer from './render.jsx';
 import path from 'path';
 
 const port = process.env.PORT || 3001;

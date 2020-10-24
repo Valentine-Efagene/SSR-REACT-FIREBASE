@@ -9,6 +9,7 @@
     "css-loader": "^5.0.0",
     "express": "^4.17.1",
     "file-loader": "^6.1.1",
+    "firebase-functions": "^3.11.0",
     "isomorphic-fetch": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
@@ -50,7 +51,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "webpack": "webpack",
-    "serve-local": "nodemon functions/local_server.js",
+    "serve-local": "nodemon build/local_express_server.js",
     "emu": "firebase emulators:start",
     "host": "firebase emulators:start --only hosting",
     "babel": "babel src -d functions/src && babel server/ssr_server.js -d functions"

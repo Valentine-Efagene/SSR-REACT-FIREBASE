@@ -10,17 +10,30 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./server/ssr_server.js":
-/*!******************************!*\
-  !*** ./server/ssr_server.js ***!
-  \******************************/
+/***/ "./servers/local_express_server/local_server.js":
+/*!******************************************************!*\
+  !*** ./servers/local_express_server/local_server.js ***!
+  \******************************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _render_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./render.jsx */ \"./servers/local_express_server/render.jsx\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ \"path\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nconst port = process.env.PORT || 3001;\nconst app = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist')));\napp.get('*', (req, res) => {\n  const content = (0,_render_jsx__WEBPACK_IMPORTED_MODULE_1__.default)(req);\n  res.send(content);\n});\napp.listen(port, () => {\n  console.log(`Listening on port: ${port}`);\n});\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_server/local_server.js?");
+
+/***/ }),
+
+/***/ "./servers/local_express_server/render.jsx":
+/*!*************************************************!*\
+  !*** ./servers/local_express_server/render.jsx ***!
+  \*************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/server */ \"react-dom/server\");\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ \"path\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _src_App_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/App.jsx */ \"./src/App.jsx\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! fs */ \"fs\");\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_5__);\n\n\n // Just importing a jsx here causes a react-univeral/lib/ not found error\n\n\n\n\nconst app = express__WEBPACK_IMPORTED_MODULE_4___default()();\napp.get('**', (req, res) => {\n  const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_App_jsx__WEBPACK_IMPORTED_MODULE_3__.default));\n  fs__WEBPACK_IMPORTED_MODULE_5___default().readFile('../public/index.html', 'utf8', (err, data) => {\n    if (err) {\n      console.log('Error reading index.html');\n    }\n\n    const finalHtml = data.replace('<!-- ::APP:: -->', body);\n    res.status(200).send(finalHtml);\n  });\n}); // app.use(express.static(path.resolve(__dirname, '..', 'public')));\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);\n\n//# sourceURL=webpack://ssr-react-firebase/./server/ssr_server.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/server */ \"react-dom/server\");\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _src_App_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../src/App.jsx */ \"./src/App.jsx\");\n\n\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (req => {\n  const content = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_App_jsx__WEBPACK_IMPORTED_MODULE_2__.default, null));\n  return `\n    <html>\n      <head>\n        <meta charset=\"utf-8\" />\n        <title>Server-side Rendering</title>\n        <link rel=\"stylesheet\" href=\"bootstrap/css/bootstrap.min.css\" >\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      </head>\n      <body>\n        <div id=\"root\">${content}</div>\n        <script type=\"text/javascript\" src=\"app.bundle.js\"></script>\n        <script type=\"text/javascript\" src=\"vendor.bundle.js\"></script>\n      </body>\n    </html>\n  `;\n});\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_server/render.jsx?");
 
 /***/ }),
 
@@ -49,20 +62,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((module) => {
 
 eval("module.exports = require(\"express\");;\n\n//# sourceURL=webpack://ssr-react-firebase/external_%22express%22?");
-
-/***/ }),
-
-/***/ "fs":
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-eval("module.exports = require(\"fs\");;\n\n//# sourceURL=webpack://ssr-react-firebase/external_%22fs%22?");
 
 /***/ }),
 
@@ -191,7 +190,7 @@ eval("module.exports = require(\"react-dom/server\");;\n\n//# sourceURL=webpack:
 /************************************************************************/
 /******/ 	// startup
 /******/ 	// Load entry module
-/******/ 	__webpack_require__("./server/ssr_server.js");
+/******/ 	__webpack_require__("./servers/local_express_server/local_server.js");
 /******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;
