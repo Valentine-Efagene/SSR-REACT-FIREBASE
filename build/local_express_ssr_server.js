@@ -10,44 +10,58 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./servers/local_express_server/local_server.js":
-/*!******************************************************!*\
-  !*** ./servers/local_express_server/local_server.js ***!
-  \******************************************************/
-/*! namespace exports */
-/*! exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _render_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./render.jsx */ \"./servers/local_express_server/render.jsx\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ \"path\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nconst port = process.env.PORT || 3001;\nconst app = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist')));\napp.get('*', (req, res) => {\n  const content = (0,_render_jsx__WEBPACK_IMPORTED_MODULE_1__.default)(req);\n  res.send(content);\n});\napp.listen(port, () => {\n  console.log(`Listening on port: ${port}`);\n});\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_server/local_server.js?");
-
-/***/ }),
-
-/***/ "./servers/local_express_server/render.jsx":
-/*!*************************************************!*\
-  !*** ./servers/local_express_server/render.jsx ***!
-  \*************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/server */ \"react-dom/server\");\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _src_App_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../src/App.jsx */ \"./src/App.jsx\");\n\n\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (req => {\n  const content = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_App_jsx__WEBPACK_IMPORTED_MODULE_2__.default, null));\n  return `\n    <html>\n      <head>\n        <meta charset=\"utf-8\" />\n        <title>Server-side Rendering</title>\n        <link rel=\"stylesheet\" href=\"bootstrap/css/bootstrap.min.css\" >\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      </head>\n      <body>\n        <div id=\"root\">${content}</div>\n        <script type=\"text/javascript\" src=\"app.bundle.js\"></script>\n        <script type=\"text/javascript\" src=\"vendor.bundle.js\"></script>\n      </body>\n    </html>\n  `;\n});\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_server/render.jsx?");
-
-/***/ }),
-
-/***/ "./src/App.jsx":
-/*!*********************!*\
-  !*** ./src/App.jsx ***!
-  \*********************/
+/***/ "./servers/local_express_ssr/render.jsx":
+/*!**********************************************!*\
+  !*** ./servers/local_express_ssr/render.jsx ***!
+  \**********************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ App\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ \"react-bootstrap\");\n/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nfunction App(props) {\n  /*if (props.facts) {\r\n    const facts = props.facts.map((fact, i) => {\r\n      return <li key={i}>{fact}</li>;\r\n    });\r\n  \r\n    return <ul>{facts}</ul>;\r\n  } else {\r\n    return <button onClick>Hello</button>;\r\n  }*/\n  const [count, setCount] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);\n\n  const increment = () => {\n    setCount(count + 1);\n  };\n\n  const decrement = () => {\n    setCount(count - 1);\n  };\n\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"p\", null, count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Button, {\n    type: \"button\",\n    onClick: decrement\n  }, \"decrement\"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Button, {\n    type: \"button\",\n    onClick: increment\n  }, \"increment\"));\n}\n\n//# sourceURL=webpack://ssr-react-firebase/./src/App.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ render\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/server */ \"react-dom/server\");\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _src_ssr_App_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../src/ssr/App.jsx */ \"./src/ssr/App.jsx\");\n/* harmony import */ var _template_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./template.js */ \"./servers/local_express_ssr/template.js\");\n\n //import { StaticRouter } from 'react-router-dom';\n\n //import Page from '../../src/ssr/Page.jsx';\n\n\nfunction render(req, res) {\n  /*const element = (\r\n    <StaticRouter location={req.url} context={{}}>\r\n      <Page />\r\n    </StaticRouter>\r\n  );*/\n  const element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_ssr_App_jsx__WEBPACK_IMPORTED_MODULE_2__.default, null);\n  const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)(element);\n  res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_3__.default)(body));\n}\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_ssr/render.jsx?");
+
+/***/ }),
+
+/***/ "./servers/local_express_ssr/server.js":
+/*!*********************************************!*\
+  !*** ./servers/local_express_ssr/server.js ***!
+  \*********************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _render_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./render.jsx */ \"./servers/local_express_ssr/render.jsx\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ \"path\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nconst port = process.env.PORT || 3001;\nconst app = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist/ssr')));\napp.get('*', _render_jsx__WEBPACK_IMPORTED_MODULE_1__.default);\napp.listen(port, () => {\n  console.log(`Listening on port: ${port}`);\n});\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_ssr/server.js?");
+
+/***/ }),
+
+/***/ "./servers/local_express_ssr/template.js":
+/*!***********************************************!*\
+  !*** ./servers/local_express_ssr/template.js ***!
+  \***********************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ template\n/* harmony export */ });\nfunction template(body) {\n  return `\n    <html>\n      <head>\n        <meta charset=\"utf-8\" />\n        <title>Server-side Rendering</title>\n        <link rel=\"stylesheet\" href=\"bootstrap/css/bootstrap.min.css\" >\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      </head>\n      <body>\n        <div id=\"root\">${body}</div>\n        <script type=\"text/javascript\" src=\"app.bundle.js\"></script>\n        <script type=\"text/javascript\" src=\"vendor.bundle.js\"></script>\n      </body>\n    </html>\n  `;\n}\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_ssr/template.js?");
+
+/***/ }),
+
+/***/ "./src/ssr/App.jsx":
+/*!*************************!*\
+  !*** ./src/ssr/App.jsx ***!
+  \*************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ App\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ \"react-bootstrap\");\n/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nfunction App(props) {\n  /*if (props.facts) {\r\n    const facts = props.facts.map((fact, i) => {\r\n      return <li key={i}>{fact}</li>;\r\n    });\r\n  \r\n    return <ul>{facts}</ul>;\r\n  } else {\r\n    return <button onClick>Hello</button>;\r\n  }*/\n  const [count, setCount] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);\n\n  const increment = () => {\n    setCount(count + 1);\n  };\n\n  const decrement = () => {\n    setCount(count - 1);\n  };\n\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"p\", null, count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Button, {\n    type: \"button\",\n    onClick: decrement\n  }, \"decrement\"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Button, {\n    type: \"button\",\n    onClick: increment\n  }, \"increment\"));\n}\n\n//# sourceURL=webpack://ssr-react-firebase/./src/ssr/App.jsx?");
 
 /***/ }),
 
@@ -190,7 +204,7 @@ eval("module.exports = require(\"react-dom/server\");;\n\n//# sourceURL=webpack:
 /************************************************************************/
 /******/ 	// startup
 /******/ 	// Load entry module
-/******/ 	__webpack_require__("./servers/local_express_server/local_server.js");
+/******/ 	__webpack_require__("./servers/local_express_ssr/server.js");
 /******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;

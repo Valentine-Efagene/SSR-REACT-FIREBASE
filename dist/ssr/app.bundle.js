@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/App.jsx":
-/*!*********************!*\
-  !*** ./src/App.jsx ***!
-  \*********************/
+/***/ "./src/ssr/App.jsx":
+/*!*************************!*\
+  !*** ./src/ssr/App.jsx ***!
+  \*************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -67,26 +67,28 @@ function App(props) {
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/ssr/index.js":
+/*!**************************!*\
+  !*** ./src/ssr/index.js ***!
+  \**************************/
 /*! namespace exports */
 /*! exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _App_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.jsx */ "./src/App.jsx");
+/* harmony import */ var _App_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.jsx */ "./src/ssr/App.jsx");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+ //import Page from './Page.jsx';
 
 
 
 var list = ['hello', 'world', '!'];
 var element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_App_jsx__WEBPACK_IMPORTED_MODULE_0__.default, {
   facts: list
-}); //ReactDOM.render(element, document.getElementById('root'));
+}); //const element = <Page />;
+//ReactDOM.render(element, document.getElementById('root'));
 
 react_dom__WEBPACK_IMPORTED_MODULE_2__.hydrate(element, document.getElementById('root'));
 
@@ -173,7 +175,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_2__.hydrate(element, document.getElementById(
 /******/ 		};
 /******/ 		
 /******/ 		var deferredModules = [
-/******/ 			["./src/index.js","vendor"]
+/******/ 			["./src/ssr/index.js","vendor"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		
