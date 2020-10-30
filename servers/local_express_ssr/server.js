@@ -9,5 +9,5 @@ app.use(express.static(path.resolve(__dirname, '..', 'dist/ssr')));
 app.get('*', render);
 
 app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
+  console.log(`http://localhost:${port}`);
 });

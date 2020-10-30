@@ -3,6 +3,56 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 
+const firebaseHostingConfig = {
+  mode: 'development',
+  entry: { app: ['./src/csr/index.js'] },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    ie: '11',
+                    edge: '15',
+                    safari: '10',
+                    firefox: '50',
+                    chrome: '49',
+                  },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'all',
+    },
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: 'true',
+    }),
+  ],
+  devtool: 'source-map',
+};
+
 const browserCSRConfig = {
   mode: 'development',
   entry: { app: ['./src/csr/index.js'] },
@@ -105,7 +155,7 @@ const browserSSRConfig = {
 
 const firebaseSsrServerConfig = {
   mode: 'development',
-  entry: { server: ['./servers/firebase_ssr_server/ssr_server.js'] },
+  entry: { server: ['./servers/firebase_server/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
   output: {
@@ -221,6 +271,7 @@ const localExpressSSRServerConfig = {
 };
 
 module.exports = [
+  firebaseHostingConfig,
   browserCSRConfig,
   browserSSRConfig,
   firebaseSsrServerConfig,

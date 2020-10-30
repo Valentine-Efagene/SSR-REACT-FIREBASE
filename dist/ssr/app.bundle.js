@@ -177,7 +177,7 @@ function Contents() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Redirect, {
     exact: true,
     from: "/",
-    to: "/issues"
+    to: "/home"
   }), _routes_js__WEBPACK_IMPORTED_MODULE_1__.default.map(function (attrs) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Route, _extends({}, attrs, {
       key: attrs.path

@@ -1,17 +1,20 @@
 import express from 'express';
 import * as functions from 'firebase-functions';
-import renderer from './render.jsx';
+import render from './render.jsx';
 import path from 'path';
 
-const app = express();
-app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+const ssrApp = express();
+ssrApp.use(express.static(path.resolve(__dirname, '..', 'dist/ssr')));
+ssrApp.get('*', render);
 
-app.get('*', (req, res) => {
-  const content = renderer(req);
-  res.send(content);
+const csrApp = express();
+csrApp.use(express.static(path.resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
+csrApp.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'dist/csr/index.html'));
 });
 
-exports.ssr = functions.https.onRequest(app);
+exports.ssr = functions.https.onRequest(ssrApp);
+exports.csr = functions.https.onRequest(csrApp);
 
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 exports.helloWorld = functions.https.onRequest((request, response) => {

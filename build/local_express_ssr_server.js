@@ -86,7 +86,7 @@ const app = express__WEBPACK_IMPORTED_MODULE_0___default()();
 app.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist/ssr')));
 app.get('*', _render_jsx__WEBPACK_IMPORTED_MODULE_1__.default);
 app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
+  console.log(`http://localhost:${port}`);
 });
 
 /***/ }),
@@ -304,7 +304,7 @@ function Contents() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Redirect, {
     exact: true,
     from: "/",
-    to: "/issues"
+    to: "/home"
   }), _routes_js__WEBPACK_IMPORTED_MODULE_2__.default.map(attrs => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Route, _extends({}, attrs, {
     key: attrs.path
   }))));
