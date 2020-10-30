@@ -465,9 +465,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
 
 function wrapPath(path) {
-  if (false) {} else {
-    return path;
-  }
+  if (true) {
+    return "/fir-ch2-5cbdb/us-central1/ssr".concat(path);
+  } else {}
 }
 
 /***/ })

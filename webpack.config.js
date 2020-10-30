@@ -47,7 +47,8 @@ const firebaseHostingConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'true',
+      __isBrowser__: JSON.stringify(true),
+      __isFirebaseSSR__: JSON.stringify(false),
     }),
   ],
   devtool: 'source-map',
@@ -97,7 +98,8 @@ const browserCSRConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'true',
+      __isBrowser__: JSON.stringify(true),
+      __isFirebaseSSR__: JSON.stringify(false),
     }),
   ],
   devtool: 'source-map',
@@ -147,7 +149,59 @@ const browserSSRConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'true',
+      __isBrowser__: JSON.stringify(true),
+      __isFirebaseSSR__: JSON.stringify(false),
+    }),
+  ],
+  devtool: 'source-map',
+};
+
+const firebaseBrowserSSRConfig = {
+  mode: 'development',
+  entry: { app: ['./src/ssr/index.js'] },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist/firebase_ssr'),
+    publicPath: '/',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    ie: '11',
+                    edge: '15',
+                    safari: '10',
+                    firefox: '50',
+                    chrome: '49',
+                  },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'all',
+    },
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: JSON.stringify(true),
+      __isFirebaseSSR__: JSON.stringify(true),
     }),
   ],
   devtool: 'source-map',
@@ -186,7 +240,8 @@ const firebaseSsrServerConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'false',
+      __isBrowser__: JSON.stringify(true),
+      __isFirebaseSSR__: JSON.stringify(true),
     }),
   ],
   devtool: 'source-map',
@@ -225,7 +280,8 @@ const localExpressCSRServerConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'false',
+      __isBrowser__: JSON.stringify(false),
+      __isFirebaseSSR__: JSON.stringify(false),
     }),
   ],
   devtool: 'source-map',
@@ -264,7 +320,8 @@ const localExpressSSRServerConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'false',
+      __isBrowser__: JSON.stringify(false),
+      __isFirebaseSSR__: JSON.stringify(false),
     }),
   ],
   devtool: 'source-map',
@@ -274,6 +331,7 @@ module.exports = [
   firebaseHostingConfig,
   browserCSRConfig,
   browserSSRConfig,
+  firebaseBrowserSSRConfig,
   firebaseSsrServerConfig,
   localExpressCSRServerConfig,
   localExpressSSRServerConfig,

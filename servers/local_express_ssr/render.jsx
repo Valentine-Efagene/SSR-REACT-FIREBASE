@@ -12,7 +12,6 @@ export default function render(req, res) {
   const store = createStore(allReducers);
   //const preloadedState = store.getState();
   const preloadedState = { counter: 9, isLogged: false };
-  console.log(preloadedState);
   const element = (
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>

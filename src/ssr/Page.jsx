@@ -5,6 +5,9 @@ import React from 'react';
 import { Navbar, Nav, NavItem, NavLink, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Contents from './Contents.jsx';
+import wrapPath from './wrapPath.js';
+
+const testInPage = wrapPath('/');
 
 export default function Page() {
   return (
@@ -64,10 +67,10 @@ function NavBar({ user }) {
           <LinkContainer to="/home">
             <NavLink>Home</NavLink>
           </LinkContainer>
-          <LinkContainer to="/redux-test">
+          <LinkContainer to={wrapPath('/redux-test')}>
             <NavLink>Redux Test</NavLink>
           </LinkContainer>
-          <LinkContainer to="/about">
+          <LinkContainer to={wrapPath('/about')}>
             <NavLink>
               <NavItem>About</NavItem>
             </NavLink>

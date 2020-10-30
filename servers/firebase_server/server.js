@@ -4,7 +4,7 @@ import render from './render.jsx';
 import path from 'path';
 
 const ssrApp = express();
-ssrApp.use(express.static(path.resolve(__dirname, '..', 'dist/ssr')));
+ssrApp.use(express.static(path.resolve(__dirname, '..', 'dist/firebase_ssr')));
 ssrApp.get('*', render);
 
 const csrApp = express();
