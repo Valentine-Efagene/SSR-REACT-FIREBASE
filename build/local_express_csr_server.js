@@ -1,11 +1,3 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is not neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -19,7 +11,23 @@
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ \"path\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);\n\n\nconst port = process.env.PORT || 3002;\nconst app = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_1___default().resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from\n\napp.get('*', (req, res) => {\n  res.sendFile(path__WEBPACK_IMPORTED_MODULE_1___default().resolve(__dirname, '..', 'dist/csr/index.html'));\n});\napp.listen(port, () => {\n  console.log(`Listening on port: ${port}`);\n});\n\n//# sourceURL=webpack://ssr-react-firebase/./servers/local_express_csr/server.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const port = process.env.PORT || 3002;
+const app = express__WEBPACK_IMPORTED_MODULE_0___default()();
+app.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_1___default().resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
+
+app.get('*', (req, res) => {
+  res.sendFile(path__WEBPACK_IMPORTED_MODULE_1___default().resolve(__dirname, '..', 'dist/csr/index.html'));
+});
+app.listen(port, () => {
+  console.log(`Listening on port: ${port}`);
+});
 
 /***/ }),
 
@@ -33,7 +41,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var expr
 /*! runtime requirements: module */
 /***/ ((module) => {
 
-eval("module.exports = require(\"express\");;\n\n//# sourceURL=webpack://ssr-react-firebase/external_%22express%22?");
+module.exports = require("express");;
 
 /***/ }),
 
@@ -47,7 +55,7 @@ eval("module.exports = require(\"express\");;\n\n//# sourceURL=webpack://ssr-rea
 /*! runtime requirements: module */
 /***/ ((module) => {
 
-eval("module.exports = require(\"path\");;\n\n//# sourceURL=webpack://ssr-react-firebase/external_%22path%22?");
+module.exports = require("path");;
 
 /***/ })
 
@@ -124,3 +132,4 @@ eval("module.exports = require(\"path\");;\n\n//# sourceURL=webpack://ssr-react-
 /******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;
+//# sourceMappingURL=local_express_csr_server.js.map

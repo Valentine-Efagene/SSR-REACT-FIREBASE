@@ -64,6 +64,9 @@ function NavBar({ user }) {
           <LinkContainer to="/home">
             <NavLink>Home</NavLink>
           </LinkContainer>
+          <LinkContainer to="/redux-test">
+            <NavLink>Redux Test</NavLink>
+          </LinkContainer>
           <LinkContainer to="/about">
             <NavLink>
               <NavItem>About</NavItem>

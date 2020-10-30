@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <div className="text-center">
-        <h3>Primaxcoin</h3>
+        <h3>Server-Side Rendering</h3>
       </div>
     </>
   );

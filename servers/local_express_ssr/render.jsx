@@ -1,17 +1,30 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-//import { StaticRouter } from 'react-router-dom';
-import App from '../../src/ssr/App.jsx';
-//import Page from '../../src/ssr/Page.jsx';
+import { StaticRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import Page from '../../src/ssr/Page.jsx';
 import template from './template.js';
+import allReducers from '../../src/redux/reducers';
 
 export default function render(req, res) {
-  /*const element = (
-    <StaticRouter location={req.url} context={{}}>
-      <Page />
-    </StaticRouter>
-  );*/
-  const element = <App />;
+  const context = {};
+  const store = createStore(allReducers);
+  //const preloadedState = store.getState();
+  const preloadedState = { counter: 9, isLogged: false };
+  console.log(preloadedState);
+  const element = (
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={context}>
+        <Page />
+      </StaticRouter>
+    </Provider>
+  );
   const body = renderToString(element);
-  res.send(template(body));
+
+  if (context.url) {
+    res.redirect(301, context.url);
+  } else {
+    res.send(template(body, preloadedState));
+  }
 }

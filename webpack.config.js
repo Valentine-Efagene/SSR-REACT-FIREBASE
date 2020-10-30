@@ -1,3 +1,4 @@
+// https://webpack.js.org/guides/development/
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
@@ -138,6 +139,7 @@ const firebaseSsrServerConfig = {
       __isBrowser__: 'false',
     }),
   ],
+  devtool: 'source-map',
 };
 
 const localExpressCSRServerConfig = {
@@ -176,6 +178,7 @@ const localExpressCSRServerConfig = {
       __isBrowser__: 'false',
     }),
   ],
+  devtool: 'source-map',
 };
 
 const localExpressSSRServerConfig = {
@@ -214,6 +217,7 @@ const localExpressSSRServerConfig = {
       __isBrowser__: 'false',
     }),
   ],
+  devtool: 'source-map',
 };
 
 module.exports = [
