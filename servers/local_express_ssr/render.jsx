@@ -22,8 +22,10 @@ export default function render(req, res) {
   const body = renderToString(element);
 
   if (context.url) {
+    console.log('context URL: ' + context.url);
     res.redirect(301, context.url);
   } else {
+    console.log('No context URL');
     res.send(template(body, preloadedState));
   }
 }

@@ -54,8 +54,10 @@ function render(req, res) {
   const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)(element);
 
   if (context.url) {
+    console.log('context URL: ' + context.url);
     res.redirect(301, context.url);
   } else {
+    console.log('No context URL');
     res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_6__.default)(body, preloadedState));
   }
 }

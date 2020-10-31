@@ -40,29 +40,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function render(req, res) {
-  console.log('Request URL: ' + req.url);
-  console.log('wrapped request URL: ' + (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(req.url));
+  const context = {};
   const store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_src_redux_reducers__WEBPACK_IMPORTED_MODULE_7__.default); //const preloadedState = store.getState();
 
   const preloadedState = {
     counter: 9,
     isLogged: false
   };
-  const context = {};
+  console.log('Request URL: ' + req.url);
+  console.log('Wrapped request URL: ' + (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(req.url));
   const element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__.Provider, {
     store: store
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
-    location: req.url,
+    location: (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(req.url),
     context: context
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_5__.default, null)));
-  const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)(element); //res.send(template(body, preloadedState));
+  const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)(element);
 
   if (context.url) {
     console.log('context URL: ' + context.url);
-    console.log('wrapped context URL: ' + (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(context.url));
-    res.redirect(301, (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(context.url));
+    res.redirect(301, context.url);
   } else {
-    console.log('No context');
+    console.log('No context URL');
     res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_6__.default)(body, preloadedState));
   }
 }

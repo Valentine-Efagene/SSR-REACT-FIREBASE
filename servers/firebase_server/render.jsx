@@ -9,29 +9,26 @@ import allReducers from '../../src/redux/reducers';
 import wrapPath from '../../src/ssr/wrapPath.js';
 
 export default function render(req, res) {
-  console.log('Request URL: ' + req.url);
-  console.log('wrapped request URL: ' + wrapPath(req.url));
+  const context = {};
   const store = createStore(allReducers);
   //const preloadedState = store.getState();
   const preloadedState = { counter: 9, isLogged: false };
-  const context = {};
+  console.log('Request URL: ' + req.url);
+  console.log('Wrapped request URL: ' + wrapPath(req.url));
   const element = (
     <Provider store={store}>
-      <StaticRouter location={req.url} context={context}>
+      <StaticRouter location={wrapPath(req.url)} context={context}>
         <Page />
       </StaticRouter>
     </Provider>
   );
-
   const body = renderToString(element);
-  //res.send(template(body, preloadedState));
 
   if (context.url) {
     console.log('context URL: ' + context.url);
-    console.log('wrapped context URL: ' + wrapPath(context.url));
-    res.redirect(301, wrapPath(context.url));
+    res.redirect(301, context.url);
   } else {
-    console.log('No context');
+    console.log('No context URL');
     res.send(template(body, preloadedState));
   }
 }
