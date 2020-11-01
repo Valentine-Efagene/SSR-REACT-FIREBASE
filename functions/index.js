@@ -2,6 +2,32 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./firebase_config.js":
+/*!****************************!*\
+  !*** ./firebase_config.js ***!
+  \****************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  apiKey: 'AIzaSyAQZch2fOfKBsdaWpL3KZ_kNFBS_Akn57s',
+  authDomain: 'fir-ch2-5cbdb.firebaseapp.com',
+  databaseURL: 'https://fir-ch2-5cbdb.firebaseio.com',
+  projectId: 'fir-ch2-5cbdb',
+  storageBucket: 'fir-ch2-5cbdb.appspot.com',
+  messagingSenderId: '758456033077',
+  appId: '1:758456033077:web:1765192f057cda6b9bb67c'
+});
+
+/***/ }),
+
 /***/ "./servers/firebase_server/render.jsx":
 /*!********************************************!*\
   !*** ./servers/firebase_server/render.jsx ***!
@@ -9,12 +35,12 @@
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ render
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -26,10 +52,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../src/ssr/Page.jsx */ "./src/ssr/Page.jsx");
-/* harmony import */ var _template_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./template.js */ "./servers/firebase_server/template.js");
-/* harmony import */ var _src_redux_reducers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../src/redux/reducers */ "./src/redux/reducers/index.js");
-/* harmony import */ var _src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../src/ssr/wrapPath.js */ "./src/ssr/wrapPath.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/app */ "firebase/app");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/auth */ "firebase/auth");
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(firebase_auth__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _firebase_config_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../firebase_config.js */ "./firebase_config.js");
+/* harmony import */ var _src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../src/ssr/Page.jsx */ "./src/ssr/Page.jsx");
+/* harmony import */ var _template_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./template.js */ "./servers/firebase_server/template.js");
+/* harmony import */ var _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../src/ssr/routes.js */ "./src/ssr/routes.js");
+/* harmony import */ var _src_redux_reducers__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../src/redux/reducers */ "./src/redux/reducers/index.js");
+/* harmony import */ var _src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../src/ssr/wrapPath.js */ "./src/ssr/wrapPath.js");
 
 
 
@@ -39,22 +71,56 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function render(req, res) {
+
+
+
+
+
+async function render(req, res) {
   const context = {};
-  const store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_src_redux_reducers__WEBPACK_IMPORTED_MODULE_7__.default); //const preloadedState = store.getState();
+  let initialData;
+  let userData;
+  const requestUrl = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)(req.url);
+  const requestPath = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)(req.path);
+  const activeRoute = _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_10__.default.find(route => (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.matchPath)(requestPath, route)); //console.log('Active Route: ' + activeRoute.path);
+  //console.log('Active Route Component: ' + activeRoute.component);
+  //console.log('Request path: ' + requestPath);
+
+  let config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_7__.default;
+  console.log('Hostname: ' + req.hostname);
+
+  if (req.hostname === 'localhost') {
+    config = {
+      projectId: 'fir-ch2-5cbdb',
+      databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb'
+    };
+  }
+
+  firebase_app__WEBPACK_IMPORTED_MODULE_5___default().initializeApp(config);
+
+  if (activeRoute && activeRoute.component.fetchData) {
+    const match = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.matchPath)(requestUrl, activeRoute);
+    const index = requestUrl.indexOf('?');
+    const search = index !== -1 ? requestUrl.substr(index) : null;
+    initialData = await activeRoute.component.fetchData(match, search, req.headers.cookie).catch(err => {
+      console.log('Fetch Error: ' + err.message);
+    });
+  }
+
+  const store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_src_redux_reducers__WEBPACK_IMPORTED_MODULE_11__.default); //const preloadedState = store.getState();
 
   const preloadedState = {
     counter: 9,
-    isLogged: false
+    isLogged: false,
+    initialData,
+    userData
   };
-  console.log('Request URL: ' + req.url);
-  console.log('Wrapped request URL: ' + (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(req.url));
   const element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__.Provider, {
     store: store
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
-    location: (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)(req.url),
+    location: requestUrl,
     context: context
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_5__.default, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_8__.default, null)));
   const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)(element);
 
   if (context.url) {
@@ -62,9 +128,11 @@ function render(req, res) {
     res.redirect(301, context.url);
   } else {
     console.log('No context URL');
-    res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_6__.default)(body, preloadedState));
+    res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_9__.default)(body, preloadedState));
   }
 }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (render);
 
 /***/ }),
 
@@ -169,6 +237,8 @@ function template(body, preloadedState) {
 /*! namespace exports */
 /*! export decrement [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export increment [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export setInitialData [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export setUserData [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -176,17 +246,31 @@ function template(body, preloadedState) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "increment": () => /* binding */ increment,
-/* harmony export */   "decrement": () => /* binding */ decrement
+/* harmony export */   "decrement": () => /* binding */ decrement,
+/* harmony export */   "setInitialData": () => /* binding */ setInitialData,
+/* harmony export */   "setUserData": () => /* binding */ setUserData
 /* harmony export */ });
 const increment = multiple => {
   return {
-    type: "INCREMENT",
+    type: 'INCREMENT',
     payload: multiple
   };
 };
 const decrement = () => {
   return {
-    type: "DECREMENT"
+    type: 'DECREMENT'
+  };
+};
+const setInitialData = initialData => {
+  return {
+    type: 'SET_INITIAL_DATA',
+    payload: initialData
+  };
+};
+const setUserData = userData => {
+  return {
+    type: 'SET_USER_DATA',
+    payload: userData
   };
 };
 
@@ -241,14 +325,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _counter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./counter */ "./src/redux/reducers/counter.js");
 /* harmony import */ var _isLogged__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./isLogged */ "./src/redux/reducers/isLogged.js");
+/* harmony import */ var _initialData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./initialData */ "./src/redux/reducers/initialData.js");
+/* harmony import */ var _userData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./userData */ "./src/redux/reducers/userData.js");
+
+
 
 
 
 const allReducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
   counter: _counter__WEBPACK_IMPORTED_MODULE_1__.default,
-  isLogged: _isLogged__WEBPACK_IMPORTED_MODULE_2__.default
+  isLogged: _isLogged__WEBPACK_IMPORTED_MODULE_2__.default,
+  initialData: _initialData__WEBPACK_IMPORTED_MODULE_3__.default,
+  userData: _userData__WEBPACK_IMPORTED_MODULE_4__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (allReducers);
+
+/***/ }),
+
+/***/ "./src/redux/reducers/initialData.js":
+/*!*******************************************!*\
+  !*** ./src/redux/reducers/initialData.js ***!
+  \*******************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+const initialDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_INITIAL_DATA':
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (initialDataReducer);
 
 /***/ }),
 
@@ -277,6 +395,34 @@ const loggedReducer = (state = false, action) => {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loggedReducer);
+
+/***/ }),
+
+/***/ "./src/redux/reducers/userData.js":
+/*!****************************************!*\
+  !*** ./src/redux/reducers/userData.js ***!
+  \****************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+const userDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_USER_DATA':
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userDataReducer);
 
 /***/ }),
 
@@ -321,27 +467,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Contents
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes.js */ "./src/ssr/routes.js");
-/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./wrapPath.js */ "./src/ssr/wrapPath.js");
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "@babel/runtime/helpers/extends");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes.js */ "./src/ssr/routes.js");
+/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wrapPath.js */ "./src/ssr/wrapPath.js");
 
 
 
 
 
 function Contents() {
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useLocation)(); //console.log(location.pathname);
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useLocation)(); //console.log(location.pathname);
 
-  const test = (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/');
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Redirect, {
+  const test = (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/');
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Redirect, {
     exact: true,
-    from: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/'),
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/home')
-  }), _routes_js__WEBPACK_IMPORTED_MODULE_2__.default.map(attrs => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Route, _extends({}, attrs, {
+    from: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/'),
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/home')
+  }), _routes_js__WEBPACK_IMPORTED_MODULE_3__.default.map(attrs => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Route, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, attrs, {
     key: attrs.path
   }))));
 }
@@ -364,13 +511,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* eslint-disable react/jsx-one-expression-per-line */
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/app */ "firebase/app");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/auth */ "firebase/auth");
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(firebase_auth__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ "firebase/firestore");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(firebase_firestore__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
 
 function Home() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Server-Side Rendering")));
 }
+
+Home.fetchData = async () => {
+  let users = [];
+  const db = firebase_app__WEBPACK_IMPORTED_MODULE_1___default().firestore();
+  const snapshot = await db.collection('users').get();
+  snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data());
+    user.push(doc.data());
+  });
+  return users;
+};
 
 /***/ }),
 
@@ -592,6 +758,20 @@ function wrapPath(path) {
 
 /***/ }),
 
+/***/ "@babel/runtime/helpers/extends":
+/*!*************************************************!*\
+  !*** external "@babel/runtime/helpers/extends" ***!
+  \*************************************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("@babel/runtime/helpers/extends");;
+
+/***/ }),
+
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -617,6 +797,48 @@ module.exports = require("express");;
 /***/ ((module) => {
 
 module.exports = require("firebase-functions");;
+
+/***/ }),
+
+/***/ "firebase/app":
+/*!*******************************!*\
+  !*** external "firebase/app" ***!
+  \*******************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("firebase/app");;
+
+/***/ }),
+
+/***/ "firebase/auth":
+/*!********************************!*\
+  !*** external "firebase/auth" ***!
+  \********************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("firebase/auth");;
+
+/***/ }),
+
+/***/ "firebase/firestore":
+/*!*************************************!*\
+  !*** external "firebase/firestore" ***!
+  \*************************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("firebase/firestore");;
 
 /***/ }),
 

@@ -11,6 +11,7 @@ export default function render(req, res) {
   const context = {};
   const store = createStore(allReducers);
   //const preloadedState = store.getState();
+
   const preloadedState = { counter: 9, isLogged: false };
   const element = (
     <Provider store={store}>
