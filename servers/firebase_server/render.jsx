@@ -5,6 +5,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import session from 'express-session';
+
 import firebase_config from '../../firebase_config.js';
 import Page from '../../src/ssr/Page.jsx';
 import template from './template.js';
@@ -14,8 +16,23 @@ import wrapPath from '../../src/ssr/wrapPath.js';
 
 async function render(req, res) {
   const context = {};
-  let initialData;
+  let initialData = {};
   let userData;
+  const session = req.session;
+  console.log('Session: ' + session);
+  console.log('Session App Visits: ' + session.appVisits);
+  console.log('Session id: ' + session.id);
+
+  if (session.appVisits) {
+    session.appVisits++;
+    initialData.appVisits = session.appVisits;
+  } else {
+    session.appVisits = 1;
+    initialData.appVisits = session.appVisits;
+  }
+
+  console.log('Session App Visits: ' + session.appVisits);
+
   const requestUrl = wrapPath(req.url);
   const requestPath = wrapPath(req.path);
   const activeRoute = routes.find((route) => matchPath(requestPath, route));
@@ -34,17 +51,19 @@ async function render(req, res) {
     };
   }
 
-  firebase.initializeApp(config);
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(config);
+  }
 
   if (activeRoute && activeRoute.component.fetchData) {
     const match = matchPath(requestUrl, activeRoute);
     const index = requestUrl.indexOf('?');
     const search = index !== -1 ? requestUrl.substr(index) : null;
-    initialData = await activeRoute.component
+    /*initialData = await activeRoute.component
       .fetchData(match, search, req.headers.cookie)
       .catch((err) => {
         console.log('Fetch Error: ' + err.message);
-      });
+      });*/
   }
 
   const store = createStore(allReducers);

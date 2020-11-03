@@ -56,12 +56,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/auth */ "firebase/auth");
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(firebase_auth__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _firebase_config_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../firebase_config.js */ "./firebase_config.js");
-/* harmony import */ var _src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../src/ssr/Page.jsx */ "./src/ssr/Page.jsx");
-/* harmony import */ var _template_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./template.js */ "./servers/firebase_server/template.js");
-/* harmony import */ var _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../src/ssr/routes.js */ "./src/ssr/routes.js");
-/* harmony import */ var _src_redux_reducers__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../src/redux/reducers */ "./src/redux/reducers/index.js");
-/* harmony import */ var _src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../src/ssr/wrapPath.js */ "./src/ssr/wrapPath.js");
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! express-session */ "express-session");
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(express_session__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _firebase_config_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../firebase_config.js */ "./firebase_config.js");
+/* harmony import */ var _src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../src/ssr/Page.jsx */ "./src/ssr/Page.jsx");
+/* harmony import */ var _template_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./template.js */ "./servers/firebase_server/template.js");
+/* harmony import */ var _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../src/ssr/routes.js */ "./src/ssr/routes.js");
+/* harmony import */ var _src_redux_reducers__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../src/redux/reducers */ "./src/redux/reducers/index.js");
+/* harmony import */ var _src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../src/ssr/wrapPath.js */ "./src/ssr/wrapPath.js");
+
 
 
 
@@ -78,15 +81,29 @@ __webpack_require__.r(__webpack_exports__);
 
 async function render(req, res) {
   const context = {};
-  let initialData;
+  let initialData = {};
   let userData;
-  const requestUrl = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)(req.url);
-  const requestPath = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)(req.path);
-  const activeRoute = _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_10__.default.find(route => (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.matchPath)(requestPath, route)); //console.log('Active Route: ' + activeRoute.path);
+  const session = req.session;
+  console.log('Session: ' + session);
+  console.log('Session App Visits: ' + session.appVisits);
+  console.log('Session id: ' + session.id);
+
+  if (session.appVisits) {
+    session.appVisits++;
+    initialData.appVisits = session.appVisits;
+  } else {
+    session.appVisits = 1;
+    initialData.appVisits = session.appVisits;
+  }
+
+  console.log('Session App Visits: ' + session.appVisits);
+  const requestUrl = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_13__.default)(req.url);
+  const requestPath = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_13__.default)(req.path);
+  const activeRoute = _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_11__.default.find(route => (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.matchPath)(requestPath, route)); //console.log('Active Route: ' + activeRoute.path);
   //console.log('Active Route Component: ' + activeRoute.component);
   //console.log('Request path: ' + requestPath);
 
-  let config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_7__.default;
+  let config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_8__.default;
   console.log('Hostname: ' + req.hostname);
 
   if (req.hostname === 'localhost') {
@@ -96,18 +113,22 @@ async function render(req, res) {
     };
   }
 
-  firebase_app__WEBPACK_IMPORTED_MODULE_5___default().initializeApp(config);
+  if ((firebase_app__WEBPACK_IMPORTED_MODULE_5___default().apps.length) === 0) {
+    firebase_app__WEBPACK_IMPORTED_MODULE_5___default().initializeApp(config);
+  }
 
   if (activeRoute && activeRoute.component.fetchData) {
     const match = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.matchPath)(requestUrl, activeRoute);
     const index = requestUrl.indexOf('?');
     const search = index !== -1 ? requestUrl.substr(index) : null;
-    initialData = await activeRoute.component.fetchData(match, search, req.headers.cookie).catch(err => {
-      console.log('Fetch Error: ' + err.message);
-    });
+    /*initialData = await activeRoute.component
+      .fetchData(match, search, req.headers.cookie)
+      .catch((err) => {
+        console.log('Fetch Error: ' + err.message);
+      });*/
   }
 
-  const store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_src_redux_reducers__WEBPACK_IMPORTED_MODULE_11__.default); //const preloadedState = store.getState();
+  const store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_src_redux_reducers__WEBPACK_IMPORTED_MODULE_12__.default); //const preloadedState = store.getState();
 
   const preloadedState = {
     counter: 9,
@@ -120,7 +141,7 @@ async function render(req, res) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
     location: requestUrl,
     context: context
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_8__.default, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_src_ssr_Page_jsx__WEBPACK_IMPORTED_MODULE_9__.default, null)));
   const body = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)(element);
 
   if (context.url) {
@@ -128,7 +149,7 @@ async function render(req, res) {
     res.redirect(301, context.url);
   } else {
     console.log('No context URL');
-    res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_9__.default)(body, preloadedState));
+    res.send((0,_template_js__WEBPACK_IMPORTED_MODULE_10__.default)(body, preloadedState));
   }
 }
 
@@ -150,24 +171,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var firebase_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase-functions */ "firebase-functions");
 /* harmony import */ var firebase_functions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase_functions__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _render_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./render.jsx */ "./servers/firebase_server/render.jsx");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _ssr_server_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ssr_server.js */ "./servers/firebase_server/ssr_server.js");
+/* harmony import */ var _session_test__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../session_test */ "./servers/session_test.js");
 
 
 
 
-const ssrApp = express__WEBPACK_IMPORTED_MODULE_0___default()();
-ssrApp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_3___default().resolve(__dirname, '..', 'dist/firebase_ssr')));
-ssrApp.get('*', _render_jsx__WEBPACK_IMPORTED_MODULE_2__.default);
+
 const csrApp = express__WEBPACK_IMPORTED_MODULE_0___default()();
-csrApp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_3___default().resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
+csrApp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
 
 csrApp.get('*', (req, res) => {
-  res.sendFile(path__WEBPACK_IMPORTED_MODULE_3___default().resolve(__dirname, '..', 'dist/csr/index.html'));
+  res.sendFile(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist/csr/index.html'));
 });
-exports.ssr = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(ssrApp);
-exports.csr = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(csrApp); // // https://firebase.google.com/docs/functions/write-firebase-functions
+exports.ssr = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(_ssr_server_js__WEBPACK_IMPORTED_MODULE_3__.default);
+exports.csr = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(csrApp);
+exports.sessiontest = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(_session_test__WEBPACK_IMPORTED_MODULE_4__.default); // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.helloWorld = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest((request, response) => {
   firebase_functions__WEBPACK_IMPORTED_MODULE_1__.logger.info('Hello logs!', {
@@ -187,6 +208,53 @@ exports.bigben = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest
     </body>
   </html>`);
 });
+
+/***/ }),
+
+/***/ "./servers/firebase_server/ssr_server.js":
+/*!***********************************************!*\
+  !*** ./servers/firebase_server/ssr_server.js ***!
+  \***********************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express-session */ "express-session");
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express_session__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! dotenv */ "dotenv");
+/* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(dotenv__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _render_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./render.jsx */ "./servers/firebase_server/render.jsx");
+
+
+
+
+
+dotenv__WEBPACK_IMPORTED_MODULE_3___default().config();
+const secret = 'nskjdvnskj';
+console.log('Secret: ' + secret);
+const app = express__WEBPACK_IMPORTED_MODULE_1___default()();
+app.use(express__WEBPACK_IMPORTED_MODULE_1___default().static(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(__dirname, '..', 'dist/firebase_ssr'))); // MaxAge is in milliseconds
+
+app.use(express_session__WEBPACK_IMPORTED_MODULE_2___default()({
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
+})); // Placing the ststic middleware between the session middleware initializasion
+// and the get request (right here) caused the sessions not to save.
+
+app.get('*', _render_jsx__WEBPACK_IMPORTED_MODULE_4__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);
 
 /***/ }),
 
@@ -227,6 +295,53 @@ function template(body, preloadedState) {
     </html>
   `;
 }
+
+/***/ }),
+
+/***/ "./servers/session_test.js":
+/*!*********************************!*\
+  !*** ./servers/session_test.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express-session */ "express-session");
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express_session__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+const app = express__WEBPACK_IMPORTED_MODULE_1___default()();
+app.use(express_session__WEBPACK_IMPORTED_MODULE_2___default()({
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 2 * 60 * 1000
+  }
+})); // Access the session as req.session
+
+app.get('/', function (req, res, next) {
+  if (req.session.views) {
+    req.session.views++;
+    res.setHeader('Content-Type', 'text/html');
+    res.write('<p>views: ' + req.session.views + '</p>');
+    res.write('<p>expires in: ' + req.session.cookie.maxAge / 1000 + 's</p>');
+    res.end();
+  } else {
+    req.session.views = 1;
+    res.end('welcome to the session demo. refresh!');
+  }
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);
 
 /***/ }),
 
@@ -676,12 +791,13 @@ __webpack_require__.r(__webpack_exports__);
 
 function ReduxTest() {
   const counter = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.counter);
+  const initialData = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.initialData);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("header", {
     className: "App-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Counter ", counter), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "You have visited this app ", initialData.appVisits, " times."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Counter ", counter), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.decrement)())
   }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.increment)())
@@ -772,6 +888,20 @@ module.exports = require("@babel/runtime/helpers/extends");;
 
 /***/ }),
 
+/***/ "dotenv":
+/*!*************************!*\
+  !*** external "dotenv" ***!
+  \*************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("dotenv");;
+
+/***/ }),
+
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -783,6 +913,20 @@ module.exports = require("@babel/runtime/helpers/extends");;
 /***/ ((module) => {
 
 module.exports = require("express");;
+
+/***/ }),
+
+/***/ "express-session":
+/*!**********************************!*\
+  !*** external "express-session" ***!
+  \**********************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("express-session");;
 
 /***/ }),
 

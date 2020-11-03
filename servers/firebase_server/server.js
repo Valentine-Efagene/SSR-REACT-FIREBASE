@@ -1,11 +1,8 @@
 import express from 'express';
 import * as functions from 'firebase-functions';
-import render from './render.jsx';
 import path from 'path';
-
-const ssrApp = express();
-ssrApp.use(express.static(path.resolve(__dirname, '..', 'dist/firebase_ssr')));
-ssrApp.get('*', render);
+import ssrApp from './ssr_server.js';
+import sessionTest from '../session_test';
 
 const csrApp = express();
 csrApp.use(express.static(path.resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
@@ -15,6 +12,7 @@ csrApp.get('*', (req, res) => {
 
 exports.ssr = functions.https.onRequest(ssrApp);
 exports.csr = functions.https.onRequest(csrApp);
+exports.sessiontest = functions.https.onRequest(sessionTest);
 
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 exports.helloWorld = functions.https.onRequest((request, response) => {

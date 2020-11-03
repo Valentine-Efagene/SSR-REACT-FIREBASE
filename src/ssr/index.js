@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-import firebase from 'firebase/app';
+//import 'core-js/stable';
+//import 'regenerator-runtime/runtime';
+//import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import allReducers from '../redux/reducers';
 import { Provider } from 'react-redux';
 import Page from './Page.jsx';
-import firebase_config from '../../firebase_config.js';
+//import firebase_config from '../../firebase_config.js';
 
 /*if (__isFirebaseCSR__ && window != undefined) {
   let config = firebase_config;
