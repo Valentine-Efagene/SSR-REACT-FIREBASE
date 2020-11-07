@@ -5,7 +5,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import session from 'express-session';
+import 'firebase/firestore';
+import 'firebase/firebase-database';
 
 import firebase_config from '../../firebase_config.js';
 import Page from '../../src/ssr/Page.jsx';
@@ -13,6 +14,7 @@ import template from './template.js';
 import routes from '../../src/ssr/routes.js';
 import allReducers from '../../src/redux/reducers';
 import wrapPath from '../../src/ssr/wrapPath.js';
+import store from '../../src/ssr/store.js';
 
 async function render(req, res) {
   const context = {};
@@ -37,40 +39,52 @@ async function render(req, res) {
   const requestPath = wrapPath(req.path);
   const activeRoute = routes.find((route) => matchPath(requestPath, route));
 
-  //console.log('Active Route: ' + activeRoute.path);
-  //console.log('Active Route Component: ' + activeRoute.component);
-  //console.log('Request path: ' + requestPath);
-
   let config = firebase_config;
   console.log('Hostname: ' + req.hostname);
 
   if (req.hostname === 'localhost') {
     config = {
       projectId: 'fir-ch2-5cbdb',
-      databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb',
+      // databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb',
     };
   }
 
-  if (firebase.apps.length === 0) {
+  if (firebase.apps.length == 0) {
     firebase.initializeApp(config);
+    //firebase.auth().useEmulator('http://localhost:9099/');
+    firebase.database().useEmulator('localhost', 9000);
+    firebase.firestore().useEmulator('localhost', 8080);
   }
 
+  console.log('Active route : ');
+  console.log(activeRoute);
+
   if (activeRoute && activeRoute.component.fetchData) {
+    console.log('ActiveRoute and fetchData exist');
     const match = matchPath(requestUrl, activeRoute);
     const index = requestUrl.indexOf('?');
     const search = index !== -1 ? requestUrl.substr(index) : null;
-    /*initialData = await activeRoute.component
-      .fetchData(match, search, req.headers.cookie)
-      .catch((err) => {
-        console.log('Fetch Error: ' + err.message);
-      });*/
+    try {
+      const dbData = await activeRoute.component.fetchData(
+        match,
+        search,
+        req.hostname,
+      );
+      console.log('Database data from server: ' + dbData);
+      initialData.dbData = dbData;
+    } catch (error) {
+      console.log('Fetch Error: ' + error.message);
+    }
   }
 
-  const store = createStore(allReducers);
-  //const preloadedState = store.getState();
+  const reduxStore = createStore(allReducers);
+  //const preloadedState = reduxStore.getState();
   const preloadedState = { counter: 9, isLogged: false, initialData, userData };
+  // store = preloadedState;
+  store.initialData = preloadedState.initialData;
+
   const element = (
-    <Provider store={store}>
+    <Provider store={reduxStore}>
       <StaticRouter location={requestUrl} context={context}>
         <Page />
       </StaticRouter>

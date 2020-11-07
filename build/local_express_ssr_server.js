@@ -404,12 +404,12 @@ function Contents() {
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Home
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -419,26 +419,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(firebase_auth__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ "firebase/firestore");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(firebase_firestore__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/firebase-database */ "firebase/firebase-database");
+/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _withToast_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./withToast.jsx */ "./src/ssr/withToast.jsx");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./src/ssr/store.js");
 
 
 
 
-function Home() {
+
+ //import { setInitialData } from '../redux/actions';
+
+ //import { useDispatch, useSelector } from 'react-redux';
+
+
+
+function Home(props) {
+  var _dbData$;
+
+  const {
+    showSuccess,
+    showError
+  } = props; //const dispatch = useDispatch();
+  // let initialData = useSelector((state) => state.initialData);
+
+  let {
+    initialData
+  } = _store__WEBPACK_IMPORTED_MODULE_6__.default;
+  /*useEffect(() => {
+    (async () => {
+      if (!initialData.dbData) {
+        try {
+          initialData.dbData = await fetchData();
+          dispatch(setInitialData(initialData));
+          showSuccess('fetched');
+        } catch (error) {
+          showError('Home useEffect fetchData error: ' + error);
+        }
+      }
+    })();
+  }, []);*/
+
+  const {
+    dbData
+  } = initialData;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Server-Side Rendering")));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Server-Side Rendering"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, dbData ? (_dbData$ = dbData[0]) === null || _dbData$ === void 0 ? void 0 : _dbData$.first : '')));
 }
 
-Home.fetchData = async () => {
+async function fetchData() {
+  const firestore = firebase_app__WEBPACK_IMPORTED_MODULE_1___default().firestore();
   let users = [];
-  const db = firebase_app__WEBPACK_IMPORTED_MODULE_1___default().firestore();
-  const snapshot = await db.collection('users').get();
-  snapshot.forEach(doc => {
-    console.log(doc.id, '=>', doc.data());
-    user.push(doc.data());
-  });
+
+  try {
+    const snapshot = await firestore.collection('users').get();
+    snapshot.forEach(doc => {
+      users.push(doc.data());
+    });
+  } catch (e) {
+    showError('Home Snapshot error: ' + e);
+  }
+
   return users;
-};
+}
+
+const HomeWithToast = (0,_withToast_jsx__WEBPACK_IMPORTED_MODULE_5__.default)(Home);
+HomeWithToast.fetchData = fetchData;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HomeWithToast);
 
 /***/ }),
 
@@ -595,6 +643,68 @@ function ReduxTest() {
 
 /***/ }),
 
+/***/ "./src/ssr/Toast.jsx":
+/*!***************************!*\
+  !*** ./src/ssr/Toast.jsx ***!
+  \***************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Toast
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__);
+
+
+class Toast extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
+  componentDidUpdate() {
+    const {
+      showing,
+      onDismiss
+    } = this.props;
+
+    if (showing) {
+      clearTimeout(this.dismissTimer);
+      this.dismissTimer = setTimeout(onDismiss, 5000);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.dismissTimer);
+  }
+
+  render() {
+    const {
+      showing,
+      bsStyle,
+      onDismiss,
+      children
+    } = this.props;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Collapse, {
+      in: showing
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        position: 'fixed',
+        bottom: 20,
+        left: 20
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Alert, {
+      bsStyle: bsStyle,
+      onDismiss: onDismiss
+    }, children)));
+  }
+
+}
+
+/***/ }),
+
 /***/ "./src/ssr/routes.js":
 /*!***************************!*\
   !*** ./src/ssr/routes.js ***!
@@ -633,6 +743,105 @@ const routes = [{
   component: _NotFound_jsx__WEBPACK_IMPORTED_MODULE_0__.default
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
+
+/***/ }),
+
+/***/ "./src/ssr/store.js":
+/*!**************************!*\
+  !*** ./src/ssr/store.js ***!
+  \**************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+const store = {};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
+/***/ }),
+
+/***/ "./src/ssr/withToast.jsx":
+/*!*******************************!*\
+  !*** ./src/ssr/withToast.jsx ***!
+  \*******************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ withToast
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "@babel/runtime/helpers/extends");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Toast_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Toast.jsx */ "./src/ssr/Toast.jsx");
+
+
+
+function withToast(OriginalComponent) {
+  return class ToastWrapper extends (react__WEBPACK_IMPORTED_MODULE_1___default().Component) {
+    constructor(props) {
+      super(props);
+      this.state = {
+        toastVisible: false,
+        toastMessage: '',
+        toastType: 'success'
+      };
+      this.showSuccess = this.showSuccess.bind(this);
+      this.showError = this.showError.bind(this);
+      this.dismissToast = this.dismissToast.bind(this);
+    }
+
+    showSuccess(message) {
+      this.setState({
+        toastVisible: true,
+        toastMessage: message,
+        toastType: 'success'
+      });
+    }
+
+    showError(message) {
+      this.setState({
+        toastVisible: true,
+        toastMessage: message,
+        toastType: 'danger'
+      });
+    }
+
+    dismissToast() {
+      this.setState({
+        toastVisible: false
+      });
+    }
+
+    render() {
+      const {
+        toastType,
+        toastVisible,
+        toastMessage
+      } = this.state;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(OriginalComponent, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({
+        showError: this.showError,
+        showSuccess: this.showSuccess,
+        dismissToast: this.dismissToast
+      }, this.props)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Toast_jsx__WEBPACK_IMPORTED_MODULE_2__.default, {
+        bsStyle: toastType,
+        showing: toastVisible,
+        onDismiss: this.dismissToast
+      }, toastMessage));
+    }
+
+  };
+}
 
 /***/ }),
 
@@ -714,6 +923,20 @@ module.exports = require("firebase/app");;
 /***/ ((module) => {
 
 module.exports = require("firebase/auth");;
+
+/***/ }),
+
+/***/ "firebase/firebase-database":
+/*!*********************************************!*\
+  !*** external "firebase/firebase-database" ***!
+  \*********************************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("firebase/firebase-database");;
 
 /***/ }),
 
