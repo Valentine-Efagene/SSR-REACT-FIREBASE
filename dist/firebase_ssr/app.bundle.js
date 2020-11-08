@@ -74,10 +74,10 @@ var setUserData = function setUserData(userData) {
 
 /***/ }),
 
-/***/ "./src/redux/reducers/counter.js":
-/*!***************************************!*\
-  !*** ./src/redux/reducers/counter.js ***!
-  \***************************************/
+/***/ "./src/redux/reducers/count.js":
+/*!*************************************!*\
+  !*** ./src/redux/reducers/count.js ***!
+  \*************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -88,15 +88,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-var counterReducer = function counterReducer() {
+var countReducer = function countReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case "INCREMENT":
+    case 'INCREMENT':
       return state + (action.payload || 1);
 
-    case "DECREMENT":
+    case 'DECREMENT':
       return state - (action.payload || 1);
 
     default:
@@ -104,7 +104,7 @@ var counterReducer = function counterReducer() {
   }
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (counterReducer);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (countReducer);
 
 /***/ }),
 
@@ -123,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _counter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./counter */ "./src/redux/reducers/counter.js");
+/* harmony import */ var _count__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./count */ "./src/redux/reducers/count.js");
 /* harmony import */ var _isLogged__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./isLogged */ "./src/redux/reducers/isLogged.js");
 /* harmony import */ var _initialData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./initialData */ "./src/redux/reducers/initialData.js");
 /* harmony import */ var _userData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./userData */ "./src/redux/reducers/userData.js");
@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var allReducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
-  counter: _counter__WEBPACK_IMPORTED_MODULE_1__.default,
+  count: _count__WEBPACK_IMPORTED_MODULE_1__.default,
   isLogged: _isLogged__WEBPACK_IMPORTED_MODULE_2__.default,
   initialData: _initialData__WEBPACK_IMPORTED_MODULE_3__.default,
   userData: _userData__WEBPACK_IMPORTED_MODULE_4__.default
@@ -321,14 +321,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
-/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
-/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
-/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/firebase-database */ "./node_modules/firebase/firebase-database.js");
-/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(firebase_firebase_database__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _withToast_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./withToast.jsx */ "./src/ssr/withToast.jsx");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store */ "./src/ssr/store.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
+/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! firebase/firebase-database */ "./node_modules/firebase/firebase-database.js");
+/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(firebase_firebase_database__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _withToast_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./withToast.jsx */ "./src/ssr/withToast.jsx");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
 
 
 
@@ -336,38 +338,57 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- //import { setInitialData } from '../redux/actions';
 
- //import { useDispatch, useSelector } from 'react-redux';
+
 
 
 
 function Home(props) {
-  var _dbData$;
+  var _store$initialData, _data$;
 
   var showSuccess = props.showSuccess,
-      showError = props.showError; //const dispatch = useDispatch();
-  // let initialData = useSelector((state) => state.initialData);
+      showError = props.showError;
+  var dbData = (_store$initialData = _store_js__WEBPACK_IMPORTED_MODULE_9__.default.initialData) === null || _store$initialData === void 0 ? void 0 : _store$initialData.dbData;
 
-  var initialData = _store__WEBPACK_IMPORTED_MODULE_8__.default.initialData;
-  /*useEffect(() => {
-    (async () => {
-      if (!initialData.dbData) {
-        try {
-          initialData.dbData = await fetchData();
-          dispatch(setInitialData(initialData));
-          showSuccess('fetched');
-        } catch (error) {
-          showError('Home useEffect fetchData error: ' + error);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(dbData ? dbData : []),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1]; // Only gets called after rendering; so, won't be called in server-side code
+
+
+  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var fetchedData;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return fetchData();
+
+            case 3:
+              fetchedData = _context.sent;
+              setData(fetchedData);
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              showError('Home useEffect fetchData error: ' + _context.t0);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
         }
-      }
-    })();
-  }, []);*/
-
-  var dbData = initialData.dbData;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      }, _callee, null, [[0, 7]]);
+    }))();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(react__WEBPACK_IMPORTED_MODULE_3__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     className: "text-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("h3", null, "Server-Side Rendering"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("h3", null, dbData ? (_dbData$ = dbData[0]) === null || _dbData$ === void 0 ? void 0 : _dbData$.first : '')));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("h3", null, "Server-Side Rendering"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("h3", null, (_data$ = data[0]) === null || _data$ === void 0 ? void 0 : _data$.first)));
 }
 
 function fetchData() {
@@ -375,45 +396,45 @@ function fetchData() {
 }
 
 function _fetchData() {
-  _fetchData = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+  _fetchData = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
     var firestore, users, snapshot;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
-            firestore = firebase_app__WEBPACK_IMPORTED_MODULE_3__.default.firestore();
+            firestore = firebase_app__WEBPACK_IMPORTED_MODULE_4__.default.firestore();
             users = [];
-            _context.prev = 2;
-            _context.next = 5;
+            _context2.prev = 2;
+            _context2.next = 5;
             return firestore.collection('users').get();
 
           case 5:
-            snapshot = _context.sent;
+            snapshot = _context2.sent;
             snapshot.forEach(function (doc) {
               users.push(doc.data());
             });
-            _context.next = 12;
+            _context2.next = 12;
             break;
 
           case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](2);
-            showError('Home Snapshot error: ' + _context.t0);
+            _context2.prev = 9;
+            _context2.t0 = _context2["catch"](2);
+            showError('Home Snapshot error: ' + _context2.t0);
 
           case 12:
-            return _context.abrupt("return", users);
+            return _context2.abrupt("return", users);
 
           case 13:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, null, [[2, 9]]);
+    }, _callee2, null, [[2, 9]]);
   }));
   return _fetchData.apply(this, arguments);
 }
 
-var HomeWithToast = (0,_withToast_jsx__WEBPACK_IMPORTED_MODULE_7__.default)(Home);
+var HomeWithToast = (0,_withToast_jsx__WEBPACK_IMPORTED_MODULE_8__.default)(Home);
 HomeWithToast.fetchData = fetchData;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HomeWithToast);
 
@@ -519,7 +540,7 @@ function NavBar(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__.default, {
     className: "mr-auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
-    to: "/home"
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/home')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
     to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/redux-test')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, "Redux Test")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
@@ -545,15 +566,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
+
 
 
 
 
 function ReduxTest() {
-  var counter = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
-    return state.counter;
-  });
+  var _store$session;
+
+  var initialCount = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.count;
+  var appVisits = (_store$session = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.session) === null || _store$session === void 0 ? void 0 : _store$session.appVisits; //const count = useSelector((state) => state.count);
+
   var initialData = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.initialData;
   });
@@ -562,13 +587,13 @@ function ReduxTest() {
     className: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", {
     className: "App-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "You have visited this app ", initialData.appVisits, " times."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Counter ", counter), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "You have visited this app ", appVisits, ' ', appVisits === 1 ? 'time' : 'times', "."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Counter ", initialCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: function onClick() {
-      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.decrement)());
+      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.decrement)());
     }
   }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: function onClick() {
-      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.increment)());
+      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.increment)());
     }
   }, "+")));
 }
@@ -732,6 +757,8 @@ if ( true && window != undefined) {
 
 var preloadedState = window.__PRELOADED_STATE__;
 _store_js__WEBPACK_IMPORTED_MODULE_10__.default.initialData = preloadedState.initialData;
+_store_js__WEBPACK_IMPORTED_MODULE_10__.default.count = preloadedState.count;
+_store_js__WEBPACK_IMPORTED_MODULE_10__.default.session = preloadedState.session;
 delete window.__PRELOADED_STATE__; // https://github.com/zalmoxisus/redux-devtools-extension
 
 var reduxStore = (0,redux__WEBPACK_IMPORTED_MODULE_11__.createStore)(_redux_reducers__WEBPACK_IMPORTED_MODULE_6__.default, preloadedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

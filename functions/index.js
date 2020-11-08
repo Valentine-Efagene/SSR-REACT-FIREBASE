@@ -143,13 +143,16 @@ async function render(req, res) {
   const reduxStore = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_src_redux_reducers__WEBPACK_IMPORTED_MODULE_13__.default); //const preloadedState = reduxStore.getState();
 
   const preloadedState = {
-    counter: 9,
+    count: 9,
     isLogged: false,
     initialData,
-    userData
+    userData,
+    session
   }; // store = preloadedState;
 
   _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__.default.initialData = preloadedState.initialData;
+  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__.default.count = preloadedState.count;
+  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__.default.session = session;
   const element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__.Provider, {
     store: reduxStore
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
@@ -402,10 +405,10 @@ const setUserData = userData => {
 
 /***/ }),
 
-/***/ "./src/redux/reducers/counter.js":
-/*!***************************************!*\
-  !*** ./src/redux/reducers/counter.js ***!
-  \***************************************/
+/***/ "./src/redux/reducers/count.js":
+/*!*************************************!*\
+  !*** ./src/redux/reducers/count.js ***!
+  \*************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -416,12 +419,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-const counterReducer = (state = 0, action) => {
+const countReducer = (state = 0, action) => {
   switch (action.type) {
-    case "INCREMENT":
+    case 'INCREMENT':
       return state + (action.payload || 1);
 
-    case "DECREMENT":
+    case 'DECREMENT':
       return state - (action.payload || 1);
 
     default:
@@ -429,7 +432,7 @@ const counterReducer = (state = 0, action) => {
   }
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (counterReducer);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (countReducer);
 
 /***/ }),
 
@@ -449,7 +452,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _counter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./counter */ "./src/redux/reducers/counter.js");
+/* harmony import */ var _count__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./count */ "./src/redux/reducers/count.js");
 /* harmony import */ var _isLogged__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./isLogged */ "./src/redux/reducers/isLogged.js");
 /* harmony import */ var _initialData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./initialData */ "./src/redux/reducers/initialData.js");
 /* harmony import */ var _userData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./userData */ "./src/redux/reducers/userData.js");
@@ -459,7 +462,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const allReducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
-  counter: _counter__WEBPACK_IMPORTED_MODULE_1__.default,
+  count: _count__WEBPACK_IMPORTED_MODULE_1__.default,
   isLogged: _isLogged__WEBPACK_IMPORTED_MODULE_2__.default,
   initialData: _initialData__WEBPACK_IMPORTED_MODULE_3__.default,
   userData: _userData__WEBPACK_IMPORTED_MODULE_4__.default
@@ -646,50 +649,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/firebase-database */ "firebase/firebase-database");
 /* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _withToast_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./withToast.jsx */ "./src/ssr/withToast.jsx");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./src/ssr/store.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
 
 
 
 
 
- //import { setInitialData } from '../redux/actions';
 
- //import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function Home(props) {
-  var _dbData$;
+  var _store$initialData, _data$;
 
   const {
     showSuccess,
     showError
-  } = props; //const dispatch = useDispatch();
-  // let initialData = useSelector((state) => state.initialData);
+  } = props;
+  const dbData = (_store$initialData = _store_js__WEBPACK_IMPORTED_MODULE_6__.default.initialData) === null || _store$initialData === void 0 ? void 0 : _store$initialData.dbData;
+  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(dbData ? dbData : []); // Only gets called after rendering; so, won't be called in server-side code
 
-  let {
-    initialData
-  } = _store__WEBPACK_IMPORTED_MODULE_6__.default;
-  /*useEffect(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     (async () => {
-      if (!initialData.dbData) {
-        try {
-          initialData.dbData = await fetchData();
-          dispatch(setInitialData(initialData));
-          showSuccess('fetched');
-        } catch (error) {
-          showError('Home useEffect fetchData error: ' + error);
-        }
+      try {
+        let fetchedData = await fetchData();
+        setData(fetchedData);
+      } catch (error) {
+        showError('Home useEffect fetchData error: ' + error);
       }
     })();
-  }, []);*/
-
-  const {
-    dbData
-  } = initialData;
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Server-Side Rendering"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, dbData ? (_dbData$ = dbData[0]) === null || _dbData$ === void 0 ? void 0 : _dbData$.first : '')));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Server-Side Rendering"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, (_data$ = data[0]) === null || _data$ === void 0 ? void 0 : _data$.first)));
 }
 
 async function fetchData() {
@@ -815,7 +807,7 @@ function NavBar({
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Nav, {
     className: "mr-auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_2__.LinkContainer, {
-    to: "/home"
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/home')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavLink, null, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_2__.LinkContainer, {
     to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/redux-test')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavLink, null, "Redux Test")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_2__.LinkContainer, {
@@ -843,23 +835,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
+
 
 
 
 
 function ReduxTest() {
-  const counter = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.counter);
+  var _store$session;
+
+  const initialCount = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.count;
+  const appVisits = (_store$session = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.session) === null || _store$session === void 0 ? void 0 : _store$session.appVisits; //const count = useSelector((state) => state.count);
+
   const initialData = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.initialData);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("header", {
     className: "App-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "You have visited this app ", initialData.appVisits, " times."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Counter ", counter), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.decrement)())
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "You have visited this app ", appVisits, ' ', appVisits === 1 ? 'time' : 'times', "."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Counter ", initialCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.decrement)())
   }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.increment)())
+    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.increment)())
   }, "+")));
 }
 

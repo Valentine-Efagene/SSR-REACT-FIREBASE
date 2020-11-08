@@ -33,6 +33,8 @@ if (__isBrowser__ && window != undefined) {
 
 const preloadedState = window.__PRELOADED_STATE__;
 store.initialData = preloadedState.initialData;
+store.count = preloadedState.count;
+store.session = preloadedState.session;
 delete window.__PRELOADED_STATE__;
 
 // https://github.com/zalmoxisus/redux-devtools-extension

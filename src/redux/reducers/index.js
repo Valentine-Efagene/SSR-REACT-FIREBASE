@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import counterReducer from './counter';
+import countReducer from './count';
 import loggedReducer from './isLogged';
 import initialDataReducer from './initialData';
 import userDataReducer from './userData';
 
 const allReducers = combineReducers({
-  counter: counterReducer,
+  count: countReducer,
   isLogged: loggedReducer,
   initialData: initialDataReducer,
   userData: userDataReducer,

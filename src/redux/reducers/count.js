@@ -1,12 +1,12 @@
-const counterReducer = (state = 0, action) => {
+const countReducer = (state = 0, action) => {
   switch (action.type) {
-    case "INCREMENT":
+    case 'INCREMENT':
       return state + (action.payload || 1);
-    case "DECREMENT":
+    case 'DECREMENT':
       return state - (action.payload || 1);
     default:
       return state;
   }
 };
 
-export default counterReducer;
+export default countReducer;

@@ -757,10 +757,10 @@ var setUserData = function setUserData(userData) {
 
 /***/ }),
 
-/***/ "./src/redux/reducers/counter.js":
-/*!***************************************!*\
-  !*** ./src/redux/reducers/counter.js ***!
-  \***************************************/
+/***/ "./src/redux/reducers/count.js":
+/*!*************************************!*\
+  !*** ./src/redux/reducers/count.js ***!
+  \*************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -771,15 +771,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-var counterReducer = function counterReducer() {
+var countReducer = function countReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case "INCREMENT":
+    case 'INCREMENT':
       return state + (action.payload || 1);
 
-    case "DECREMENT":
+    case 'DECREMENT':
       return state - (action.payload || 1);
 
     default:
@@ -787,7 +787,7 @@ var counterReducer = function counterReducer() {
   }
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (counterReducer);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (countReducer);
 
 /***/ }),
 
@@ -806,7 +806,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _counter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./counter */ "./src/redux/reducers/counter.js");
+/* harmony import */ var _count__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./count */ "./src/redux/reducers/count.js");
 /* harmony import */ var _isLogged__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./isLogged */ "./src/redux/reducers/isLogged.js");
 /* harmony import */ var _initialData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./initialData */ "./src/redux/reducers/initialData.js");
 /* harmony import */ var _userData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./userData */ "./src/redux/reducers/userData.js");
@@ -816,7 +816,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var allReducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
-  counter: _counter__WEBPACK_IMPORTED_MODULE_1__.default,
+  count: _count__WEBPACK_IMPORTED_MODULE_1__.default,
   isLogged: _isLogged__WEBPACK_IMPORTED_MODULE_2__.default,
   initialData: _initialData__WEBPACK_IMPORTED_MODULE_3__.default,
   userData: _userData__WEBPACK_IMPORTED_MODULE_4__.default

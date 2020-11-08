@@ -3,41 +3,33 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/firebase-database';
-
 import { useState, useEffect } from 'react';
 
-//import { setInitialData } from '../redux/actions';
 import withToast from './withToast.jsx';
-//import { useDispatch, useSelector } from 'react-redux';
 import store from './store.js';
 
 function Home(props) {
   const { showSuccess, showError } = props;
-  //const dispatch = useDispatch();
-  // let initialData = useSelector((state) => state.initialData);
-  let { initialData } = store;
+  const dbData = store.initialData?.dbData;
+  const [data, setData] = useState(dbData ? dbData : []);
 
-  /*useEffect(() => {
+  // Only gets called after rendering; so, won't be called in server-side code
+  useEffect(() => {
     (async () => {
-      if (!initialData.dbData) {
-        try {
-          initialData.dbData = await fetchData();
-          dispatch(setInitialData(initialData));
-          showSuccess('fetched');
-        } catch (error) {
-          showError('Home useEffect fetchData error: ' + error);
-        }
+      try {
+        let fetchedData = await fetchData();
+        setData(fetchedData);
+      } catch (error) {
+        showError('Home useEffect fetchData error: ' + error);
       }
     })();
-  }, []);*/
-
-  const { dbData } = initialData;
+  }, []);
 
   return (
     <>
       <div className="text-center">
         <h3>Server-Side Rendering</h3>
-        <h3>{dbData ? dbData[0]?.first : ''}</h3>
+        <h3>{data[0]?.first}</h3>
       </div>
     </>
   );

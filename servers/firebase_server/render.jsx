@@ -79,9 +79,17 @@ async function render(req, res) {
 
   const reduxStore = createStore(allReducers);
   //const preloadedState = reduxStore.getState();
-  const preloadedState = { counter: 9, isLogged: false, initialData, userData };
+  const preloadedState = {
+    count: 9,
+    isLogged: false,
+    initialData,
+    userData,
+    session,
+  };
   // store = preloadedState;
   store.initialData = preloadedState.initialData;
+  store.count = preloadedState.count;
+  store.session = session;
 
   const element = (
     <Provider store={reduxStore}>
