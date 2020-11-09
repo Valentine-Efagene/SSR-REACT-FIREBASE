@@ -854,20 +854,24 @@ function withToast(OriginalComponent) {
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ wrapPath
 /* harmony export */ });
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
+const appendedPath = '/ssr'; //const appendedPath = '/fir-ch2-5cbdb/us-central1/ssr';
 
 function wrapPath(path) {
-  if (false) {} else {
+  return `${appendedPath}${path}`; // Use this when you want to deploy functions live
+  // Use on localhost
+
+  /*if (__isFirebaseSSR__) {
+    return `/fir-ch2-5cbdb/us-central1/ssr${path}`; 
+  } else {
     return path;
-  }
+  }*/
 }
 
 /***/ }),
@@ -967,20 +971,6 @@ module.exports = require("firebase/firestore");;
 /***/ ((module) => {
 
 module.exports = require("path");;
-
-/***/ }),
-
-/***/ "prop-types":
-/*!*****************************!*\
-  !*** external "prop-types" ***!
-  \*****************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-module.exports = require("prop-types");;
 
 /***/ }),
 

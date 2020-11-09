@@ -4,14 +4,14 @@ import path from 'path';
 import ssrApp from './ssr_server.js';
 import sessionTest from '../session_test';
 
-const csrApp = express();
-csrApp.use(express.static(path.resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
+/*const csrApp = express();
+csrApp.use(express.static(path.resolve(__dirname, 'dist/csr'))); // Tells where to load static resources like bundle.js from
 csrApp.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'dist/csr/index.html'));
+  res.sendFile(path.resolve(__dirname, 'dist/csr/index.html'));
 });
+exports.csr = functions.https.onRequest(csrApp);*/
 
 exports.ssr = functions.https.onRequest(ssrApp);
-exports.csr = functions.https.onRequest(csrApp);
 exports.sessiontest = functions.https.onRequest(sessionTest);
 
 // // https://firebase.google.com/docs/functions/write-firebase-functions

@@ -56,7 +56,7 @@ const firebaseHostingConfig = {
   devtool: 'source-map',
 };
 
-const browserCSRConfig = {
+const localExpressCSRBrowserConfig = {
   mode: 'development',
   entry: { app: ['./src/csr/index.js'] },
   output: {
@@ -109,7 +109,7 @@ const browserCSRConfig = {
   devtool: 'source-map',
 };
 
-const browserSSRConfig = {
+const localExpressSSRBrowserConfig = {
   mode: 'development',
   entry: { app: ['./src/ssr/index.js'] },
   output: {
@@ -167,7 +167,7 @@ const firebaseBrowserSSRConfig = {
   entry: { app: ['./src/ssr/index.js'] },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist/firebase_ssr'),
+    path: path.resolve(__dirname, 'functions/dist'),
     publicPath: '/',
   },
   module: {
@@ -342,10 +342,10 @@ const localExpressSSRServerConfig = {
 
 module.exports = [
   firebaseHostingConfig,
-  browserCSRConfig,
-  browserSSRConfig,
   firebaseBrowserSSRConfig,
   firebaseSsrServerConfig,
+  localExpressCSRBrowserConfig,
+  localExpressSSRBrowserConfig,
   localExpressCSRServerConfig,
   localExpressSSRServerConfig,
 ];

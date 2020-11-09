@@ -11,7 +11,7 @@ const secret = 'nskjdvnskj';
 console.log('Secret: ' + secret);
 
 const app = express();
-app.use(express.static(path.resolve(__dirname, '..', 'dist/firebase_ssr')));
+app.use(express.static(path.resolve(__dirname, 'dist')));
 // MaxAge is in milliseconds
 app.use(
   session({
@@ -19,7 +19,7 @@ app.use(
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
   }),
 );
-// Placing the ststic middleware between the session middleware initializasion
+// Placing the static middleware between the session middleware initializasion
 // and the get request (right here) caused the sessions not to save.
 app.get('*', render);
 

@@ -65,8 +65,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _template_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./template.js */ "./servers/firebase_server/template.js");
 /* harmony import */ var _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../src/ssr/routes.js */ "./src/ssr/routes.js");
 /* harmony import */ var _src_redux_reducers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../src/redux/reducers */ "./src/redux/reducers/index.js");
-/* harmony import */ var _src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../src/ssr/wrapPath.js */ "./src/ssr/wrapPath.js");
-/* harmony import */ var _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../src/ssr/store.js */ "./src/ssr/store.js");
+/* harmony import */ var _src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../src/ssr/wrapPath.js */ "./src/ssr/wrapPath.js");
+/* harmony import */ var _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../src/ssr/store.js */ "./src/ssr/store.js");
 
 
 
@@ -102,8 +102,8 @@ async function render(req, res) {
   }
 
   console.log('Session App Visits: ' + session.appVisits);
-  const requestUrl = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_14__.default)(req.url);
-  const requestPath = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_14__.default)(req.path);
+  const requestUrl = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_15__.default)(req.url);
+  const requestPath = (0,_src_ssr_wrapPath_js__WEBPACK_IMPORTED_MODULE_15__.default)(req.path);
   const activeRoute = _src_ssr_routes_js__WEBPACK_IMPORTED_MODULE_12__.default.find(route => (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.matchPath)(requestPath, route));
   let config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_9__.default;
   console.log('Hostname: ' + req.hostname);
@@ -148,9 +148,9 @@ async function render(req, res) {
     userData,
     session
   };
-  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__.default.initialData = preloadedState.initialData;
-  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__.default.count = preloadedState.count;
-  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_15__.default.session = session;
+  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_14__.default.initialData = preloadedState.initialData;
+  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_14__.default.count = preloadedState.count;
+  _src_ssr_store_js__WEBPACK_IMPORTED_MODULE_14__.default.session = session;
   const element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__.Provider, {
     store: reduxStore
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
@@ -195,14 +195,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const csrApp = express__WEBPACK_IMPORTED_MODULE_0___default()();
-csrApp.use(express__WEBPACK_IMPORTED_MODULE_0___default().static(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist/csr'))); // Tells where to load static resources like bundle.js from
-
+/*const csrApp = express();
+csrApp.use(express.static(path.resolve(__dirname, 'dist/csr'))); // Tells where to load static resources like bundle.js from
 csrApp.get('*', (req, res) => {
-  res.sendFile(path__WEBPACK_IMPORTED_MODULE_2___default().resolve(__dirname, '..', 'dist/csr/index.html'));
+  res.sendFile(path.resolve(__dirname, 'dist/csr/index.html'));
 });
+exports.csr = functions.https.onRequest(csrApp);*/
+
 exports.ssr = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(_ssr_server_js__WEBPACK_IMPORTED_MODULE_3__.default);
-exports.csr = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(csrApp);
 exports.sessiontest = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest(_session_test__WEBPACK_IMPORTED_MODULE_4__.default); // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.helloWorld = firebase_functions__WEBPACK_IMPORTED_MODULE_1__.https.onRequest((request, response) => {
@@ -258,14 +258,14 @@ dotenv__WEBPACK_IMPORTED_MODULE_3___default().config();
 const secret = 'nskjdvnskj';
 console.log('Secret: ' + secret);
 const app = express__WEBPACK_IMPORTED_MODULE_1___default()();
-app.use(express__WEBPACK_IMPORTED_MODULE_1___default().static(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(__dirname, '..', 'dist/firebase_ssr'))); // MaxAge is in milliseconds
+app.use(express__WEBPACK_IMPORTED_MODULE_1___default().static(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(__dirname, 'dist'))); // MaxAge is in milliseconds
 
 app.use(express_session__WEBPACK_IMPORTED_MODULE_2___default()({
   secret: 'keyboard cat',
   cookie: {
     maxAge: 24 * 60 * 60 * 1000
   }
-})); // Placing the ststic middleware between the session middleware initializasion
+})); // Placing the static middleware between the session middleware initializasion
 // and the get request (right here) caused the sessions not to save.
 
 app.get('*', _render_jsx__WEBPACK_IMPORTED_MODULE_4__.default);
@@ -1079,20 +1079,24 @@ function withToast(OriginalComponent) {
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ wrapPath
 /* harmony export */ });
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
+const appendedPath = '/ssr'; //const appendedPath = '/fir-ch2-5cbdb/us-central1/ssr';
 
 function wrapPath(path) {
-  if (true) {
-    return `/fir-ch2-5cbdb/us-central1/ssr${path}`;
-  } else {}
+  return `${appendedPath}${path}`; // Use this when you want to deploy functions live
+  // Use on localhost
+
+  /*if (__isFirebaseSSR__) {
+    return `/fir-ch2-5cbdb/us-central1/ssr${path}`; 
+  } else {
+    return path;
+  }*/
 }
 
 /***/ }),
@@ -1234,20 +1238,6 @@ module.exports = require("firebase/firestore");;
 /***/ ((module) => {
 
 module.exports = require("path");;
-
-/***/ }),
-
-/***/ "prop-types":
-/*!*****************************!*\
-  !*** external "prop-types" ***!
-  \*****************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-module.exports = require("prop-types");;
 
 /***/ }),
 

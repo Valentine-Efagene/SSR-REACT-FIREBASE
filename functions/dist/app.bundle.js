@@ -278,24 +278,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes.js */ "./src/ssr/routes.js");
-/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./wrapPath.js */ "./src/ssr/wrapPath.js");
+/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wrapPath.js */ "./src/ssr/wrapPath.js");
 
 
 
 
 
 function Contents() {
-  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)(); //console.log(location.pathname);
+  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)(); //console.log(location.pathname);
 
-  var test = (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/');
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Redirect, {
+  var test = (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/');
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Redirect, {
     exact: true,
-    from: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/'),
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/home')
+    from: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/'),
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_4__.default)('/home')
   }), _routes_js__WEBPACK_IMPORTED_MODULE_2__.default.map(function (attrs) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Route, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, attrs, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Route, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, attrs, {
       key: attrs.path
     }));
   }));
@@ -960,20 +960,24 @@ function withToast(OriginalComponent) {
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ wrapPath
 /* harmony export */ });
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
+var appendedPath = '/ssr'; //const appendedPath = '/fir-ch2-5cbdb/us-central1/ssr';
 
 function wrapPath(path) {
-  if (true) {
-    return "/fir-ch2-5cbdb/us-central1/ssr".concat(path);
-  } else {}
+  return "".concat(appendedPath).concat(path); // Use this when you want to deploy functions live
+  // Use on localhost
+
+  /*if (__isFirebaseSSR__) {
+    return `/fir-ch2-5cbdb/us-central1/ssr${path}`; 
+  } else {
+    return path;
+  }*/
 }
 
 /***/ })

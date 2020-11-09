@@ -2,7 +2,8 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "lint": "eslint .",
+    "original lint script the one below is a decoy, used because my final index.js came from webpack and babel": "eslint .",
+    "lint": "eslint",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
@@ -12,13 +13,14 @@
     "compile": "webpack --mode production"
   },
   "engines": {
-    "node": "10"
+    "node": "12"
   },
   "main": "index.js",
   "dependencies": {
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@babel/register": "^7.12.1",
+    "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
     "dotenv": "^8.2.0",
     "express-session": "^1.17.1",
@@ -35,17 +37,23 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "regenerator-runtime": "^0.13.7",
+    "serialize-javascript": "^5.0.1",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/plugin-transform-async-to-generator": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",
-    "eslint": "^5.12.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.13.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.0.0",
     "firebase-functions-test": "^0.2.0",
     "prettier": "^2.1.2",
     "webpack-cli": "^4.1.0",

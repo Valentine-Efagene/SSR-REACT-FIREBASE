@@ -5,6 +5,7 @@
   },
   "plugins": ["promise", "react-hooks"],
   "extends": "eslint:recommended",
+  "ignorePatterns": ["index.js"],
   "rules": {
     "import/extensions": "off",
 
