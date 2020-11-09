@@ -50,7 +50,7 @@ async function render(req, res) {
 
   if (firebase.apps.length == 0) {
     firebase.initializeApp(config);
-    //firebase.auth().useEmulator('http://localhost:9099/');
+    firebase.auth().useEmulator('http://localhost:9099/');
     firebase.database().useEmulator('localhost', 9000);
     firebase.firestore().useEmulator('localhost', 8080);
   }
@@ -77,7 +77,7 @@ async function render(req, res) {
   }
 
   const reduxStore = createStore(allReducers);
-  //const preloadedState = reduxStore.getState();
+  // const preloadedState = reduxStore.getState();
   const preloadedState = {
     count: 9,
     isLogged: false,
@@ -85,7 +85,7 @@ async function render(req, res) {
     userData,
     session,
   };
-  // store = preloadedState;
+
   store.initialData = preloadedState.initialData;
   store.count = preloadedState.count;
   store.session = session;

@@ -565,9 +565,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
-/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
- //import { useSelector, useDispatch } from 'react-redux';
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
+
 
 
 
@@ -575,22 +576,33 @@ __webpack_require__.r(__webpack_exports__);
 function ReduxTest() {
   var _store$session;
 
-  var initialCount = _store_js__WEBPACK_IMPORTED_MODULE_1__.default.count;
-  var appVisits = (_store$session = _store_js__WEBPACK_IMPORTED_MODULE_1__.default.session) === null || _store$session === void 0 ? void 0 : _store$session.appVisits; //const count = useSelector((state) => state.count);
-  //const initialData = useSelector((state) => state.initialData);
+  var initialCount = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.count;
+  var appVisits = (_store$session = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.session) === null || _store$session === void 0 ? void 0 : _store$session.appVisits;
+  var count;
 
-  var dispatch = useDispatch();
+  if (typeof window === 'undefined') {
+    count = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function () {
+      return initialCount;
+    });
+  } else {
+    count = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+      return state.count;
+    });
+  } //const initialData = useSelector((state) => state.initialData);
+
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", {
     className: "App-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "You have visited this app ", appVisits, ' ', appVisits === 1 ? 'time' : 'times', "."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Counter ", initialCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "You have visited this app ", appVisits, ' ', appVisits === 1 ? 'time' : 'times', "."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Counter ", count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: function onClick() {
-      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.decrement)());
+      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.decrement)());
     }
   }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: function onClick() {
-      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.increment)());
+      return dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.increment)());
     }
   }, "+")));
 }
@@ -736,7 +748,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_9__.default;
 
-if ( true && window != undefined) {
+if ( true && typeof window !== 'undefined') {
   if (window.location.hostname === 'localhost') {
     delete config.databaseURL;
     delete config.authDomain;

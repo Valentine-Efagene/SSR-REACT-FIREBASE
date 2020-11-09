@@ -15,7 +15,7 @@ import store from './store.js';
 
 let config = firebase_config;
 
-if (__isBrowser__ && window != undefined) {
+if (__isBrowser__ && typeof window !== 'undefined') {
   if (window.location.hostname === 'localhost') {
     delete config.databaseURL;
     delete config.authDomain;
