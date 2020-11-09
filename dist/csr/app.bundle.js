@@ -533,17 +533,16 @@ var config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_9__.default;
 console.log('Hostname: ' + window.location.hostname);
 
 if (window.location.hostname === 'localhost') {
-  config = {
-    projectId: 'fir-ch2-5cbdb' // databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb',
-
-  };
+  delete config.databaseURL;
+  delete config.authDomain;
+  delete config.storageBucket;
 }
 
 console.log(config);
 
 if (firebase_app__WEBPACK_IMPORTED_MODULE_5__.default.apps.length == 0) {
-  firebase_app__WEBPACK_IMPORTED_MODULE_5__.default.initializeApp(config); //firebase.auth().useEmulator('http://localhost:9099/');
-
+  firebase_app__WEBPACK_IMPORTED_MODULE_5__.default.initializeApp(config);
+  firebase_app__WEBPACK_IMPORTED_MODULE_5__.default.auth().useEmulator('http://localhost:9099/');
   firebase_app__WEBPACK_IMPORTED_MODULE_5__.default.database().useEmulator('localhost', 9000);
   firebase_app__WEBPACK_IMPORTED_MODULE_5__.default.firestore().useEmulator('localhost', 8080);
 }

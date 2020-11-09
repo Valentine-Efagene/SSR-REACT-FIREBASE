@@ -15,17 +15,16 @@ let config = firebase_config;
 console.log('Hostname: ' + window.location.hostname);
 
 if (window.location.hostname === 'localhost') {
-  config = {
-    projectId: 'fir-ch2-5cbdb',
-    // databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb',
-  };
+  delete config.databaseURL;
+  delete config.authDomain;
+  delete config.storageBucket;
 }
 
 console.log(config);
 
 if (firebase.apps.length == 0) {
   firebase.initializeApp(config);
-  //firebase.auth().useEmulator('http://localhost:9099/');
+  firebase.auth().useEmulator('http://localhost:9099/');
   firebase.database().useEmulator('localhost', 9000);
   firebase.firestore().useEmulator('localhost', 8080);
 }

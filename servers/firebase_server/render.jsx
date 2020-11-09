@@ -43,10 +43,9 @@ async function render(req, res) {
   console.log('Hostname: ' + req.hostname);
 
   if (req.hostname === 'localhost') {
-    config = {
-      projectId: 'fir-ch2-5cbdb',
-      // databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb',
-    };
+    delete config.databaseURL;
+    delete config.authDomain;
+    delete config.storageBucket;
   }
 
   if (firebase.apps.length == 0) {

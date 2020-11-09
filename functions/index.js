@@ -109,10 +109,9 @@ async function render(req, res) {
   console.log('Hostname: ' + req.hostname);
 
   if (req.hostname === 'localhost') {
-    config = {
-      projectId: 'fir-ch2-5cbdb' // databaseURL: 'http://localhost:9000/?ns=fir-ch2-5cbdb',
-
-    };
+    delete config.databaseURL;
+    delete config.authDomain;
+    delete config.storageBucket;
   }
 
   if ((firebase_app__WEBPACK_IMPORTED_MODULE_5___default().apps.length) == 0) {
@@ -833,11 +832,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "react-redux");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
-/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
-
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
+ //import { useSelector, useDispatch } from 'react-redux';
 
 
 
@@ -845,19 +842,19 @@ __webpack_require__.r(__webpack_exports__);
 function ReduxTest() {
   var _store$session;
 
-  const initialCount = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.count;
-  const appVisits = (_store$session = _store_js__WEBPACK_IMPORTED_MODULE_2__.default.session) === null || _store$session === void 0 ? void 0 : _store$session.appVisits; //const count = useSelector((state) => state.count);
+  const initialCount = _store_js__WEBPACK_IMPORTED_MODULE_1__.default.count;
+  const appVisits = (_store$session = _store_js__WEBPACK_IMPORTED_MODULE_1__.default.session) === null || _store$session === void 0 ? void 0 : _store$session.appVisits; //const count = useSelector((state) => state.count);
+  //const initialData = useSelector((state) => state.initialData);
 
-  const initialData = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.initialData);
-  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const dispatch = useDispatch();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("header", {
     className: "App-header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "You have visited this app ", appVisits, ' ', appVisits === 1 ? 'time' : 'times', "."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Counter ", initialCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.decrement)())
+    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.decrement)())
   }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.increment)())
+    onClick: () => dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_2__.increment)())
   }, "+")));
 }
 
