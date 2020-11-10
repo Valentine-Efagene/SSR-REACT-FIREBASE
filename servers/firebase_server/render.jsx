@@ -47,13 +47,15 @@ async function render(req, res) {
     delete config.authDomain;
     delete config.storageBucket;
     console.log('Using emulator settings in server side code');
-  }
 
-  if (firebase.apps.length == 0) {
+    if (firebase.apps.length == 0) {
+      firebase.initializeApp(config);
+      firebase.auth().useEmulator('http://localhost:9099/');
+      firebase.database().useEmulator('localhost', 9000);
+      firebase.firestore().useEmulator('localhost', 8080);
+    }
+  } else if (firebase.apps.length == 0) {
     firebase.initializeApp(config);
-    firebase.auth().useEmulator('http://localhost:9099/');
-    firebase.database().useEmulator('localhost', 9000);
-    firebase.firestore().useEmulator('localhost', 8080);
   }
 
   console.log('Active route : ');

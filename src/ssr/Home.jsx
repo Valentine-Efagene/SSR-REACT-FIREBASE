@@ -5,12 +5,23 @@ import 'firebase/firestore';
 import 'firebase/firebase-database';
 import { useState, useEffect } from 'react';
 
+//import { useSelector, useDispatch } from 'react-redux';
+//import { setInitialData } from '../redux/actions';
+
 import withToast from './withToast.jsx';
 import store from './store.js';
 
 function Home(props) {
   const { showSuccess, showError } = props;
   const dbData = store.initialData?.dbData;
+  /*let initialData;
+
+  if (typeof window === 'undefined') {
+    initialData = useSelector(() => dbData);
+  } else {
+    initialData = useSelector((state) => state.initialData);
+  }*/
+
   const [data, setData] = useState(dbData ? dbData : []);
 
   // Only gets called after rendering; so, won't be called in server-side code
@@ -29,7 +40,7 @@ function Home(props) {
     <>
       <div className="text-center">
         <h3>Server-Side Rendering</h3>
-        <h3>{data[0]?.name}</h3>
+        <h3>{data[1]?.name}</h3>
       </div>
     </>
   );

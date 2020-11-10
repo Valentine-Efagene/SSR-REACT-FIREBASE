@@ -27,7 +27,7 @@ function Home(props) {
     <>
       <div className="text-center">
         <h3>Server-Side Rendering</h3>
-        <h3>{data[0]?.name}</h3>
+        <h3>{data[1]?.name}</h3>
       </div>
     </>
   );
