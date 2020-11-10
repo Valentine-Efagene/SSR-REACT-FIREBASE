@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement } from '../redux/actions';
 
 function ReduxTest() {
-  const counter = useSelector((state) => state.counter);
+  const counter = useSelector((state) => state.count);
   const dispatch = useDispatch();
   return (
     <div className="App">
