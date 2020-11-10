@@ -13,23 +13,21 @@ import store from './store.js';
 
 function Home(props) {
   const { showSuccess, showError } = props;
-  const dbData = store.initialData?.dbData;
-  /*let initialData;
-
-  if (typeof window === 'undefined') {
-    initialData = useSelector(() => dbData);
-  } else {
-    initialData = useSelector((state) => state.initialData);
-  }*/
-
-  const [data, setData] = useState(dbData ? dbData : []);
+  const [data, setData] = useState(
+    store.initialData ? store.initialData : null,
+  );
 
   // Only gets called after rendering; so, won't be called in server-side code
   useEffect(() => {
     (async () => {
       try {
-        let fetchedData = await fetchData();
+        //console.log('Before fetching: Data in useEffect');
+        //console.log(data);
+        //console.log('---------------------------------------------------');
+        let fetchedData = data ? data : await fetchData();
         setData(fetchedData);
+        //console.log('Fetched: Data in useEffect');
+        //console.log(data);// Will not reflect change
       } catch (error) {
         showError('Home useEffect fetchData error: ' + error);
       }
@@ -40,13 +38,14 @@ function Home(props) {
     <>
       <div className="text-center">
         <h3>Server-Side Rendering</h3>
-        <h3>{data[1]?.name}</h3>
+        <h3>{data ? data[1]?.name : null}</h3>
       </div>
     </>
   );
 }
 
 async function fetchData() {
+  //console.log('Inside fetching function');
   const firestore = firebase.firestore();
   let users = [];
 

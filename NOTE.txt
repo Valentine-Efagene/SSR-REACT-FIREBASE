@@ -1,1 +1,3 @@
-Change wrapPath to match deployment
+Change wrapPath to match deployment.
+Comment out the configs you don't need in the webpack config file, to save time.
+https://firebase.google.com/docs/functions/manage-functions Deploy only required functions to prevent exceeding development quota and getting 429 or 500 errors

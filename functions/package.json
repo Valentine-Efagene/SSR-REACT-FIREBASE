@@ -8,6 +8,7 @@
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
+    "deploy-ssr": "firebase deploy --only functions:ssr",
     "logs": "firebase functions:log",
     "watch": "webpack --watch",
     "compile": "webpack --mode production"

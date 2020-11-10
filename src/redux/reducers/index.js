@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import countReducer from './count';
-import loggedReducer from './isLogged';
-import initialDataReducer from './initialData';
-import userDataReducer from './userData';
+import count from './count';
+import isLogged from './isLogged';
+import initialData from './initialData';
+import userData from './userData';
+import session from './session';
 
 const allReducers = combineReducers({
-  count: countReducer,
-  isLogged: loggedReducer,
-  initialData: initialDataReducer,
-  userData: userDataReducer,
+  count,
+  isLogged,
+  initialData,
+  userData,
+  session,
 });
 
 export default allReducers;

@@ -4,8 +4,10 @@ const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 require('dotenv').config();
 
+const mode = process.env.MODE;
+
 const firebaseHostingConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { app: ['./src/csr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -58,7 +60,7 @@ const firebaseHostingConfig = {
 };
 
 const localExpressCSRBrowserConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { app: ['./src/csr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -111,7 +113,7 @@ const localExpressCSRBrowserConfig = {
 };
 
 const localExpressSSRBrowserConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { app: ['./src/ssr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -164,7 +166,7 @@ const localExpressSSRBrowserConfig = {
 };
 
 const firebaseBrowserSSRConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { app: ['./src/ssr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -217,7 +219,7 @@ const firebaseBrowserSSRConfig = {
 };
 
 const firebaseSsrServerConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { server: ['./servers/firebase_server/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
@@ -259,7 +261,7 @@ const firebaseSsrServerConfig = {
 };
 
 const localExpressCSRServerConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { server: ['./servers/local_express_csr/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
@@ -300,7 +302,7 @@ const localExpressCSRServerConfig = {
 };
 
 const localExpressSSRServerConfig = {
-  mode: process.env.MODE,
+  mode,
   entry: { server: ['./servers/local_express_ssr/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
@@ -341,12 +343,22 @@ const localExpressSSRServerConfig = {
   devtool: 'source-map',
 };
 
+if (mode === 'production') {
+  delete firebaseHostingConfig.devtool;
+  delete firebaseBrowserSSRConfig.devtool;
+  delete firebaseSsrServerConfig.devtool;
+  delete localExpressCSRBrowserConfig.devtool;
+  delete localExpressSSRBrowserConfig.devtool;
+  delete localExpressCSRServerConfig.devtool;
+  delete localExpressSSRServerConfig.devtool;
+}
+
 module.exports = [
-  firebaseHostingConfig,
+  //firebaseHostingConfig,
   firebaseBrowserSSRConfig,
   firebaseSsrServerConfig,
-  localExpressCSRBrowserConfig,
-  localExpressSSRBrowserConfig,
-  localExpressCSRServerConfig,
-  localExpressSSRServerConfig,
+  //localExpressCSRBrowserConfig,
+  //localExpressSSRBrowserConfig,
+  //localExpressCSRServerConfig,
+  //localExpressSSRServerConfig,
 ];

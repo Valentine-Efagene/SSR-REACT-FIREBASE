@@ -24,3 +24,10 @@ export const setUserData = (userData) => {
     payload: userData,
   };
 };
+
+export const setSession = (session) => {
+  return {
+    type: 'SET_SESSION',
+    payload: session,
+  };
+};

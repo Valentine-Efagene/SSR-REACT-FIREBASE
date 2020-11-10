@@ -18,7 +18,7 @@ import store from '../../src/ssr/store.js';
 
 async function render(req, res) {
   const context = {};
-  let initialData = {};
+  let initialData;
   let userData;
   const session = req.session;
   console.log('Session: ' + session);
@@ -27,10 +27,8 @@ async function render(req, res) {
 
   if (session.appVisits) {
     session.appVisits++;
-    initialData.appVisits = session.appVisits;
   } else {
     session.appVisits = 1;
-    initialData.appVisits = session.appVisits;
   }
 
   console.log('Session App Visits: ' + session.appVisits);
@@ -72,8 +70,10 @@ async function render(req, res) {
         search,
         req.hostname,
       );
-      console.log('Database data from server: ' + dbData);
-      initialData.dbData = dbData;
+
+      console.log('Database data from server: ');
+      console.log(dbData);
+      initialData = dbData;
     } catch (error) {
       console.log('Fetch Error: ' + error.message);
     }
