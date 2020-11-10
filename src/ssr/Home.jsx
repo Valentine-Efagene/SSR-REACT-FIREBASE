@@ -29,7 +29,7 @@ function Home(props) {
     <>
       <div className="text-center">
         <h3>Server-Side Rendering</h3>
-        <h3>{data[0]?.first}</h3>
+        <h3>{data[0]?.name}</h3>
       </div>
     </>
   );
@@ -40,7 +40,7 @@ async function fetchData() {
   let users = [];
 
   try {
-    const snapshot = await firestore.collection('users').get();
+    const snapshot = await firestore.collection('contacts').get();
     snapshot.forEach((doc) => {
       users.push(doc.data());
     });

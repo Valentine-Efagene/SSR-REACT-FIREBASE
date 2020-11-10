@@ -20,13 +20,17 @@ if (__isBrowser__ && typeof window !== 'undefined') {
     delete config.databaseURL;
     delete config.authDomain;
     delete config.storageBucket;
-  }
 
-  if (firebase.apps.length == 0) {
-    firebase.initializeApp(config);
-    firebase.auth().useEmulator('http://localhost:9099/');
-    firebase.database().useEmulator('localhost', 9000);
-    firebase.firestore().useEmulator('localhost', 8080);
+    if (firebase.apps.length == 0) {
+      firebase.initializeApp(config);
+      firebase.auth().useEmulator('http://localhost:9099/');
+      firebase.database().useEmulator('localhost', 9000);
+      firebase.firestore().useEmulator('localhost', 8080);
+    }
+  } else {
+    if (firebase.apps.length == 0) {
+      firebase.initializeApp(config);
+    }
   }
 }
 

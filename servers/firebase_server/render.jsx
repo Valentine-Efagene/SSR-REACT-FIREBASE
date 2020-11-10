@@ -46,6 +46,7 @@ async function render(req, res) {
     delete config.databaseURL;
     delete config.authDomain;
     delete config.storageBucket;
+    console.log('Using emulator settings in server side code');
   }
 
   if (firebase.apps.length == 0) {

@@ -2,9 +2,10 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
+require('dotenv').config();
 
 const firebaseHostingConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { app: ['./src/csr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -57,7 +58,7 @@ const firebaseHostingConfig = {
 };
 
 const localExpressCSRBrowserConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { app: ['./src/csr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -110,7 +111,7 @@ const localExpressCSRBrowserConfig = {
 };
 
 const localExpressSSRBrowserConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { app: ['./src/ssr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -163,7 +164,7 @@ const localExpressSSRBrowserConfig = {
 };
 
 const firebaseBrowserSSRConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { app: ['./src/ssr/index.js'] },
   output: {
     filename: '[name].bundle.js',
@@ -216,7 +217,7 @@ const firebaseBrowserSSRConfig = {
 };
 
 const firebaseSsrServerConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { server: ['./servers/firebase_server/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
@@ -258,7 +259,7 @@ const firebaseSsrServerConfig = {
 };
 
 const localExpressCSRServerConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { server: ['./servers/local_express_csr/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
@@ -299,7 +300,7 @@ const localExpressCSRServerConfig = {
 };
 
 const localExpressSSRServerConfig = {
-  mode: 'development',
+  mode: process.env.MODE,
   entry: { server: ['./servers/local_express_ssr/server.js'] },
   target: 'node',
   externals: [nodeExternals()],
