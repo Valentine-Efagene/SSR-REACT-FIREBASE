@@ -1,5 +1,5 @@
-const appendedPath = '/ssr';
-//const appendedPath = '/fir-ch2-5cbdb/us-central1/ssr';
+//const appendedPath = '/ssr';
+const appendedPath = '/fir-ch2-5cbdb/us-central1/ssr';
 
 export default function wrapPath(path) {
   return `${appendedPath}${path}`; // Use this when you want to deploy functions live
