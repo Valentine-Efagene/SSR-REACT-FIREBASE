@@ -1,33 +1,45 @@
-export const increment = (multiple) => {
+import { logIn, logOut } from './email.js';
+
+const increment = (multiple) => {
   return {
     type: 'INCREMENT',
     payload: multiple,
   };
 };
 
-export const decrement = () => {
+const decrement = () => {
   return {
     type: 'DECREMENT',
   };
 };
 
-export const setInitialData = (initialData) => {
+const setInitialData = (initialData) => {
   return {
     type: 'SET_INITIAL_DATA',
     payload: initialData,
   };
 };
 
-export const setUserData = (userData) => {
+const setUser = (user) => {
   return {
-    type: 'SET_USER_DATA',
-    payload: userData,
+    type: 'SET_USER',
+    payload: user,
   };
 };
 
-export const setSession = (session) => {
+const setSession = (session) => {
   return {
     type: 'SET_SESSION',
     payload: session,
   };
+};
+
+export {
+  logIn,
+  logOut,
+  increment,
+  decrement,
+  setInitialData,
+  setUser,
+  setSession,
 };

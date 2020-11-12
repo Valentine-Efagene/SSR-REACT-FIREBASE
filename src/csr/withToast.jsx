@@ -46,7 +46,7 @@ export default function withToast(OriginalComponent) {
             {...this.props}
           />
           <Toast
-            bsstyle={toastType}
+            bsStyle={toastType}
             showing={toastVisible}
             onDismiss={this.dismissToast}
           >

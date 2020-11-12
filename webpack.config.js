@@ -354,7 +354,7 @@ if (mode === 'production') {
 }
 
 module.exports = [
-  //firebaseHostingConfig,
+  firebaseHostingConfig,
   firebaseBrowserSSRConfig,
   firebaseSsrServerConfig,
   //localExpressCSRBrowserConfig,
