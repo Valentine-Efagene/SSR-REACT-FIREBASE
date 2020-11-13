@@ -20,9 +20,14 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faPhoneAlt,
+  faPhoneSquare,
+  faEnvelope,
   faUser,
   faPhone,
+  faMailBulk,
 } from '@fortawesome/free-solid-svg-icons';
+
+import wrapPath from './wrapPath.js';
 
 function SignUp(props) {
   const img = '';
@@ -33,11 +38,11 @@ function SignUp(props) {
           <Card.Header>
             <Card.Title className="text-center">Sign Up</Card.Title>
           </Card.Header>
-          <Button>
-            Sign up with Email <FontAwesomeIcon icon={faPhone} />
+          <Button href={wrapPath('/signup-email')}>
+            Email Sign Up <FontAwesomeIcon icon={faEnvelope} />
           </Button>
-          <Button>
-            Sign up with phone number <FontAwesomeIcon icon={faPhoneAlt} />
+          <Button href={wrapPath('/signup-phone')}>
+            Phone Sign Up <FontAwesomeIcon icon={faPhone} />
           </Button>
           <Card.Body></Card.Body>
           <Card.Footer>

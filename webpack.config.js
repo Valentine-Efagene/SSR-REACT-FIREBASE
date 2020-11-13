@@ -1,3 +1,8 @@
+/**
+ * styel-loader doesn't work on server-side code, because it
+ * references 'document', which only exists on the client
+ */
+
 // https://webpack.js.org/guides/development/
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
@@ -40,6 +45,14 @@ const firebaseHostingConfig = {
             plugins: ['@babel/transform-runtime'],
           },
         },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: 'url-loader',
       },
     ],
   },
@@ -94,6 +107,14 @@ const localExpressCSRBrowserConfig = {
           },
         },
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: 'url-loader',
+      },
     ],
   },
   optimization: {
@@ -146,6 +167,14 @@ const localExpressSSRBrowserConfig = {
             plugins: ['@babel/transform-runtime'],
           },
         },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: 'url-loader',
       },
     ],
   },
@@ -200,6 +229,14 @@ const firebaseBrowserSSRConfig = {
           },
         },
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: 'url-loader',
+      },
     ],
   },
   optimization: {
@@ -248,6 +285,18 @@ const firebaseSsrServerConfig = {
           },
         },
       },
+      {
+        test: /\.css$/i,
+        use: ['css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -290,6 +339,14 @@ const localExpressCSRServerConfig = {
           },
         },
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: 'url-loader',
+      },
     ],
   },
   plugins: [
@@ -330,6 +387,18 @@ const localExpressSSRServerConfig = {
             plugins: ['@babel/transform-runtime'],
           },
         },
+      },
+      {
+        test: /\.css$/i,
+        use: ['css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
       },
     ],
   },

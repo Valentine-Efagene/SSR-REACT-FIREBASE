@@ -30,11 +30,12 @@ import withToast from './withToast.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
 import { setUser } from '../redux/actions';
-//import img from './assets/images/home.png';
+import img from '../assets/images/home.png';
+import '../assets/css/styles.css';
+//import img from '../assets/images/logo.svg';
 //import './assets/css/styles.css';
 
 function EmailSignUp(props) {
-  const img = '';
   const dispatch = useDispatch();
   var user = useSelector((state) => state.user);
   var [loading, setLoading] = useState(false);

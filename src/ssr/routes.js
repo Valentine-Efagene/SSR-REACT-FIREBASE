@@ -4,9 +4,9 @@ import About from './About.jsx';
 import Test from './Test.jsx';
 import Login from './LogIn.jsx';
 import SignUp from './SignUp.jsx';
+import ReduxTest from './ReduxTest.js';
 import EmailSignUp from './EmailSignUp.jsx';
 import PhoneSignUp from './PhoneSignUp.jsx';
-import ReduxTest from './ReduxTest.js';
 import CreateArticle from './CreateArticle.jsx';
 import wrapPath from './wrapPath.js';
 

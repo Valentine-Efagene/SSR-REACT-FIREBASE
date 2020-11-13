@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable func-names */
+import firebase from 'firebase';
+import 'firebase/auth';
 import React, { Component, useState, useEffect } from 'react';
 import {
   Col,
@@ -17,6 +19,7 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faEnvelope,
   faSignInAlt,
   faSignOutAlt,
   faUser,
@@ -26,57 +29,44 @@ import {
 import withToast from './withToast.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
-//import img from './assets/images/home.png';
+import { setUser } from '../redux/actions';
+import img from '../assets/images/home.png';
+import '../assets/css/styles.css';
+//import img from '../assets/images/logo.svg';
 //import './assets/css/styles.css';
 
-function LogIn(props) {
-  const img = '';
+function EmailSignUp(props) {
   const dispatch = useDispatch();
-  var [user, setUser] = useState({
-    email: useSelector((state) => state.email),
-  });
+  var user = useSelector((state) => state.user);
   var [loading, setLoading] = useState(false);
-  var [showValidation, setShowVaidation] = useState(false);
-  var [noAccount, setNoAccout] = useState(false);
+  var [valid, setValid] = useState(false);
 
   function onChange(event, naturalValue) {
     const { name, value: textValue } = event.target;
     const prevUser = user;
     const value = naturalValue === undefined ? textValue : naturalValue;
-    setUser({ ...prevUser, [name]: value });
-  }
-
-  function showValidation() {
-    setShowVaidation(true);
-  }
-
-  function dismissValidation() {
-    setShowVaidation(false);
-  }
-
-  function startLoading() {
-    setLoading(true);
-  }
-
-  function stopLoading() {
-    setLoading(false);
+    dispatch(setUser({ ...prevUser, [name]: value }));
   }
 
   async function signOut(event) {
     event.preventDefault();
     const { showSuccess, showError } = props;
-    startLoading();
-    dispatch(logOut());
-    stopLoading();
+    setLoading(true);
+    //---
+    setLoading(false);
     showSuccess('Logged out');
   }
 
   async function signUpWithEmail(email, password) {
-    dispatch(logIn(user.email));
-  }
-
-  async function signInWithEmail(email, password) {
-    const { showError, showSuccess } = props;
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
   }
 
   function handleSubmit(event) {
@@ -88,17 +78,23 @@ function LogIn(props) {
       user.password === '' ||
       user.email === ''
     ) {
-      showValidation();
+      setValid(false);
     } else {
-      dismissValidation();
+      setValid(true);
 
-      if (noAccount) {
-        signUpWithEmail(user.email, user.password);
-      } else {
-        signInWithEmail(user.email, user.password);
-      }
+      signUpWithEmail(user.email, user.password);
     }
   }
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      dispatch(setUser(user));
+    } else {
+      console.log('Signed out');
+    }
+    // ...
+  });
 
   let spinner = null;
 
@@ -107,46 +103,28 @@ function LogIn(props) {
   }
 
   let validationMessage;
-  if (showValidation) {
+  if (!valid) {
     validationMessage = (
-      <Alert bsStyle="danger" onClose={dismissValidation}>
-        All fields must be filled
-      </Alert>
+      <Alert variant="danger">All fields must be filled</Alert>
     );
   }
 
-  let btn = '';
-
   if (useSelector((state) => state.email)) {
-    btn = (
+    return (
       <Button disabled={false} bsStyle="primary" onClick={signOut}>
         <FontAwesomeIcon icon={faSignOutAlt} />
       </Button>
     );
-  } else {
-    btn = (
-      <Button disabled={false} bsStyle="primary" type="submit">
-        <FontAwesomeIcon icon={faSignInAlt} />
-      </Button>
-    );
   }
-
-  if (noAccount) {
-    btn = (
-      <Button disabled={false} bsStyle="primary" onClick={handleSubmit}>
-        <FontAwesomeIcon icon={faUser} />
-      </Button>
-    );
-  }
-
-  const loggedInEmail = useSelector((state) => state.email);
 
   return (
     <Row className="justify-content-md-center">
       <Col className="col-centered" sm={12} md={6}>
         <Card>
           <Card.Header>
-            <Card.Title className="text-center">Email Login</Card.Title>
+            <Card.Title className="text-center">
+              Email Sign Up <FontAwesomeIcon icon={faEnvelope} />
+            </Card.Title>
           </Card.Header>
           <Card.Body>
             <Form horizontal onSubmit={handleSubmit}>
@@ -157,7 +135,7 @@ function LogIn(props) {
                     style={{
                       border: 'none',
                     }}
-                    disabled={loggedInEmail !== null}
+                    disabled={user?.email !== null}
                     onClick={() => {
                       setNoAccout(true);
                     }}
@@ -188,7 +166,11 @@ function LogIn(props) {
               </FormGroup>
               <FormGroup>
                 <Col className="col-centered">
-                  <ButtonToolbar>{btn}</ButtonToolbar>
+                  <ButtonToolbar>
+                    <Button disabled={false} variant="primary" type="submit">
+                      <FontAwesomeIcon icon={faUser} />
+                    </Button>
+                  </ButtonToolbar>
                 </Col>
               </FormGroup>
               <FormGroup>
@@ -211,5 +193,5 @@ function LogIn(props) {
   );
 }
 
-const LoginWithToast = withToast(LogIn);
-export default LoginWithToast;
+const EmailSignUpWithToast = withToast(EmailSignUp);
+export default EmailSignUpWithToast;

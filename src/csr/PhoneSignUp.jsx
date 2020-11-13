@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignInAlt,
   faSignOutAlt,
+  faPhone,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -71,32 +72,24 @@ function PhoneSignUp(props) {
     showSuccess('Logged out');
   }
 
-  async function signUpWithEmail(email, password) {
+  async function signUpWithPhone(phone, password) {
     dispatch(logIn(user.email));
-  }
-
-  async function signInWithEmail(email, password) {
-    const { showError, showSuccess } = props;
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
     if (
+      user.phone === undefined ||
       user.password === undefined ||
-      user.email === undefined ||
-      user.password === '' ||
-      user.email === ''
+      user.phone === '' ||
+      user.password === ''
     ) {
       showValidation();
     } else {
       dismissValidation();
 
-      if (noAccount) {
-        signUpWithEmail(user.email, user.password);
-      } else {
-        signInWithEmail(user.email, user.password);
-      }
+      signUpWithPhone(user.phone, user.password);
     }
   }
 
@@ -133,7 +126,7 @@ function PhoneSignUp(props) {
 
   if (noAccount) {
     btn = (
-      <Button disabled={false} bsStyle="primary" onClick={handleSubmit}>
+      <Button disabled={false} variant="primary" onClick={handleSubmit}>
         <FontAwesomeIcon icon={faUser} />
       </Button>
     );
@@ -146,7 +139,9 @@ function PhoneSignUp(props) {
       <Col className="col-centered" sm={12} md={6}>
         <Card>
           <Card.Header>
-            <Card.Title className="text-center">Email Login</Card.Title>
+            <Card.Title className="text-center">
+              Phone Sign Up <FontAwesomeIcon icon={faPhone} />
+            </Card.Title>
           </Card.Header>
           <Card.Body>
             <Form horizontal onSubmit={handleSubmit}>
@@ -169,9 +164,9 @@ function PhoneSignUp(props) {
               <FormGroup>
                 <Col className="col-centered">
                   <FormControl
-                    type="email"
-                    placeholder="Email"
-                    name="email"
+                    type="phone"
+                    placeholder="+xxx"
+                    name="phone"
                     onChange={onChange}
                   />
                 </Col>
