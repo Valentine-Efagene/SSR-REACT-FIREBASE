@@ -21,24 +21,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
   faSignInAlt,
+  faSpinner,
   faSignOutAlt,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
-//import Spinner from './Spinner.jsx';
+import Spinner from './Spinner.jsx';
 import withToast from './withToast.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
 import { setUser } from '../redux/actions';
-import img from '../assets/images/home.png';
-//import '../assets/css/styles.css';
-//import img from '../assets/images/logo.svg';
+//import img from '../assets/images/home.png';
 
 function EmailSignUp(props) {
   const dispatch = useDispatch();
   var user = useSelector((state) => state.user);
   var [loading, setLoading] = useState(false);
   var [valid, setValid] = useState(false);
+
+  //const footerImage = typeof window == 'undefined' ? './assets/img/home.png' : img;
 
   function onChange(event, naturalValue) {
     const { name, value: textValue } = event.target;
@@ -98,7 +99,7 @@ function EmailSignUp(props) {
   let spinner = null;
 
   if (loading) {
-    //spinner = <Spinner size={50} />;
+    spinner = <Spinner size={50} />;
   }
 
   let validationMessage;
@@ -168,6 +169,15 @@ function EmailSignUp(props) {
                   <ButtonToolbar>
                     <Button disabled={false} variant="primary" type="submit">
                       <FontAwesomeIcon icon={faUser} />
+                    </Button>
+                    <Button
+                      disabled={false}
+                      variant="primary"
+                      onClick={() => {
+                        setLoading(true);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faSpinner} />
                     </Button>
                   </ButtonToolbar>
                 </Col>
