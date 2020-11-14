@@ -23,6 +23,7 @@ const firebaseHostingConfig = {
     rules: [
       {
         test: /\.jsx?$/,
+
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -284,7 +285,7 @@ const firebaseSsrServerConfig = {
             plugins: ['@babel/transform-runtime'],
           },
         },
-      },
+      } /* I consider this best practice, in order to keep the js bundle small
       {
         test: /\.css$/i,
         use: ['css-loader'],
@@ -296,7 +297,7 @@ const firebaseSsrServerConfig = {
             loader: 'url-loader',
           },
         ],
-      },
+      },*/,
     ],
   },
   plugins: [
@@ -387,7 +388,7 @@ const localExpressSSRServerConfig = {
             plugins: ['@babel/transform-runtime'],
           },
         },
-      },
+      } /*  I consider this best practice, in order to keep the js bundle small
       {
         test: /\.css$/i,
         use: ['css-loader'],
@@ -399,7 +400,7 @@ const localExpressSSRServerConfig = {
             loader: 'url-loader',
           },
         ],
-      },
+      },*/,
     ],
   },
   plugins: [

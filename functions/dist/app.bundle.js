@@ -562,8 +562,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _withToast_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./withToast.jsx */ "./src/ssr/withToast.jsx");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
-/* harmony import */ var _assets_images_home_png__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../assets/images/home.png */ "./src/assets/images/home.png");
-/* harmony import */ var _assets_css_styles_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../assets/css/styles.css */ "./src/assets/css/styles.css");
+/* harmony import */ var _assets_images_home_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../assets/images/home.png */ "./src/assets/images/home.png");
 
 
 
@@ -587,9 +586,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-
- //import img from '../assets/images/logo.svg';
-//import './assets/css/styles.css';
+ //import '../assets/css/styles.css';
+//import img from '../assets/images/logo.svg';
 
 function EmailSignUp(props) {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_9__.useDispatch)();
@@ -769,7 +767,7 @@ function EmailSignUp(props) {
     className: "col-centered"
   }, validationMessage))), spinner), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__.default.Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__.default, {
     className: "footer-image",
-    src: _assets_images_home_png__WEBPACK_IMPORTED_MODULE_24__.default
+    src: './assets/img/home.png'
   })))));
 }
 
@@ -1932,18 +1930,19 @@ var Toast = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/index.esm.js");
 /* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/firebase-database */ "./node_modules/firebase/firebase-database.js");
 /* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(firebase_firebase_database__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _redux_reducers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../redux/reducers */ "./src/redux/reducers/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Page_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Page.jsx */ "./src/ssr/Page.jsx");
-/* harmony import */ var _firebase_config_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../firebase_config.js */ "./firebase_config.js");
-/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _redux_reducers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../redux/reducers */ "./src/redux/reducers/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Page_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Page.jsx */ "./src/ssr/Page.jsx");
+/* harmony import */ var _firebase_config_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../firebase_config.js */ "./firebase_config.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./store.js */ "./src/ssr/store.js");
 
 
 
@@ -1957,37 +1956,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var config = _firebase_config_js__WEBPACK_IMPORTED_MODULE_9__.default;
+
+var fireabaseConfig = _firebase_config_js__WEBPACK_IMPORTED_MODULE_10__.default;
 
 if ( true && typeof window !== 'undefined') {
   if (window.location.hostname === 'localhost') {
-    delete config.databaseURL;
-    delete config.authDomain;
-    delete config.storageBucket;
+    delete fireabaseConfig.databaseURL;
+    delete fireabaseConfig.authDomain;
+    delete fireabaseConfig.storageBucket;
 
     if (firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.apps.length == 0) {
-      firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.initializeApp(config);
+      firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.initializeApp(fireabaseConfig);
       firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.auth().useEmulator('http://localhost:9099/');
       firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.database().useEmulator('localhost', 9000);
       firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.firestore().useEmulator('localhost', 8080);
     }
   } else {
     if (firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.apps.length == 0) {
-      firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.initializeApp(config);
+      firebase_app__WEBPACK_IMPORTED_MODULE_2__.default.initializeApp(fireabaseConfig);
     }
   }
 }
 
 var preloadedState = window.__PRELOADED_STATE__;
-_store_js__WEBPACK_IMPORTED_MODULE_10__.default.initialData = preloadedState.initialData;
-_store_js__WEBPACK_IMPORTED_MODULE_10__.default.count = preloadedState.count;
-_store_js__WEBPACK_IMPORTED_MODULE_10__.default.session = preloadedState.session;
+_store_js__WEBPACK_IMPORTED_MODULE_11__.default.initialData = preloadedState.initialData;
+_store_js__WEBPACK_IMPORTED_MODULE_11__.default.count = preloadedState.count;
+_store_js__WEBPACK_IMPORTED_MODULE_11__.default.session = preloadedState.session;
 delete window.__PRELOADED_STATE__; // https://github.com/zalmoxisus/redux-devtools-extension
 
-var reduxStore = (0,redux__WEBPACK_IMPORTED_MODULE_11__.createStore)(_redux_reducers__WEBPACK_IMPORTED_MODULE_6__.default, preloadedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_redux__WEBPACK_IMPORTED_MODULE_7__.Provider, {
+var reduxStore = (0,redux__WEBPACK_IMPORTED_MODULE_12__.createStore)(_redux_reducers__WEBPACK_IMPORTED_MODULE_7__.default, preloadedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__.config.autoAddCss = false;
+react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_redux__WEBPACK_IMPORTED_MODULE_8__.Provider, {
   store: reduxStore
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Page_jsx__WEBPACK_IMPORTED_MODULE_8__.default, null)))), document.getElementById('root'));
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Page_jsx__WEBPACK_IMPORTED_MODULE_9__.default, null)))), document.getElementById('root'));
 
 /***/ }),
 
@@ -2227,69 +2228,6 @@ function wrapPath(path) {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/assets/css/styles.css":
-/*!*************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/assets/css/styles.css ***!
-  \*************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".footer-image {\n  height: 30px;\n  width: 30px;\n}\n", "",{"version":3,"sources":["webpack://./src/assets/css/styles.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".footer-image {\n  height: 30px;\n  width: 30px;\n}\n"],"sourceRoot":""}]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./src/assets/css/styles.css":
-/*!***********************************!*\
-  !*** ./src/assets/css/styles.css ***!
-  \***********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./styles.css */ "./node_modules/css-loader/dist/cjs.js!./src/assets/css/styles.css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_styles_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_styles_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
 /***/ "./src/assets/images/home.png":
 /*!************************************!*\
   !*** ./src/assets/images/home.png ***!
@@ -2297,14 +2235,14 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.p, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/png;base64,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");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "e2b1752b51033dfee8aa90d892478dc6.png");
 
 /***/ })
 
@@ -2405,6 +2343,11 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		__webpack_require__.p = "/";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */

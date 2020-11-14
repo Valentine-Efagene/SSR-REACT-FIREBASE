@@ -28,174 +28,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/runtime/api.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
-  \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module) => {
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
-
-module.exports = function (cssWithMappingToString) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = cssWithMappingToString(item);
-
-      if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
-      }
-
-      return content;
-    }).join('');
-  }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
-
-
-  list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
-    }
-
-    var alreadyImportedModules = {};
-
-    if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
-
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
-
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
-        } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
-        }
-      }
-
-      list.push(item);
-    }
-  };
-
-  return list;
-};
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/cssWithMappingToString.js ***!
-  \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 61:0-14 */
-/***/ ((module) => {
-
-
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-module.exports = function cssWithMappingToString(item) {
-  var _item = _slicedToArray(item, 4),
-      content = _item[1],
-      cssMapping = _item[3];
-
-  if (typeof btoa === 'function') {
-    // eslint-disable-next-line no-undef
-    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
-    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
-    var sourceMapping = "/*# ".concat(data, " */");
-    var sourceURLs = cssMapping.sources.map(function (source) {
-      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
-    });
-    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-  }
-
-  return [content].join('\n');
-};
-
-/***/ }),
-
 /***/ "./servers/firebase_server/render.jsx":
 /*!********************************************!*\
   !*** ./servers/firebase_server/render.jsx ***!
@@ -459,6 +291,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var serialize_javascript__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! serialize-javascript */ "serialize-javascript");
 /* harmony import */ var serialize_javascript__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(serialize_javascript__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "@fortawesome/fontawesome-svg-core");
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__);
+
 
 function template(body, preloadedState) {
   return `
@@ -466,6 +301,8 @@ function template(body, preloadedState) {
       <head>
         <meta charset="utf-8" />
         <title>Server-side Rendering</title>
+        <style type="text/css">${_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__.dom.css()}</style>
+        <link rel="stylesheet" href="assets/css/styles.css" >
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       </head>
@@ -1029,8 +866,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../redux/actions */ "./src/redux/actions/index.js");
-/* harmony import */ var _assets_images_home_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../assets/images/home.png */ "./src/assets/images/home.png");
-/* harmony import */ var _assets_css_styles_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../assets/css/styles.css */ "./src/assets/css/styles.css");
+/* harmony import */ var _assets_images_home_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../assets/images/home.png */ "./src/assets/images/home.png");
 /* eslint-disable react/jsx-one-expression-per-line */
 
 /* eslint-disable func-names */
@@ -1045,9 +881,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
- //import img from '../assets/images/logo.svg';
-//import './assets/css/styles.css';
+ //import '../assets/css/styles.css';
+//import img from '../assets/images/logo.svg';
 
 function EmailSignUp(props) {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__.useDispatch)();
@@ -1184,7 +1019,7 @@ function EmailSignUp(props) {
     className: "col-centered"
   }, validationMessage))), spinner), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__.Card.Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__.Image, {
     className: "footer-image",
-    src: _assets_images_home_png__WEBPACK_IMPORTED_MODULE_10__.default
+    src: './assets/img/home.png'
   })))));
 }
 
@@ -2273,36 +2108,6 @@ function wrapPath(path) {
 
 /***/ }),
 
-/***/ "./src/assets/css/styles.css":
-/*!***********************************!*\
-  !*** ./src/assets/css/styles.css ***!
-  \***********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".footer-image {\n  height: 30px;\n  width: 30px;\n}\n", "",{"version":3,"sources":["webpack://./src/assets/css/styles.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".footer-image {\n  height: 30px;\n  width: 30px;\n}\n"],"sourceRoot":""}]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
 /***/ "./src/assets/images/home.png":
 /*!************************************!*\
   !*** ./src/assets/images/home.png ***!
@@ -2310,14 +2115,14 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".footer-image {\n  height: 30px;\n  wi
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.p, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/png;base64,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");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "e2b1752b51033dfee8aa90d892478dc6.png");
 
 /***/ }),
 
@@ -2332,6 +2137,20 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((module) => {
 
 module.exports = require("@babel/runtime/helpers/extends");;
+
+/***/ }),
+
+/***/ "@fortawesome/fontawesome-svg-core":
+/*!****************************************************!*\
+  !*** external "@fortawesome/fontawesome-svg-core" ***!
+  \****************************************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("@fortawesome/fontawesome-svg-core");;
 
 /***/ }),
 
@@ -2628,7 +2447,7 @@ module.exports = require("serialize-javascript");;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
+/******/ 			// no module.id needed
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
@@ -2679,6 +2498,11 @@ module.exports = require("serialize-javascript");;
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		__webpack_require__.p = "/";
 /******/ 	})();
 /******/ 	
 /************************************************************************/

@@ -1,4 +1,5 @@
 import serialize from 'serialize-javascript';
+import { dom } from '@fortawesome/fontawesome-svg-core';
 
 export default function template(body, preloadedState) {
   return `
@@ -6,6 +7,8 @@ export default function template(body, preloadedState) {
       <head>
         <meta charset="utf-8" />
         <title>Server-side Rendering</title>
+        <style type="text/css">${dom.css()}</style>
+        <link rel="stylesheet" href="assets/css/styles.css" >
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       </head>

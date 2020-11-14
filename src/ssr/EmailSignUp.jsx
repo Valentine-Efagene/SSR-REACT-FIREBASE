@@ -31,9 +31,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
 import { setUser } from '../redux/actions';
 import img from '../assets/images/home.png';
-import '../assets/css/styles.css';
+//import '../assets/css/styles.css';
 //import img from '../assets/images/logo.svg';
-//import './assets/css/styles.css';
 
 function EmailSignUp(props) {
   const dispatch = useDispatch();
@@ -185,7 +184,7 @@ function EmailSignUp(props) {
             {spinner}
           </Card.Body>
           <Card.Footer>
-            <Image className="footer-image" src={img} />
+            <Image className="footer-image" src={'./assets/img/home.png'} />
           </Card.Footer>
         </Card>
       </Col>

@@ -6,6 +6,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/firebase-database';
+import { config } from '@fortawesome/fontawesome-svg-core';
 
 import allReducers from '../redux/reducers';
 import { Provider } from 'react-redux';
@@ -13,23 +14,23 @@ import Page from './Page.jsx';
 import firebase_config from '../../firebase_config.js';
 import store from './store.js';
 
-let config = firebase_config;
+let fireabaseConfig = firebase_config;
 
 if (__isBrowser__ && typeof window !== 'undefined') {
   if (window.location.hostname === 'localhost') {
-    delete config.databaseURL;
-    delete config.authDomain;
-    delete config.storageBucket;
+    delete fireabaseConfig.databaseURL;
+    delete fireabaseConfig.authDomain;
+    delete fireabaseConfig.storageBucket;
 
     if (firebase.apps.length == 0) {
-      firebase.initializeApp(config);
+      firebase.initializeApp(fireabaseConfig);
       firebase.auth().useEmulator('http://localhost:9099/');
       firebase.database().useEmulator('localhost', 9000);
       firebase.firestore().useEmulator('localhost', 8080);
     }
   } else {
     if (firebase.apps.length == 0) {
-      firebase.initializeApp(config);
+      firebase.initializeApp(fireabaseConfig);
     }
   }
 }
@@ -46,6 +47,8 @@ const reduxStore = createStore(
   preloadedState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
+
+config.autoAddCss = false;
 
 ReactDOM.hydrate(
   <React.StrictMode>
