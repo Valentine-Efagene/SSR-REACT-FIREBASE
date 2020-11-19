@@ -4,7 +4,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/firebase-database';
 import { useState, useEffect } from 'react';
-import { Col, Form, Row, Button } from 'react-bootstrap';
+import { Col, Form, Row, Button, Figure } from 'react-bootstrap';
 
 //import { useSelector, useDispatch } from 'react-redux';
 //import { setInitialData } from '../redux/actions';
@@ -13,8 +13,10 @@ import withToast from './withToast.jsx';
 
 function CreateArticle(props) {
   const { showSuccess, showError } = props;
+  const [imgSrc, setImgSrc] = useState(null);
   const [text, setText] = useState(null);
   const [title, setTitle] = useState(null);
+  const [imgDim, setImgDim] = useState();
 
   firebase
     .auth()
@@ -84,6 +86,33 @@ function CreateArticle(props) {
                   }}
                 />
               </Form.Group>
+              <Form.Group>
+                <Form.File
+                  id="custom-file"
+                  label="Custom file input"
+                  custom
+                  onChange={(event) => {
+                    let fileName = event.target.files[0];
+                    //showSuccess(file.name);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(fileName);
+                    reader.onload = () => {
+                      const file = reader.result;
+                      let img = new Image();
+                      img.onload = function () {
+                        setImgDim({ width: img.width, height: img.height });
+                      };
+                      img.src = reader.result;
+                      setImgSrc(file);
+                      const size = file.size ? file.size : 'NOT SUPPORTED';
+                      showSuccess(size);
+                    };
+                    reader.onerror = function (error) {
+                      console.log('Error: ', error);
+                    };
+                  }}
+                />
+              </Form.Group>
               <Button variant="primary" type="submit">
                 Post
               </Button>
@@ -103,6 +132,17 @@ function CreateArticle(props) {
               >
                 {text}
               </p>
+              <Figure>
+                <Figure.Image
+                  width={imgDim?.width}
+                  height={imgDim?.height}
+                  alt="171x180"
+                  src={imgSrc}
+                />
+                <Figure.Caption>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </Figure.Caption>
+              </Figure>
             </div>
           </Col>
         </Row>

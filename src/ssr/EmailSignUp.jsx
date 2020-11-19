@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 import firebase from 'firebase';
 import 'firebase/auth';
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Col,
   Row,
@@ -20,7 +20,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
-  faSignInAlt,
   faSpinner,
   faSignOutAlt,
   faUser,
@@ -29,7 +28,6 @@ import {
 import Spinner from './Spinner.jsx';
 import withToast from './withToast.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { logIn, logOut } from '../redux/actions';
 import { setUser } from '../redux/actions';
 //import img from '../assets/images/home.png';
 
@@ -98,7 +96,7 @@ function EmailSignUp(props) {
 
   let spinner = null;
 
-  if (loading) {
+  if (loading && typeof window !== 'undefined') {
     spinner = <Spinner size={50} />;
   }
 

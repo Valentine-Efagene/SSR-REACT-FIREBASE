@@ -1,6 +1,7 @@
+/** @jsx jsx */
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { css } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
+//import { css } from '@emotion/core';
 import ClipLoader from 'react-spinners/DotLoader';
 
 const override = css`
