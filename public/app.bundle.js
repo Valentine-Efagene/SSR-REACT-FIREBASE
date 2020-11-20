@@ -811,10 +811,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/NavLink.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/NavItem.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Navbar.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
 /* harmony import */ var react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-bootstrap */ "./node_modules/react-router-bootstrap/lib/index.js");
 /* harmony import */ var _Contents_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Contents.jsx */ "./src/csr/Contents.jsx");
-/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./wrapPath.js */ "./src/csr/wrapPath.js");
+/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./wrapPath.js */ "./src/csr/wrapPath.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* eslint-disable react/jsx-one-expression-per-line */
 // import { useState } from 'react';
 
@@ -822,7 +824,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var testInPage = (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/');
+
+
 function Page() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(NavBar, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
     fluid: true
@@ -860,22 +863,29 @@ function NavBar(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
     bg: "light",
     expand: "lg"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Toggle, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Brand, {
+    href: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/home')
+  }, "React-Firebase ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
+    color: "orange",
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faFire
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Toggle, {
     "aria-controls": "basic-navbar-nav"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Collapse, {
     id: "basic-navbar-nav"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__.default, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__.default, {
     className: "mr-auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/home')
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/home')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/redux-test')
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/redux-test')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, "Redux Test")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/about')
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/p5-test')
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, "P5 Test")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/about')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, null, "About"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/create-article')
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/create-article')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, null, "Create Article"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_1__.LinkContainer, {
-    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_3__.default)('/test')
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_8__.default)('/test')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, null, "Test"))), update, contactAdd)));
 }
 
@@ -1529,6 +1539,56 @@ react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPO
 
 /***/ }),
 
+/***/ "./src/csr/p5Test.jsx":
+/*!****************************!*\
+  !*** ./src/csr/p5Test.jsx ***!
+  \****************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_p5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-p5 */ "./node_modules/react-p5/build/index.js");
+/* harmony import */ var react_p5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_p5__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (props) {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  var x = 50;
+  var y = 50;
+
+  var setup = function setup(p5, canvasParentRef) {
+    // use parent to render the canvas in this ref
+    // (without that p5 will render the canvas outside of your component)
+    p5.createCanvas(500, 500).parent(canvasParentRef);
+  };
+
+  var draw = function draw(p5) {
+    p5.background(0);
+    p5.ellipse(x, y, 70, 70); // NOTE: Do not use setState in the draw function or in functions that are executed
+    // in the draw function...
+    // please use normal variables or class properties for these purposes
+
+    x++;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((react_p5__WEBPACK_IMPORTED_MODULE_1___default()), {
+    setup: setup,
+    draw: draw
+  });
+});
+
+/***/ }),
+
 /***/ "./src/csr/routes.js":
 /*!***************************!*\
   !*** ./src/csr/routes.js ***!
@@ -1552,8 +1612,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReduxTest_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ReduxTest.js */ "./src/csr/ReduxTest.js");
 /* harmony import */ var _EmailSignUp_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./EmailSignUp.jsx */ "./src/csr/EmailSignUp.jsx");
 /* harmony import */ var _PhoneSignUp_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PhoneSignUp.jsx */ "./src/csr/PhoneSignUp.jsx");
-/* harmony import */ var _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CreateArticle.jsx */ "./src/csr/CreateArticle.jsx");
-/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./wrapPath.js */ "./src/csr/wrapPath.js");
+/* harmony import */ var _p5Test_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./p5Test.jsx */ "./src/csr/p5Test.jsx");
+/* harmony import */ var _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateArticle.jsx */ "./src/csr/CreateArticle.jsx");
+/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./wrapPath.js */ "./src/csr/wrapPath.js");
+
 
 
 
@@ -1566,34 +1628,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [{
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/home'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/home'),
   component: _Home_jsx__WEBPACK_IMPORTED_MODULE_1__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/signup'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/signup'),
   component: _SignUp_jsx__WEBPACK_IMPORTED_MODULE_5__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/signup-email'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/signup-email'),
   component: _EmailSignUp_jsx__WEBPACK_IMPORTED_MODULE_7__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/signup-phone'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/signup-phone'),
   component: _PhoneSignUp_jsx__WEBPACK_IMPORTED_MODULE_8__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/about'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/about'),
   component: _About_jsx__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/test'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/test'),
   component: _Test_jsx__WEBPACK_IMPORTED_MODULE_3__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/login'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/p5-test'),
+  component: _p5Test_jsx__WEBPACK_IMPORTED_MODULE_9__.default
+}, {
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/login'),
   component: _LogIn_jsx__WEBPACK_IMPORTED_MODULE_4__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/redux-test'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/redux-test'),
   component: _ReduxTest_js__WEBPACK_IMPORTED_MODULE_6__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('/create-article'),
-  component: _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_9__.default
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/create-article'),
+  component: _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_10__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_10__.default)('*'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('*'),
   component: _NotFound_jsx__WEBPACK_IMPORTED_MODULE_0__.default
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);

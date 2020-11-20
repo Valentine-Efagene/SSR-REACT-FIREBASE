@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Image, Row } from 'react-bootstrap';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -36,10 +37,18 @@ function Home(props) {
 
   return (
     <>
-      <div className="text-center">
-        <h3>Server-Side Rendering</h3>
-        <h3>{data ? data[1]?.name : null}</h3>
-      </div>
+      <Image
+        src="assets/img/landscape.jpg"
+        style={{ width: '100%', height: 'auto' }}
+      />
+      <Row>
+        <Col xs xl="12">
+          <div className="text-center">
+            <h3>Server-Side Rendering</h3>
+            <h3>{data ? data[1]?.name : null}</h3>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 }

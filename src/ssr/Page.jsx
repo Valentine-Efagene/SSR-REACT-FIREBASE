@@ -73,6 +73,9 @@ function NavBar({ user }) {
           <LinkContainer to={wrapPath('/redux-test')}>
             <NavLink>Redux Test</NavLink>
           </LinkContainer>
+          <LinkContainer to={wrapPath('/p5-test')}>
+            <NavLink>P5 Test</NavLink>
+          </LinkContainer>
           <LinkContainer to={wrapPath('/about')}>
             <NavLink>
               <NavItem>About</NavItem>

@@ -6,8 +6,8 @@ import { Navbar, Nav, NavItem, NavLink, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Contents from './Contents.jsx';
 import wrapPath from './wrapPath.js';
-
-const testInPage = wrapPath('/');
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFire } from '@fortawesome/free-solid-svg-icons';
 
 export default function Page() {
   return (
@@ -61,6 +61,9 @@ function NavBar({ user }) {
 
   return (
     <Navbar bg="light" expand="lg">
+      <Navbar.Brand href={wrapPath('/home')}>
+        React-Firebase <FontAwesomeIcon color="orange" icon={faFire} />
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -69,6 +72,9 @@ function NavBar({ user }) {
           </LinkContainer>
           <LinkContainer to={wrapPath('/redux-test')}>
             <NavLink>Redux Test</NavLink>
+          </LinkContainer>
+          <LinkContainer to={wrapPath('/p5-test')}>
+            <NavLink>P5 Test</NavLink>
           </LinkContainer>
           <LinkContainer to={wrapPath('/about')}>
             <NavLink>
