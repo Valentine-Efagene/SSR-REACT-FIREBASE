@@ -4,7 +4,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/firebase-database';
 import { useState, useEffect } from 'react';
-import { Col, Form, Row, Button, Figure } from 'react-bootstrap';
+import { Col, Form, Row, Button, Figure, Container } from 'react-bootstrap';
 
 //import { useSelector, useDispatch } from 'react-redux';
 //import { setInitialData } from '../redux/actions';
@@ -59,7 +59,7 @@ function CreateArticle(props) {
   };
 
   return (
-    <>
+    <Container fluid>
       <div className="text-center">
         <h3>Create An Article</h3>
         <Row className="justify-content-md-center">
@@ -147,7 +147,7 @@ function CreateArticle(props) {
           </Col>
         </Row>
       </div>
-    </>
+    </Container>
   );
 }
 

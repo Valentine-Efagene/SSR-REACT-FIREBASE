@@ -1169,7 +1169,9 @@ function CreateArticle(props) {
     });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Container, {
+    fluid: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Create An Article"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Row, {
     className: "justify-content-md-center"
@@ -1843,9 +1845,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Page() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(NavBar, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Container, {
-    fluid: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Contents_jsx__WEBPACK_IMPORTED_MODULE_3__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Footer, null));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(NavBar, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Contents_jsx__WEBPACK_IMPORTED_MODULE_3__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Footer, null));
 }
 
 function Footer() {
@@ -2412,8 +2412,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-loadable */ "./node_modules/react-loadable/lib/index.js");
-/* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_loadable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-loadable */ "./node_modules/react-loadable/lib/index.js");
+/* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_loadable__WEBPACK_IMPORTED_MODULE_2__);
+
 
  //import Sketch from 'react-p5';
 
@@ -2426,29 +2429,37 @@ function Loading() {
     return null;
   }
 
-  const Sketch = react_loadable__WEBPACK_IMPORTED_MODULE_1___default()({
+  const [dim, setDim] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    w: 0,
+    h: 0
+  });
+  const Sketch = react_loadable__WEBPACK_IMPORTED_MODULE_2___default()({
     loader: () => __webpack_require__.e(/*! import() */ "vendors-node_modules_react-p5_build_index_js").then(__webpack_require__.t.bind(__webpack_require__, /*! react-p5 */ "./node_modules/react-p5/build/index.js", 7)),
     loading: Loading
   });
-  let dim = {
-    w: window.innerWidth,
-    h: window.innerHeight
-  };
   const stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null); // useEffect will run on stageCanvasRef value assignment
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     // The 'current' property contains info of the reference:
     // align, title, ... , width, height, etc.
-    const setDims = () => {
-      if (stageCanvasRef.current) {
-        dim.h = stageCanvasRef.current.offsetHeight;
-        dim.w = stageCanvasRef.current.offsetWidth;
-      }
-    };
+    let h = 0;
+    let w = 0;
 
-    window.addEventListener('resize', setDims);
+    if (stageCanvasRef.current) {
+      h = stageCanvasRef.current.offsetHeight;
+      w = stageCanvasRef.current.offsetWidth;
+    }
+
+    setDim({
+      w,
+      h
+    });
+    window.addEventListener('resize', setDim({
+      w,
+      h
+    }));
     return () => {
-      window.removeEventListener('resize', setDims);
+      window.removeEventListener('resize', setDim(w, h));
     };
   }, [stageCanvasRef]);
 
@@ -2469,16 +2480,14 @@ function Loading() {
       p5.fill(0);
     } else {
       p5.fill(255);
-    }
+    } //const { width, height, background, ellipse } = p5;
 
-    p5.ellipse(p5.mouseX, p5.mouseY, 80, 80); //const { width, height, background, ellipse } = p5;
 
     const d = p5.width / 10;
     const r = d / 2;
     p5.ellipse(x, y, d, d);
     p5.text(`${x + d}`, dim.w / 2, dim.h / 5);
-    p5.line(x, 0, x, dim.h);
-    p5.text(`x: ${p5.mouseX}, y: ${p5.mouseY}`, dim.w / 2, dim.h / 4); // NOTE: Do not use setState in the draw function or in functions that are executed
+    p5.line(x, 0, x, dim.h); // NOTE: Do not use setState in the draw function or in functions that are executed
     // in the draw function...
     // please use normal variables or class properties for these purposes
 
