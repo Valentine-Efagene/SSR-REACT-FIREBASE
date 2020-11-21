@@ -1,31 +1,36 @@
-import React from 'react';
-import { useRef } from 'react';
-import ReactDOM from 'react-dom';
-import useScrollPosition from './useScrollPosition.js';
+import React, { useRef, useEffect } from 'react';
 
-export default function Test() {
-  const inputEl = useRef(null);
-  const onButtonClick = () => {
-    // `current` points to the mounted text input element
-    inputEl.current.focus();
-    inputEl.current.value = 'qqw';
+const Canvas = (props) => {
+  const canvasRef = useRef(null);
+
+  const draw = (ctx, frameCount) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.arc(50, 100, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
+    ctx.fill();
   };
 
-  useScrollPosition(
-    ({ prevPos, pos }) => {
-      //console.log(prevPos?.y);
-      inputEl.current.value = prevPos?.y;
-    },
-    [],
-    null,
-    true,
-    200,
-  );
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    let frameCount = 0;
+    let animationFrameId;
 
-  return (
-    <>
-      <input ref={inputEl} type="text" />
-      <button onClick={onButtonClick}>Focus the input</button>
-    </>
-  );
-}
+    //Our draw came here
+    const render = () => {
+      frameCount++;
+      draw(context, frameCount);
+      animationFrameId = window.requestAnimationFrame(render);
+    };
+    render();
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [draw]);
+
+  return <canvas ref={canvasRef} {...props} />;
+};
+
+export default Canvas;

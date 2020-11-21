@@ -2283,45 +2283,54 @@ function Spinner({
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Test
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _useScrollPosition_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useScrollPosition.js */ "./src/ssr/useScrollPosition.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "@babel/runtime/helpers/extends");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
+const Canvas = props => {
+  const canvasRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
 
-function Test() {
-  const inputEl = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-
-  const onButtonClick = () => {
-    // `current` points to the mounted text input element
-    inputEl.current.focus();
-    inputEl.current.value = 'qqw';
+  const draw = (ctx, frameCount) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.arc(50, 100, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
+    ctx.fill();
   };
 
-  (0,_useScrollPosition_js__WEBPACK_IMPORTED_MODULE_2__.default)(({
-    prevPos,
-    pos
-  }) => {
-    //console.log(prevPos?.y);
-    inputEl.current.value = prevPos === null || prevPos === void 0 ? void 0 : prevPos.y;
-  }, [], null, true, 200);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    ref: inputEl,
-    type: "text"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: onButtonClick
-  }, "Focus the input"));
-}
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    let frameCount = 0;
+    let animationFrameId; //Our draw came here
+
+    const render = () => {
+      frameCount++;
+      draw(context, frameCount);
+      animationFrameId = window.requestAnimationFrame(render);
+    };
+
+    render();
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [draw]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("canvas", _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({
+    ref: canvasRef
+  }, props));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Canvas);
 
 /***/ }),
 
@@ -2417,32 +2426,72 @@ function Loading() {
     return null;
   }
 
-  let x = 50;
-  const y = 50;
   const Sketch = react_loadable__WEBPACK_IMPORTED_MODULE_1___default()({
     loader: () => __webpack_require__.e(/*! import() */ "vendors-node_modules_react-p5_build_index_js").then(__webpack_require__.t.bind(__webpack_require__, /*! react-p5 */ "./node_modules/react-p5/build/index.js", 7)),
     loading: Loading
   });
+  let dim = {
+    w: window.innerWidth,
+    h: window.innerHeight
+  };
+  const stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null); // useEffect will run on stageCanvasRef value assignment
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // The 'current' property contains info of the reference:
+    // align, title, ... , width, height, etc.
+    if (stageCanvasRef.current) {
+      dim.h = stageCanvasRef.current.offsetHeight;
+      dim.w = stageCanvasRef.current.offsetWidth;
+    }
+  }, []);
 
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
-    p5.createCanvas(500, 500).parent(canvasParentRef);
+    p5.createCanvas(dim.w, dim.h).parent(canvasParentRef);
   };
 
+  let x = dim.w / 2;
+  let y = dim.h / 2;
+  let xVel = 3;
+
   const draw = p5 => {
-    p5.background(0);
-    p5.ellipse(x, y, 70, 70); // NOTE: Do not use setState in the draw function or in functions that are executed
+    p5.background(129, 71, 109);
+
+    if (p5.mouseIsPressed) {
+      p5.fill(0);
+    } else {
+      p5.fill(255);
+    }
+
+    p5.ellipse(p5.mouseX, p5.mouseY, 80, 80); //const { width, height, background, ellipse } = p5;
+
+    const d = p5.width / 10;
+    const r = d / 2;
+    p5.ellipse(x, y, d, d);
+    p5.text(`${x + d}`, dim.w / 2, dim.h / 5);
+    p5.line(x, 0, x, dim.h);
+    p5.text(`x: ${p5.mouseX}, y: ${p5.mouseY}`, dim.w / 2, dim.h / 4); // NOTE: Do not use setState in the draw function or in functions that are executed
     // in the draw function...
     // please use normal variables or class properties for these purposes
 
-    x++;
+    x += xVel;
+
+    if (x + r >= dim.w || x <= r) {
+      xVel *= -1;
+    }
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Sketch, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    ref: stageCanvasRef,
+    style: {
+      width: '100%',
+      height: '100%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Sketch, {
     setup: setup,
     draw: draw
-  });
+  }));
 });
 
 /***/ }),
@@ -2539,81 +2588,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const store = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
-
-/***/ }),
-
-/***/ "./src/ssr/useScrollPosition.js":
-/*!**************************************!*\
-  !*** ./src/ssr/useScrollPosition.js ***!
-  \**************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ useScrollPosition
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-const isBrowser = typeof window !== `undefined`;
-
-function getScrollPosition({
-  element,
-  useWindow
-}) {
-  if (!isBrowser) return {
-    x: 0,
-    y: 0
-  };
-  const target = element ? element.current : document.body;
-  const position = target.getBoundingClientRect();
-  return useWindow ? {
-    x: window.scrollX,
-    y: window.scrollY
-  } : {
-    x: position.left,
-    y: position.top
-  };
-}
-
-function useScrollPosition(effect, deps, element, useWindow, wait) {
-  const position = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(getScrollPosition({
-    useWindow
-  }));
-  let throttleTimeout = null;
-
-  const callBack = () => {
-    const currPos = getScrollPosition({
-      element,
-      useWindow
-    });
-    effect({
-      prevPos: position.current,
-      currPos
-    });
-    position.current = currPos;
-    throttleTimeout = null;
-  };
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
-    const handleScroll = () => {
-      if (wait) {
-        if (throttleTimeout === null) {
-          throttleTimeout = setTimeout(callBack, wait);
-        }
-      } else {
-        callBack();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, deps);
-}
 
 /***/ }),
 
@@ -2974,20 +2948,6 @@ module.exports = require("react");;
 /***/ ((module) => {
 
 module.exports = require("react-bootstrap");;
-
-/***/ }),
-
-/***/ "react-dom":
-/*!****************************!*\
-  !*** external "react-dom" ***!
-  \****************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-module.exports = require("react-dom");;
 
 /***/ }),
 
