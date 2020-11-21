@@ -20,11 +20,7 @@ export default () => {
   });
 
   const stageCanvasRef = useRef(null);
-
-  // useEffect will run on stageCanvasRef value assignment
-  useEffect(() => {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
+  const initDimensions = () => {
     let h = 0;
     let w = 0;
 
@@ -34,10 +30,17 @@ export default () => {
     }
 
     setDim({ w, h });
+  };
 
-    window.addEventListener('resize', setDim({ w, h }));
+  // useEffect will run on stageCanvasRef value assignment
+  useEffect(() => {
+    // The 'current' property contains info of the reference:
+    // align, title, ... , width, height, etc.
+    initDimensions();
+
+    window.addEventListener('resize', initDimensions);
     return () => {
-      window.removeEventListener('resize', setDim(w, h));
+      window.removeEventListener('resize', initDimensions);
     };
   }, [stageCanvasRef]);
 

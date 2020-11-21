@@ -2437,11 +2437,9 @@ function Loading() {
     loader: () => __webpack_require__.e(/*! import() */ "vendors-node_modules_react-p5_build_index_js").then(__webpack_require__.t.bind(__webpack_require__, /*! react-p5 */ "./node_modules/react-p5/build/index.js", 7)),
     loading: Loading
   });
-  const stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null); // useEffect will run on stageCanvasRef value assignment
+  const stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
+  const initDimensions = () => {
     let h = 0;
     let w = 0;
 
@@ -2454,12 +2452,16 @@ function Loading() {
       w,
       h
     });
-    window.addEventListener('resize', setDim({
-      w,
-      h
-    }));
+  }; // useEffect will run on stageCanvasRef value assignment
+
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // The 'current' property contains info of the reference:
+    // align, title, ... , width, height, etc.
+    initDimensions();
+    window.addEventListener('resize', initDimensions);
     return () => {
-      window.removeEventListener('resize', setDim(w, h));
+      window.removeEventListener('resize', initDimensions);
     };
   }, [stageCanvasRef]);
 

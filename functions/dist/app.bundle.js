@@ -2149,11 +2149,9 @@ function Loading() {
     },
     loading: Loading
   });
-  var stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null); // useEffect will run on stageCanvasRef value assignment
+  var stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
 
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
+  var initDimensions = function initDimensions() {
     var h = 0;
     var w = 0;
 
@@ -2166,12 +2164,16 @@ function Loading() {
       w: w,
       h: h
     });
-    window.addEventListener('resize', setDim({
-      w: w,
-      h: h
-    }));
+  }; // useEffect will run on stageCanvasRef value assignment
+
+
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    // The 'current' property contains info of the reference:
+    // align, title, ... , width, height, etc.
+    initDimensions();
+    window.addEventListener('resize', initDimensions);
     return function () {
-      window.removeEventListener('resize', setDim(w, h));
+      window.removeEventListener('resize', initDimensions);
     };
   }, [stageCanvasRef]);
 
