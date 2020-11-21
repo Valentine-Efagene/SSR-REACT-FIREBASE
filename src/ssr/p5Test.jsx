@@ -6,7 +6,7 @@ function Loading() {
   return null;
 }
 
-export default (props) => {
+export default () => {
   if (typeof window === 'undefined') {
     return null;
   }
@@ -23,11 +23,18 @@ export default (props) => {
   useEffect(() => {
     // The 'current' property contains info of the reference:
     // align, title, ... , width, height, etc.
-    if (stageCanvasRef.current) {
-      dim.h = stageCanvasRef.current.offsetHeight;
-      dim.w = stageCanvasRef.current.offsetWidth;
-    }
-  }, []);
+    const setDims = () => {
+      if (stageCanvasRef.current) {
+        dim.h = stageCanvasRef.current.offsetHeight;
+        dim.w = stageCanvasRef.current.offsetWidth;
+      }
+    };
+
+    window.addEventListener('resize', setDims);
+    return () => {
+      window.removeEventListener('resize', setDims);
+    };
+  }, [stageCanvasRef]);
 
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref

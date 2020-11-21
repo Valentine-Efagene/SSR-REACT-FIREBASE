@@ -2421,7 +2421,7 @@ function Loading() {
   return null;
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (props => {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
   if (typeof window === 'undefined') {
     return null;
   }
@@ -2439,11 +2439,18 @@ function Loading() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     // The 'current' property contains info of the reference:
     // align, title, ... , width, height, etc.
-    if (stageCanvasRef.current) {
-      dim.h = stageCanvasRef.current.offsetHeight;
-      dim.w = stageCanvasRef.current.offsetWidth;
-    }
-  }, []);
+    const setDims = () => {
+      if (stageCanvasRef.current) {
+        dim.h = stageCanvasRef.current.offsetHeight;
+        dim.w = stageCanvasRef.current.offsetWidth;
+      }
+    };
+
+    window.addEventListener('resize', setDims);
+    return () => {
+      window.removeEventListener('resize', setDims);
+    };
+  }, [stageCanvasRef]);
 
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
