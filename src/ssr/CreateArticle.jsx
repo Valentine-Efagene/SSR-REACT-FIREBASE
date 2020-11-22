@@ -11,12 +11,80 @@ import { Col, Form, Row, Button, Figure, Container } from 'react-bootstrap';
 
 import withToast from './withToast.jsx';
 
+let currentTextPos = 0;
+let currentImgPos = 0;
+
 function CreateArticle(props) {
   const { showSuccess, showError } = props;
-  const [imgSrc, setImgSrc] = useState(null);
-  const [text, setText] = useState(null);
+  const [imgSrc, setImgSrc] = useState([]);
+  const [sequence, setSequence] = useState('');
+  const [text, setText] = useState([]);
   const [title, setTitle] = useState(null);
-  const [imgDim, setImgDim] = useState();
+  const [imgDim, setImgDim] = useState([]);
+
+  let textArea = (
+    <Form.Control
+      as="textarea"
+      rows={6}
+      placeholder="Write with love"
+      onBlur={(event) => {
+        let t = text;
+        t.push(event.target.value);
+        setText(t);
+        let s = sequence;
+        setSequence((s += '0'));
+        event.target.value = '';
+      }}
+    />
+  );
+
+  let textPos = 0;
+  let imgPos = 0;
+
+  let article = [...sequence].map((c) => {
+    if (c === '0') {
+      let val = text[textPos];
+
+      let ret = (
+        <p
+          style={{
+            background: 'beige',
+            wordBreak: 'break-all',
+            textAlign: 'left',
+            whiteSpace: 'pre-line',
+          }}
+          onClick={() => {
+            currentTextPos = textPos;
+            textArea.value = text[currentTextPos];
+          }}
+        >
+          {val}
+        </p>
+      );
+
+      textPos++;
+      return ret;
+    } else {
+      let ret = (
+        <Figure>
+          <Figure.Image
+            width={imgDim[imgPos]?.width}
+            height={imgDim[imgPos]?.height}
+            alt="171x180"
+            src={imgSrc[imgPos]}
+            onClick={() => {
+              currentImgPos = imgPos;
+            }}
+          />
+          <Figure.Caption>
+            Nulla vitae elit libero, a pharetra augue mollis interdum.
+          </Figure.Caption>
+        </Figure>
+      );
+      imgPos++;
+      return ret;
+    }
+  });
 
   firebase
     .auth()
@@ -77,14 +145,7 @@ function CreateArticle(props) {
               </Form.Group>
               <Form.Group controlId="createArticle.ControlTextarea1">
                 <Form.Label>Text</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={6}
-                  placeholder="Write with love"
-                  onChange={(event) => {
-                    setText(event.target.value);
-                  }}
-                />
+                {textArea}
               </Form.Group>
               <Form.Group>
                 <Form.File
@@ -100,10 +161,16 @@ function CreateArticle(props) {
                       const file = reader.result;
                       let img = new Image();
                       img.onload = function () {
-                        setImgDim({ width: img.width, height: img.height });
+                        let imd = imgDim;
+                        imd.push({ width: img.width, height: img.height });
+                        setImgDim(imd);
                       };
-                      img.src = reader.result;
-                      setImgSrc(file);
+                      img.src = file;
+                      let ims = imgSrc;
+                      ims.push(file);
+                      setImgSrc(ims);
+                      let s = sequence;
+                      setSequence((s += '1'));
                       const size = file.size ? file.size : 'NOT SUPPORTED';
                       showSuccess(size);
                     };
@@ -121,29 +188,7 @@ function CreateArticle(props) {
           <Col xs lg="6">
             <h3>Preview</h3>
             <h5>{title}</h5>
-            <div>
-              <p
-                style={{
-                  background: 'beige',
-                  wordBreak: 'break-all',
-                  textAlign: 'left',
-                  whiteSpace: 'pre-line',
-                }}
-              >
-                {text}
-              </p>
-              <Figure>
-                <Figure.Image
-                  width={imgDim?.width}
-                  height={imgDim?.height}
-                  alt="171x180"
-                  src={imgSrc}
-                />
-                <Figure.Caption>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </Figure.Caption>
-              </Figure>
-            </div>
+            <div>{article}</div>
           </Col>
         </Row>
       </div>

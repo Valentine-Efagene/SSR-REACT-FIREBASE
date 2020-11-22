@@ -1,3 +1,4 @@
+import { faThinkPeaks } from '@fortawesome/free-brands-svg-icons';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import Loadable from 'react-loadable';
@@ -34,10 +35,7 @@ export default () => {
 
   // useEffect will run on stageCanvasRef value assignment
   useEffect(() => {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
     initDimensions();
-
     window.addEventListener('resize', initDimensions);
     return () => {
       window.removeEventListener('resize', initDimensions);
@@ -47,24 +45,29 @@ export default () => {
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
-
     p5.createCanvas(dim.w, dim.h).parent(canvasParentRef);
   };
 
   let x = dim.w / 2;
   let y = dim.h / 2;
   let xVel = 3;
+  let b;
 
   const draw = (p5) => {
+    let { mouseIsPressed, width } = p5;
     p5.background(129, 71, 109);
 
-    if (p5.mouseIsPressed) {
+    b = new Bob(p5, x, y + 50);
+
+    if (mouseIsPressed) {
       p5.fill(0);
     } else {
       p5.fill(255);
     }
+
+    b.display();
     //const { width, height, background, ellipse } = p5;
-    const d = p5.width / 10;
+    const d = width / 10;
     const r = d / 2;
     p5.ellipse(x, y, d, d);
     p5.text(`${x + d}`, dim.w / 2, dim.h / 5);
@@ -85,3 +88,31 @@ export default () => {
     </div>
   );
 };
+
+// Bob class, just like our regular Mover (position, velocity, acceleration, mass)
+class Bob {
+  // Constructor
+  constructor(p5, x, y) {
+    this.position = p5.createVector(x, y);
+    this.velocity = p5.createVector();
+    this.acceleration = p5.createVector();
+    this.dragOffset = p5.createVector();
+    this.dragging = false;
+    this.p5 = p5;
+    this.mass = 24;
+  }
+
+  // Draw the bob
+  display() {
+    let { p5, position, dragging, mass } = this;
+    p5.stroke(0);
+    p5.strokeWeight(2);
+    //p5.fill(175);
+
+    if (dragging) {
+      p5.fill(50);
+    }
+
+    p5.ellipse(position.x, position.y, mass * 2, mass * 2);
+  }
+}
