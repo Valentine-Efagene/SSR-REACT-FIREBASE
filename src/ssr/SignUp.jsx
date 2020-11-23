@@ -30,7 +30,6 @@ import {
 import wrapPath from './wrapPath.js';
 
 function SignUp(props) {
-  const img = '';
   return (
     <Row className="justify-content-md-center">
       <Col className="col-centered" sm={12} md={6}>
@@ -46,7 +45,7 @@ function SignUp(props) {
           </Button>
           <Card.Body></Card.Body>
           <Card.Footer>
-            <Image className="footer-image" src={img} />
+            <Image className="footer-image" src={'./assets/img/home.png'} />
           </Card.Footer>
         </Card>
       </Col>

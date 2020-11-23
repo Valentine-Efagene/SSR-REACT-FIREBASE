@@ -8,6 +8,7 @@ import ReduxTest from './ReduxTest.js';
 import EmailSignUp from './EmailSignUp.jsx';
 import PhoneSignUp from './PhoneSignUp.jsx';
 import p5Test from './p5Test.jsx';
+import Editor from './Editor.jsx';
 import CreateArticle from './CreateArticle.jsx';
 import wrapPath from './wrapPath.js';
 
@@ -17,6 +18,7 @@ const routes = [
   { path: wrapPath('/signup-email'), component: EmailSignUp },
   { path: wrapPath('/signup-phone'), component: PhoneSignUp },
   { path: wrapPath('/about'), component: About },
+  { path: wrapPath('/editor'), component: Editor },
   { path: wrapPath('/test'), component: Test },
   { path: wrapPath('/p5-test'), component: p5Test },
   { path: wrapPath('/login'), component: Login },

@@ -89,6 +89,11 @@ function NavBar({ user }) {
               <NavItem>Test</NavItem>
             </NavLink>
           </LinkContainer>
+          <LinkContainer to={wrapPath('/editor')}>
+            <NavLink>
+              <NavItem>Editor</NavItem>
+            </NavLink>
+          </LinkContainer>
           {update}
           {contactAdd}
         </Nav>

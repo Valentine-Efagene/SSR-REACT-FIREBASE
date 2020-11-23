@@ -28,384 +28,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/react-loadable/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/react-loadable/lib/index.js ***!
-  \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__, __webpack_require__.m, __webpack_require__.* */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var React = __webpack_require__(/*! react */ "react");
-
-var PropTypes = __webpack_require__(/*! prop-types */ "prop-types");
-
-var ALL_INITIALIZERS = [];
-var READY_INITIALIZERS = [];
-
-function isWebpackReady(getModuleIds) {
-  if (( false ? 0 : _typeof(__webpack_require__.m)) !== "object") {
-    return false;
-  }
-
-  return getModuleIds().every(function (moduleId) {
-    return typeof moduleId !== "undefined" && typeof __webpack_require__.m[moduleId] !== "undefined";
-  });
-}
-
-function load(loader) {
-  var promise = loader();
-  var state = {
-    loading: true,
-    loaded: null,
-    error: null
-  };
-  state.promise = promise.then(function (loaded) {
-    state.loading = false;
-    state.loaded = loaded;
-    return loaded;
-  }).catch(function (err) {
-    state.loading = false;
-    state.error = err;
-    throw err;
-  });
-  return state;
-}
-
-function loadMap(obj) {
-  var state = {
-    loading: false,
-    loaded: {},
-    error: null
-  };
-  var promises = [];
-
-  try {
-    Object.keys(obj).forEach(function (key) {
-      var result = load(obj[key]);
-
-      if (!result.loading) {
-        state.loaded[key] = result.loaded;
-        state.error = result.error;
-      } else {
-        state.loading = true;
-      }
-
-      promises.push(result.promise);
-      result.promise.then(function (res) {
-        state.loaded[key] = res;
-      }).catch(function (err) {
-        state.error = err;
-      });
-    });
-  } catch (err) {
-    state.error = err;
-  }
-
-  state.promise = Promise.all(promises).then(function (res) {
-    state.loading = false;
-    return res;
-  }).catch(function (err) {
-    state.loading = false;
-    throw err;
-  });
-  return state;
-}
-
-function resolve(obj) {
-  return obj && obj.__esModule ? obj.default : obj;
-}
-
-function render(loaded, props) {
-  return React.createElement(resolve(loaded), props);
-}
-
-function createLoadableComponent(loadFn, options) {
-  var _class, _temp;
-
-  if (!options.loading) {
-    throw new Error("react-loadable requires a `loading` component");
-  }
-
-  var opts = Object.assign({
-    loader: null,
-    loading: null,
-    delay: 200,
-    timeout: null,
-    render: render,
-    webpack: null,
-    modules: null
-  }, options);
-  var res = null;
-
-  function init() {
-    if (!res) {
-      res = loadFn(opts.loader);
-    }
-
-    return res.promise;
-  }
-
-  ALL_INITIALIZERS.push(init);
-
-  if (typeof opts.webpack === "function") {
-    READY_INITIALIZERS.push(function () {
-      if (isWebpackReady(opts.webpack)) {
-        return init();
-      }
-    });
-  }
-
-  return _temp = _class = function (_React$Component) {
-    _inherits(LoadableComponent, _React$Component);
-
-    function LoadableComponent(props) {
-      _classCallCheck(this, LoadableComponent);
-
-      var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-
-      _this.retry = function () {
-        _this.setState({
-          error: null,
-          loading: true,
-          timedOut: false
-        });
-
-        res = loadFn(opts.loader);
-
-        _this._loadModule();
-      };
-
-      init();
-      _this.state = {
-        error: res.error,
-        pastDelay: false,
-        timedOut: false,
-        loading: res.loading,
-        loaded: res.loaded
-      };
-      return _this;
-    }
-
-    LoadableComponent.preload = function preload() {
-      return init();
-    };
-
-    LoadableComponent.prototype.componentWillMount = function componentWillMount() {
-      this._mounted = true;
-
-      this._loadModule();
-    };
-
-    LoadableComponent.prototype._loadModule = function _loadModule() {
-      var _this2 = this;
-
-      if (this.context.loadable && Array.isArray(opts.modules)) {
-        opts.modules.forEach(function (moduleName) {
-          _this2.context.loadable.report(moduleName);
-        });
-      }
-
-      if (!res.loading) {
-        return;
-      }
-
-      if (typeof opts.delay === "number") {
-        if (opts.delay === 0) {
-          this.setState({
-            pastDelay: true
-          });
-        } else {
-          this._delay = setTimeout(function () {
-            _this2.setState({
-              pastDelay: true
-            });
-          }, opts.delay);
-        }
-      }
-
-      if (typeof opts.timeout === "number") {
-        this._timeout = setTimeout(function () {
-          _this2.setState({
-            timedOut: true
-          });
-        }, opts.timeout);
-      }
-
-      var update = function update() {
-        if (!_this2._mounted) {
-          return;
-        }
-
-        _this2.setState({
-          error: res.error,
-          loaded: res.loaded,
-          loading: res.loading
-        });
-
-        _this2._clearTimeouts();
-      };
-
-      res.promise.then(function () {
-        update();
-      }).catch(function (err) {
-        update();
-      });
-    };
-
-    LoadableComponent.prototype.componentWillUnmount = function componentWillUnmount() {
-      this._mounted = false;
-
-      this._clearTimeouts();
-    };
-
-    LoadableComponent.prototype._clearTimeouts = function _clearTimeouts() {
-      clearTimeout(this._delay);
-      clearTimeout(this._timeout);
-    };
-
-    LoadableComponent.prototype.render = function render() {
-      if (this.state.loading || this.state.error) {
-        return React.createElement(opts.loading, {
-          isLoading: this.state.loading,
-          pastDelay: this.state.pastDelay,
-          timedOut: this.state.timedOut,
-          error: this.state.error,
-          retry: this.retry
-        });
-      } else if (this.state.loaded) {
-        return opts.render(this.state.loaded, this.props);
-      } else {
-        return null;
-      }
-    };
-
-    return LoadableComponent;
-  }(React.Component), _class.contextTypes = {
-    loadable: PropTypes.shape({
-      report: PropTypes.func.isRequired
-    })
-  }, _temp;
-}
-
-function Loadable(opts) {
-  return createLoadableComponent(load, opts);
-}
-
-function LoadableMap(opts) {
-  if (typeof opts.render !== "function") {
-    throw new Error("LoadableMap requires a `render(loaded, props)` function");
-  }
-
-  return createLoadableComponent(loadMap, opts);
-}
-
-Loadable.Map = LoadableMap;
-
-var Capture = function (_React$Component2) {
-  _inherits(Capture, _React$Component2);
-
-  function Capture() {
-    _classCallCheck(this, Capture);
-
-    return _possibleConstructorReturn(this, _React$Component2.apply(this, arguments));
-  }
-
-  Capture.prototype.getChildContext = function getChildContext() {
-    return {
-      loadable: {
-        report: this.props.report
-      }
-    };
-  };
-
-  Capture.prototype.render = function render() {
-    return React.Children.only(this.props.children);
-  };
-
-  return Capture;
-}(React.Component);
-
-Capture.propTypes = {
-  report: PropTypes.func.isRequired
-};
-Capture.childContextTypes = {
-  loadable: PropTypes.shape({
-    report: PropTypes.func.isRequired
-  }).isRequired
-};
-Loadable.Capture = Capture;
-
-function flushInitializers(initializers) {
-  var promises = [];
-
-  while (initializers.length) {
-    var init = initializers.pop();
-    promises.push(init());
-  }
-
-  return Promise.all(promises).then(function () {
-    if (initializers.length) {
-      return flushInitializers(initializers);
-    }
-  });
-}
-
-Loadable.preloadAll = function () {
-  return new Promise(function (resolve, reject) {
-    flushInitializers(ALL_INITIALIZERS).then(resolve, reject);
-  });
-};
-
-Loadable.preloadReady = function () {
-  return new Promise(function (resolve, reject) {
-    // We always will resolve, errors should be handled within loading UIs.
-    flushInitializers(READY_INITIALIZERS).then(resolve, resolve);
-  });
-};
-
-module.exports = Loadable;
-
-/***/ }),
-
 /***/ "./servers/firebase_server/render.jsx":
 /*!********************************************!*\
   !*** ./servers/firebase_server/render.jsx ***!
@@ -1129,10 +751,276 @@ __webpack_require__.r(__webpack_exports__);
 //import { setInitialData } from '../redux/actions';
 
 
+let currentPos = 0;
+let modalText;
+
+function CreateArticle(props) {
+  //const { showSuccess, showError } = props;
+  const [showTAM, setShowTAM] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [showIM, setShowIM] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [articleData, setArticleData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [title, setTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  let imageModal = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal, {
+    show: showIM,
+    onHide: () => setShowIM(false)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Header, {
+    closeButton: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Title, null, "Modal heading")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.File, {
+    id: "custom-file",
+    label: "Custom file input",
+    custom: true,
+    onChange: event => {
+      let fileName = event.target.files[0]; //showSuccess(file.name);
+
+      let reader = new FileReader();
+      reader.readAsDataURL(fileName);
+
+      reader.onload = () => {
+        const file = reader.result;
+        let img = new Image();
+        img.src = file;
+        let ad = [...articleData];
+
+        img.onload = function () {
+          ad[currentPos] = {
+            type: 1,
+            source: file,
+            dimension: {
+              width: img.width,
+              height: img.height
+            }
+          };
+          setArticleData(ad);
+          setShowIM(false);
+        }; //const size = file.size ? file.size : 'NOT SUPPORTED';
+        //showSuccess(size);
+
+      };
+
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Button, {
+    variant: "secondary",
+    onClick: () => setShowIM(false)
+  }, "Cancel")));
+  let textAreaModal = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal, {
+    show: showTAM,
+    onHide: () => setShowTAM(false)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Header, {
+    closeButton: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Title, null, "Modal heading")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Control, {
+    type: "text",
+    placeholder: "Title",
+    onChange: event => {
+      modalText = event.target.value;
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Modal.Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Button, {
+    variant: "secondary",
+    onClick: () => setShowTAM(false)
+  }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Button, {
+    variant: "primary",
+    onClick: () => {
+      let ad = articleData;
+      ad[currentPos] = {
+        type: 0,
+        content: modalText
+      };
+      setArticleData(ad);
+      setShowTAM(false);
+    }
+  }, "Save Changes")));
+  let imageInput = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.File, {
+    id: "custom-file",
+    label: "Custom file input",
+    custom: true,
+    onChange: event => {
+      let fileName = event.target.files[0]; //showSuccess(file.name);
+
+      let reader = new FileReader();
+      reader.readAsDataURL(fileName);
+
+      reader.onload = () => {
+        const file = reader.result;
+        let img = new Image();
+        img.src = file;
+        let ad = [...articleData];
+
+        img.onload = function () {
+          ad.push({
+            type: 1,
+            source: file,
+            dimension: {
+              width: img.width,
+              height: img.height
+            }
+          });
+          setArticleData(ad);
+        }; //const size = file.size ? file.size : 'NOT SUPPORTED';
+        //showSuccess(size);
+
+      };
+
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
+    }
+  });
+  let textArea = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Control, {
+    as: "textarea",
+    rows: 6,
+    placeholder: "Write with love",
+    onBlur: event => {
+      let ad = [...articleData];
+      ad.push({
+        type: 0,
+        content: event.target.value
+      });
+      setArticleData(event.target.value === '' ? articleData : ad);
+      event.target.value = '';
+    }
+  });
+  let article = [...articleData].map((c, i) => {
+    if (c.type == 0) {
+      let val = c.content;
+      let ret = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+        style: {
+          background: 'beige',
+          wordBreak: 'break-all',
+          textAlign: 'left',
+          whiteSpace: 'pre-line'
+        },
+        position: i,
+        onClick: event => {
+          currentPos = event.target.getAttribute('position');
+          setShowTAM(true);
+        }
+      }, val);
+      return ret;
+    } else {
+      let src = c.source;
+      let dim = c.dimension;
+      let ret = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Figure.Image, {
+        width: dim === null || dim === void 0 ? void 0 : dim.width,
+        height: dim === null || dim === void 0 ? void 0 : dim.height,
+        alt: "171x180",
+        position: i,
+        src: src,
+        onClick: event => {
+          currentPos = event.target.getAttribute('position');
+          setShowIM(true);
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Figure.Caption, null, "Nulla vitae elit libero, a pharetra augue mollis interdum."));
+      return ret;
+    }
+  });
+  firebase_app__WEBPACK_IMPORTED_MODULE_1___default().auth().signInAnonymously().catch(function (error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message; // ...
+  });
+  firebase_app__WEBPACK_IMPORTED_MODULE_1___default().auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid; //console.log('Anonymous ID: ');
+      //console.log(uid);
+      // ...
+    } else {
+      console.log('Signed out');
+    } // ...
+
+  });
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const firestore = firebase_app__WEBPACK_IMPORTED_MODULE_1___default().firestore();
+    firestore.collection('text').add({
+      text
+    }).then(function (docRef) {
+      console.log('Document written with ID: ', docRef.id);
+    }).catch(function (error) {
+      console.error('Error adding document: ', error);
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Container, {
+    fluid: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "text-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Create An Article"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Row, {
+    className: "justify-content-md-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Col, {
+    xs: true,
+    lg: "6"
+  }, textAreaModal, imageModal, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form, {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Group, {
+    controlId: "createArticle.ControlInput1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Label, null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Control, {
+    type: "text",
+    placeholder: "Title",
+    onChange: event => {
+      setTitle(event.target.value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Group, {
+    controlId: "createArticle.ControlTextarea1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Label, null, "Text"), textArea), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Figure, null, imageInput)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Button, {
+    variant: "primary",
+    type: "submit"
+  }, "Post"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Col, {
+    xs: true,
+    lg: "6"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, article)))));
+}
+
+const CreateArticleWithToast = (0,_withToast_jsx__WEBPACK_IMPORTED_MODULE_6__.default)(CreateArticle);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateArticleWithToast);
+
+/***/ }),
+
+/***/ "./src/ssr/Editor.jsx":
+/*!****************************!*\
+  !*** ./src/ssr/Editor.jsx ***!
+  \****************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/app */ "firebase/app");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/auth */ "firebase/auth");
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(firebase_auth__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ "firebase/firestore");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(firebase_firestore__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/firebase-database */ "firebase/firebase-database");
+/* harmony import */ var firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(firebase_firebase_database__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _withToast_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./withToast.jsx */ "./src/ssr/withToast.jsx");
+
+
+
+
+
+
+ //import { useSelector, useDispatch } from 'react-redux';
+//import { setInitialData } from '../redux/actions';
+
+
 let currentTextPos = 0;
 let currentImgPos = 0;
 
-function CreateArticle(props) {
+function Editor(props) {
   const {
     showSuccess,
     showError
@@ -1142,6 +1030,44 @@ function CreateArticle(props) {
   const [text, setText] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [title, setTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [imgDim, setImgDim] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  let imageInput = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.File, {
+    id: "custom-file",
+    label: "Custom file input",
+    custom: true,
+    onChange: event => {
+      let fileName = event.target.files[0]; //showSuccess(file.name);
+
+      let reader = new FileReader();
+      reader.readAsDataURL(fileName);
+
+      reader.onload = () => {
+        const file = reader.result;
+        let img = new Image();
+
+        img.onload = function () {
+          let imd = imgDim;
+          imd.push({
+            width: img.width,
+            height: img.height
+          });
+          setImgDim(imd);
+        };
+
+        img.src = file;
+        let ims = imgSrc;
+        ims.push(file);
+        setImgSrc(ims);
+        let s = sequence;
+        setSequence(s += '1');
+        const size = file.size ? file.size : 'NOT SUPPORTED';
+        showSuccess(size);
+      };
+
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
+    }
+  });
   let textArea = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Control, {
     as: "textarea",
     rows: 6,
@@ -1241,44 +1167,7 @@ function CreateArticle(props) {
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Group, {
     controlId: "createArticle.ControlTextarea1"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Label, null, "Text"), textArea), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.File, {
-    id: "custom-file",
-    label: "Custom file input",
-    custom: true,
-    onChange: event => {
-      let fileName = event.target.files[0]; //showSuccess(file.name);
-
-      let reader = new FileReader();
-      reader.readAsDataURL(fileName);
-
-      reader.onload = () => {
-        const file = reader.result;
-        let img = new Image();
-
-        img.onload = function () {
-          let imd = imgDim;
-          imd.push({
-            width: img.width,
-            height: img.height
-          });
-          setImgDim(imd);
-        };
-
-        img.src = file;
-        let ims = imgSrc;
-        ims.push(file);
-        setImgSrc(ims);
-        let s = sequence;
-        setSequence(s += '1');
-        const size = file.size ? file.size : 'NOT SUPPORTED';
-        showSuccess(size);
-      };
-
-      reader.onerror = function (error) {
-        console.log('Error: ', error);
-      };
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Button, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Form.Label, null, "Text"), textArea), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Button, {
     variant: "primary",
     type: "submit"
   }, "Post"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.Col, {
@@ -1287,8 +1176,8 @@ function CreateArticle(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Preview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, article)))));
 }
 
-const CreateArticleWithToast = (0,_withToast_jsx__WEBPACK_IMPORTED_MODULE_6__.default)(CreateArticle);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateArticleWithToast);
+const EditorWithToast = (0,_withToast_jsx__WEBPACK_IMPORTED_MODULE_6__.default)(Editor);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditorWithToast);
 
 /***/ }),
 
@@ -1941,7 +1830,9 @@ function NavBar({
     to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_6__.default)('/create-article')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavLink, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavItem, null, "Create Article"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_2__.LinkContainer, {
     to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_6__.default)('/test')
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavLink, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavItem, null, "Test"))), update, contactAdd)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavLink, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavItem, null, "Test"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_bootstrap__WEBPACK_IMPORTED_MODULE_2__.LinkContainer, {
+    to: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_6__.default)('/editor')
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavLink, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.NavItem, null, "Editor"))), update, contactAdd)));
 }
 
 /***/ }),
@@ -2240,7 +2131,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function SignUp(props) {
-  const img = '';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Row, {
     className: "justify-content-md-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Col, {
@@ -2259,7 +2149,7 @@ function SignUp(props) {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faPhone
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Card.Body, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Card.Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__.Image, {
     className: "footer-image",
-    src: img
+    src: './assets/img/home.png'
   })))));
 }
 
@@ -2418,7 +2308,7 @@ class Toast extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.e, __webpack_require__.t, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.t, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -2431,7 +2321,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-loadable */ "./node_modules/react-loadable/lib/index.js");
+/* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-loadable */ "react-loadable");
 /* harmony import */ var react_loadable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_loadable__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -2452,7 +2342,7 @@ function Loading() {
     h: 0
   });
   const Sketch = react_loadable__WEBPACK_IMPORTED_MODULE_3___default()({
-    loader: () => __webpack_require__.e(/*! import() */ "vendors-node_modules_react-p5_build_index_js").then(__webpack_require__.t.bind(__webpack_require__, /*! react-p5 */ "./node_modules/react-p5/build/index.js", 7)),
+    loader: () => Promise.resolve(/*! import() */).then(__webpack_require__.t.bind(__webpack_require__, /*! react-p5 */ "react-p5", 7)),
     loading: Loading
   });
   const stageCanvasRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
@@ -2593,8 +2483,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EmailSignUp_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./EmailSignUp.jsx */ "./src/ssr/EmailSignUp.jsx");
 /* harmony import */ var _PhoneSignUp_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PhoneSignUp.jsx */ "./src/ssr/PhoneSignUp.jsx");
 /* harmony import */ var _p5Test_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./p5Test.jsx */ "./src/ssr/p5Test.jsx");
-/* harmony import */ var _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateArticle.jsx */ "./src/ssr/CreateArticle.jsx");
-/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./wrapPath.js */ "./src/ssr/wrapPath.js");
+/* harmony import */ var _Editor_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Editor.jsx */ "./src/ssr/Editor.jsx");
+/* harmony import */ var _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateArticle.jsx */ "./src/ssr/CreateArticle.jsx");
+/* harmony import */ var _wrapPath_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./wrapPath.js */ "./src/ssr/wrapPath.js");
+
 
 
 
@@ -2608,37 +2500,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const routes = [{
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/home'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/home'),
   component: _Home_jsx__WEBPACK_IMPORTED_MODULE_1__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/signup'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/signup'),
   component: _SignUp_jsx__WEBPACK_IMPORTED_MODULE_5__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/signup-email'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/signup-email'),
   component: _EmailSignUp_jsx__WEBPACK_IMPORTED_MODULE_7__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/signup-phone'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/signup-phone'),
   component: _PhoneSignUp_jsx__WEBPACK_IMPORTED_MODULE_8__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/about'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/about'),
   component: _About_jsx__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/test'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/editor'),
+  component: _Editor_jsx__WEBPACK_IMPORTED_MODULE_10__.default
+}, {
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/test'),
   component: _Test_jsx__WEBPACK_IMPORTED_MODULE_3__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/p5-test'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/p5-test'),
   component: _p5Test_jsx__WEBPACK_IMPORTED_MODULE_9__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/login'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/login'),
   component: _LogIn_jsx__WEBPACK_IMPORTED_MODULE_4__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/redux-test'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/redux-test'),
   component: _ReduxTest_js__WEBPACK_IMPORTED_MODULE_6__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('/create-article'),
-  component: _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_10__.default
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('/create-article'),
+  component: _CreateArticle_jsx__WEBPACK_IMPORTED_MODULE_11__.default
 }, {
-  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_11__.default)('*'),
+  path: (0,_wrapPath_js__WEBPACK_IMPORTED_MODULE_12__.default)('*'),
   component: _NotFound_jsx__WEBPACK_IMPORTED_MODULE_0__.default
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
@@ -2997,19 +2892,6 @@ module.exports = require("path");;
 
 /***/ }),
 
-/***/ "prop-types":
-/*!*****************************!*\
-  !*** external "prop-types" ***!
-  \*****************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-module.exports = require("prop-types");;
-
-/***/ }),
-
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -3049,6 +2931,33 @@ module.exports = require("react-bootstrap");;
 /***/ ((module) => {
 
 module.exports = require("react-dom/server");;
+
+/***/ }),
+
+/***/ "react-loadable":
+/*!*********************************!*\
+  !*** external "react-loadable" ***!
+  \*********************************/
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("react-loadable");;
+
+/***/ }),
+
+/***/ "react-p5":
+/*!***************************!*\
+  !*** external "react-p5" ***!
+  \***************************/
+/*! dynamic exports */
+/*! exports [maybe provided (runtime-defined)] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+module.exports = require("react-p5");;
 
 /***/ }),
 
@@ -3155,14 +3064,11 @@ module.exports = require("serialize-javascript");;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -3212,28 +3118,6 @@ module.exports = require("serialize-javascript");;
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/ensure chunk */
-/******/ 	(() => {
-/******/ 		__webpack_require__.f = {};
-/******/ 		// This file contains only the entry chunk.
-/******/ 		// The chunk loading function for additional chunks
-/******/ 		__webpack_require__.e = (chunkId) => {
-/******/ 			return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
-/******/ 				__webpack_require__.f[key](chunkId, promises);
-/******/ 				return promises;
-/******/ 			}, []));
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/get javascript chunk filename */
-/******/ 	(() => {
-/******/ 		// This function allow to reference async chunks
-/******/ 		__webpack_require__.u = (chunkId) => {
-/******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + ".index.js";
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
@@ -3250,51 +3134,11 @@ module.exports = require("serialize-javascript");;
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/require chunk loading */
-/******/ 	(() => {
-/******/ 		// no baseURI
-/******/ 		
-/******/ 		// object to store loaded chunks
-/******/ 		// "1" means "loaded", otherwise not loaded yet
-/******/ 		var installedChunks = {
-/******/ 			"server": 1
-/******/ 		};
-/******/ 		
-/******/ 		var installChunk = (chunk) => {
-/******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids, runtime = chunk.runtime;
-/******/ 			for(var moduleId in moreModules) {
-/******/ 				if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 				}
-/******/ 			}
-/******/ 			if(runtime) runtime(__webpack_require__);
-/******/ 			for(var i = 0; i < chunkIds.length; i++)
-/******/ 				installedChunks[chunkIds[i]] = 1;
-/******/ 		};
-/******/ 		
-/******/ 		// require() chunk loading for javascript
-/******/ 		__webpack_require__.f.require = function(chunkId, promises) {
-/******/ 		
-/******/ 			// "1" is the signal for "already loaded"
-/******/ 			if(!installedChunks[chunkId]) {
-/******/ 				if(true) { // all chunks have JS
-/******/ 					installChunk(require("./" + __webpack_require__.u(chunkId)));
-/******/ 				} else installedChunks[chunkId] = 1;
-/******/ 			}
-/******/ 		};
-/******/ 		
-/******/ 		// no external install chunk
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 	})();
-/******/ 	
 /************************************************************************/
-/******/ 	// module factories are used so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module
 /******/ 	__webpack_require__("./servers/firebase_server/server.js");
+/******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map

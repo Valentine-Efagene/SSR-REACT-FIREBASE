@@ -4,23 +4,144 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/firebase-database';
 import { useState, useEffect } from 'react';
-import { Col, Form, Row, Button, Figure, Container } from 'react-bootstrap';
+import {
+  Col,
+  Form,
+  Row,
+  Button,
+  Figure,
+  Container,
+  Modal,
+} from 'react-bootstrap';
 
 //import { useSelector, useDispatch } from 'react-redux';
 //import { setInitialData } from '../redux/actions';
 
 import withToast from './withToast.jsx';
 
-let currentTextPos = 0;
-let currentImgPos = 0;
+let currentPos = 0;
+let modalText;
 
 function CreateArticle(props) {
-  const { showSuccess, showError } = props;
-  const [imgSrc, setImgSrc] = useState([]);
-  const [sequence, setSequence] = useState('');
-  const [text, setText] = useState([]);
+  //const { showSuccess, showError } = props;
+  const [showTAM, setShowTAM] = useState(false);
+  const [showIM, setShowIM] = useState(false);
+  const [articleData, setArticleData] = useState([]);
   const [title, setTitle] = useState(null);
-  const [imgDim, setImgDim] = useState([]);
+
+  let imageModal = (
+    <Modal show={showIM} onHide={() => setShowIM(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.File
+          id="custom-file"
+          label="Custom file input"
+          custom
+          onChange={(event) => {
+            let fileName = event.target.files[0];
+            //showSuccess(file.name);
+            let reader = new FileReader();
+            reader.readAsDataURL(fileName);
+            reader.onload = () => {
+              const file = reader.result;
+              let img = new Image();
+              img.src = file;
+              let ad = [...articleData];
+
+              img.onload = function () {
+                ad[currentPos] = {
+                  type: 1,
+                  source: file,
+                  dimension: { width: img.width, height: img.height },
+                };
+                setArticleData(ad);
+                setShowIM(false);
+              };
+              //const size = file.size ? file.size : 'NOT SUPPORTED';
+              //showSuccess(size);
+            };
+            reader.onerror = function (error) {
+              console.log('Error: ', error);
+            };
+          }}
+        />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowIM(false)}>
+          Cancel
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+
+  let textAreaModal = (
+    <Modal show={showTAM} onHide={() => setShowTAM(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Control
+          type="text"
+          placeholder="Title"
+          onChange={(event) => {
+            modalText = event.target.value;
+          }}
+        />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowTAM(false)}>
+          Close
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            let ad = articleData;
+            ad[currentPos] = { type: 0, content: modalText };
+            setArticleData(ad);
+            setShowTAM(false);
+          }}
+        >
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+
+  let imageInput = (
+    <Form.File
+      id="custom-file"
+      label="Custom file input"
+      custom
+      onChange={(event) => {
+        let fileName = event.target.files[0];
+        //showSuccess(file.name);
+        let reader = new FileReader();
+        reader.readAsDataURL(fileName);
+        reader.onload = () => {
+          const file = reader.result;
+          let img = new Image();
+          img.src = file;
+          let ad = [...articleData];
+
+          img.onload = function () {
+            ad.push({
+              type: 1,
+              source: file,
+              dimension: { width: img.width, height: img.height },
+            });
+            setArticleData(ad);
+          };
+          //const size = file.size ? file.size : 'NOT SUPPORTED';
+          //showSuccess(size);
+        };
+        reader.onerror = function (error) {
+          console.log('Error: ', error);
+        };
+      }}
+    />
+  );
 
   let textArea = (
     <Form.Control
@@ -28,22 +149,17 @@ function CreateArticle(props) {
       rows={6}
       placeholder="Write with love"
       onBlur={(event) => {
-        let t = text;
-        t.push(event.target.value);
-        setText(t);
-        let s = sequence;
-        setSequence((s += '0'));
+        let ad = [...articleData];
+        ad.push({ type: 0, content: event.target.value });
+        setArticleData(event.target.value === '' ? articleData : ad);
         event.target.value = '';
       }}
     />
   );
 
-  let textPos = 0;
-  let imgPos = 0;
-
-  let article = [...sequence].map((c) => {
-    if (c === '0') {
-      let val = text[textPos];
+  let article = [...articleData].map((c, i) => {
+    if (c.type == 0) {
+      let val = c.content;
 
       let ret = (
         <p
@@ -53,35 +169,39 @@ function CreateArticle(props) {
             textAlign: 'left',
             whiteSpace: 'pre-line',
           }}
-          onClick={() => {
-            currentTextPos = textPos;
-            textArea.value = text[currentTextPos];
+          position={i}
+          onClick={(event) => {
+            currentPos = event.target.getAttribute('position');
+            setShowTAM(true);
           }}
         >
           {val}
         </p>
       );
 
-      textPos++;
       return ret;
     } else {
+      let src = c.source;
+      let dim = c.dimension;
       let ret = (
-        <Figure>
+        <>
           <Figure.Image
-            width={imgDim[imgPos]?.width}
-            height={imgDim[imgPos]?.height}
+            width={dim?.width}
+            height={dim?.height}
             alt="171x180"
-            src={imgSrc[imgPos]}
-            onClick={() => {
-              currentImgPos = imgPos;
+            position={i}
+            src={src}
+            onClick={(event) => {
+              currentPos = event.target.getAttribute('position');
+              setShowIM(true);
             }}
           />
           <Figure.Caption>
             Nulla vitae elit libero, a pharetra augue mollis interdum.
           </Figure.Caption>
-        </Figure>
+        </>
       );
-      imgPos++;
+
       return ret;
     }
   });
@@ -101,8 +221,8 @@ function CreateArticle(props) {
       // User is signed in.
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
-      console.log('Anonymous ID: ');
-      console.log(uid);
+      //console.log('Anonymous ID: ');
+      //console.log(uid);
       // ...
     } else {
       console.log('Signed out');
@@ -132,6 +252,8 @@ function CreateArticle(props) {
         <h3>Create An Article</h3>
         <Row className="justify-content-md-center">
           <Col xs lg="6">
+            {textAreaModal}
+            {imageModal}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="createArticle.ControlInput1">
                 <Form.Label>Title</Form.Label>
@@ -148,37 +270,7 @@ function CreateArticle(props) {
                 {textArea}
               </Form.Group>
               <Form.Group>
-                <Form.File
-                  id="custom-file"
-                  label="Custom file input"
-                  custom
-                  onChange={(event) => {
-                    let fileName = event.target.files[0];
-                    //showSuccess(file.name);
-                    let reader = new FileReader();
-                    reader.readAsDataURL(fileName);
-                    reader.onload = () => {
-                      const file = reader.result;
-                      let img = new Image();
-                      img.onload = function () {
-                        let imd = imgDim;
-                        imd.push({ width: img.width, height: img.height });
-                        setImgDim(imd);
-                      };
-                      img.src = file;
-                      let ims = imgSrc;
-                      ims.push(file);
-                      setImgSrc(ims);
-                      let s = sequence;
-                      setSequence((s += '1'));
-                      const size = file.size ? file.size : 'NOT SUPPORTED';
-                      showSuccess(size);
-                    };
-                    reader.onerror = function (error) {
-                      console.log('Error: ', error);
-                    };
-                  }}
-                />
+                <Figure>{imageInput}</Figure>
               </Form.Group>
               <Button variant="primary" type="submit">
                 Post
