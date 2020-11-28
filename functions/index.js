@@ -2953,7 +2953,8 @@ module.exports = require("react-loadable");;
   !*** external "react-p5" ***!
   \***************************/
 /*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
